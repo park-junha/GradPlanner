@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>SCU Course Planner</title>
+
+  <link rel="icon" href="{{ url_for('static', filename='favicon/SCU-Favicon.png') }}">
+  <!--------------------Implement Bootstrap---------------->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="css/styles.css">-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/schedule_styles.css') }}">
+  <!--<script src="{{ url_for('static', filename='js/survey.js') }}"></script>-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <section id="top_navbar">
+    <nav class="navbar navbar-inverse navbar-fixed-top Course_Planner_Navbar">
+      <div class="container-fluid container-fluid-spacious">
+        <div class="navbar-brand navbar-brand-emphasized navbar_left_float">
+          <div class="logo">
+            <!--<img class="navbar_logo" src="{{ url_for('static', filename='img/Santa_Clara_U_Seal.svg.png') }}" alt="IHS_logo">-->
+            <img class="navbar_logo" src="{{ url_for('static', filename='img/Santa_Clara_U_Seal.svg.png') }}" alt="IHS_logo">
+          </div>
+          <div class="school_name">
+            <small class='text-sans-bold sch_text'>SANTA CLARA UNIVERSITY</small>
+          </div>
+          <div class="project_name">
+            <br>
+            <small>Course Planner</small>
+          </div>
+        </div>
+        <div class="navbar_right_float">
+          <button class="btn btn-danger home" type="button" name="home-button" onclick="location.href='index'">Home</button>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+  <section id="body">
+    <div class="container">
+      {% for yearDict in fourYearPlan %}
+        <div class="{{ yearDict['year'] }}">
+          <h2 class="year_title">{{ yearDict['year'] }}</h2>
+          <div class="card-columns d-flex justify-content-center">
+            {% for quarterDict in yearDict['yearSchedule'] %}
+              <div class="card Four-Year-Schedule">
+                <div class="card-block">
+                  <div class="card-header">
+                    {{ quarterDict['quarter'] }}
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    {% for classDict in quarterDict['classes'] %}
+                      <li class="list-group-item" id="freshman_fall_course_1">{{ classDict['name'] }}
+                        {% if classDict['units'] > 0 %}
+                            <ul>
+                              <li>Units: {{ classDict['units'] }}</li>
+                              {% if classDict['prereqs'] is not none %}
+                                <li>Pre-requisites:
+                                  <ul>
+                                    {% for prereq in classDict['prereqs'] %}
+                                      <li>{{ prereq }}</li>
+                                    {% endfor %}
+                                  </ul>
+                                </li>
+                              {% endif %}
+                              <!--
+                              {% if classDict['satisfies'] is not none %}
+                                <li>Satisfies:
+                                  <ul>
+                                    {% for prereqFor in classDict['satisfies'] %}
+                                      <li>{{ prereqFor }}</li>
+                                    {% endfor %}
+                                  </ul>
+                                </li>
+                              {% endif %}
+                              -->
+                            </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+      <div>
+        <button class="btn btn-secondary btn-lg save_button" type="button" name="button">Save</button>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>
