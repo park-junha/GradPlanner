@@ -13,19 +13,19 @@ csciEmphasesJson = surveysPath + '/csciEmphases.json'
 csciMajorReqsJson = surveysPath + '/csciMajorReqs.json'
 coreReqsJson = surveysPath + '/coreReqs.json'
 
-DEBUG_MODE = False
+# Enable to print more info to console log
+VERBOSE_MODE = False
 
-if any(arg in ['-d', '--debug'] for arg in sys.argv):
-    print("Debug flag set to True")
-    DEBUG_MODE = True
+if any(arg in ['-v', '--verbose'] for arg in sys.argv):
+    VERBOSE_MODE = True
 
 class scuClass:
-    def __init__(self, cID = "", name = "", sub = "", quart = "", creds = 0):
-        self.classInfo = {'classID': cID, 'fullName': name, 'subject': sub, 'quarters': quart, 'credits': creds}
+    def __init__(self, cID = "", name = "", sat = "", quart = "", creds = 0):
+        self.classInfo = {'classID': cID, 'fullName': name, 'satisfies': sat, 'quarters': quart, 'credits': creds}
         self.preReqs = []
 
     def pushPreReq(self, cID):
-        if DEBUG_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
+        if VERBOSE_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
         self.preReqs.append(cID)
 
     def getID(self):
@@ -34,8 +34,8 @@ class scuClass:
     def getName(self):
         return self.classInfo['fullName']
 
-    def getSubject(self):
-        return self.classInfo['subject']
+    def getSatisfies(self):
+        return self.classInfo['satisfies']
 
     def getQuarters(self):
         return self.classInfo['quarters']
@@ -49,7 +49,7 @@ class scuClass:
     def printDetails(self):
         print("Class ID:", self.getID())
         print("Name:", self.getName())
-        print("Subject:", self.getSubject())
+        print("Satisfies:", self.getSatisfies())
         print("Credits:", self.getCredits())
         offered = "Offered during "
         quartersMap = {'F': 'Fall ', 'W': 'Winter ', 'S': 'Spring ', 'E': 'Even school years (2020-21)', 'O': 'Odd school years (2019-2020)'}
@@ -74,101 +74,104 @@ class scuClass:
 
 class FourYearPlan:
     # All constructor arguments are hash maps except for creditsAlreadyDone
-    def __init__(self, inputMajor, inputCore, creditsAlreadyDone):
-        self.metadata = {'major': inputMajor, 'core': inputCore, 'doneClasses': [], 'credits': creditsAlreadyDone}
+    def __init__(self, required, creditsAlreadyDone, major):
+        self.metadata = {'required': required, 'doneClasses': [], 'credits': creditsAlreadyDone, 'major': major}
+        self.preferences = {'maxClassCount': 4, 'maxMajorClasses': 2, 'maxCoreClasses': 2}
         self.quarters = ["F","W","S","F","W","S","F","W","S","F","W","S"]
 
     def completeClass(self, cID):
-        maps = ['major', 'core']
-        for key in maps:
-            if cID in self.metadata[key]:
-                self.metadata['doneClasses'].append(cID)
-                self.metadata['credits'] += self.metadata[key][cID].getCredits()
+        if cID in self.metadata['required']:
+            self.metadata['doneClasses'].append(cID)
+            self.metadata['credits'] += self.metadata['required'][cID].getCredits()
 
     def getClass(self, cID): # scuClass return value
-        maps = ['major', 'core']
-        for key in maps:
-            if cID in self.metadata[key]:
-                return self.metadata[key][cID]
+        if cID in self.metadata['required']:
+            return self.metadata['required'][cID]
 
-    # not sure if logic is correct, especially any condition
     def feasible(self, cID, quarter, year):
-        if DEBUG_MODE is True: print("feasible(), cID:", cID)
-        if DEBUG_MODE is True: print("feasible(), quarter:", quarter)
-        if DEBUG_MODE is True: print("feasible(), year:", year)
-        if DEBUG_MODE is True: print("feasible(), self.metadata['doneClasses']:", self.metadata['doneClasses'])
-        if DEBUG_MODE is True: print("feasible(), self.getClass(cID).getPrereqs():", self.getClass(cID).getPrereqs())
+        if VERBOSE_MODE is True: print("feasible(), cID:", cID)
+        if VERBOSE_MODE is True: print("feasible(), quarter:", quarter)
+        if VERBOSE_MODE is True: print("feasible(), year:", year)
+        if VERBOSE_MODE is True: print("feasible(), self.metadata['doneClasses']:", self.metadata['doneClasses'])
+        if VERBOSE_MODE is True: print("feasible(), self.getClass(cID).getPrereqs():", self.getClass(cID).getPrereqs())
         if cID in self.metadata['doneClasses']:
-            if DEBUG_MODE is True: print("feasible() return False because class is done")
+            if VERBOSE_MODE is True: print("feasible() return False because class is done")
             return False
         if any(prereq not in self.metadata['doneClasses'] for prereq in self.getClass(cID).getPrereqs()):
-            if DEBUG_MODE is True: print("feasible() return False because prereqs not met")
+            if VERBOSE_MODE is True: print("feasible() return False because prereqs not met")
             return False
-        if DEBUG_MODE is True: print("feasible() return", self.getClass(cID).available(quarter, year))
+        if VERBOSE_MODE is True: print("feasible() return", self.getClass(cID).available(quarter, year))
         return self.getClass(cID).available(quarter, year)
 
     def planComplete(self):
-        maps = ['major', 'core']
         if self.metadata['credits'] < 175:
-            if DEBUG_MODE is True: print("planComplete() return False because credits under 175")
+            if VERBOSE_MODE is True: print("planComplete() return False because credits under 175")
             return False
-        for key in maps:
-            for cID in self.metadata[key]:
-                if cID not in self.metadata['doneClasses']:
-                    if DEBUG_MODE is True: print("planComplete() return False because", cID, "not yet taken")
-                    return False
-        if DEBUG_MODE is True: print("planComplete() return True")
+        for cID in self.metadata['required']:
+            if cID not in self.metadata['doneClasses']:
+                if VERBOSE_MODE is True: print("planComplete() return False because", cID, "not yet taken")
+                return False
+        if VERBOSE_MODE is True: print("planComplete() return True")
+        return True
+
+    def preferenceMet(self, quarterMap, satisfiesKey):
+        keyMap = {'classCount': 'maxClassCount', 'majorClasses': 'maxMajorClasses', 'coreClasses': 'maxCoreClasses'}
+        if quarterMap[satisfiesKey] >= self.preferences[keyMap[satisfiesKey]]:
+            return False
+        return True
+
+    def allPreferencesMet(self, quarterMap):
+        keyMap = {'classCount': 'maxClassCount', 'majorClasses': 'maxMajorClasses', 'coreClasses': 'maxCoreClasses'}
+        for key, value in keyMap.items():
+            if quarterMap[key] < self.preferences[value]:
+                return False
         return True
 
     def buildPlan(self, year):
         plan = []
         currentYear = -1
         quarter = -1
-        maxClassCount = 4
         terms = ['Fall', 'Winter', 'Spring']
-        maps = ['major', 'core']
         while not self.planComplete():
             quarter += 1
             if quarter % 3 == 0:
                 quarter = 0
                 currentYear += 1
                 academicYear = str(year) + '-' + str(year + 1)
-                if DEBUG_MODE is True: print("buildPlan(), currentYear:", currentYear)
-                if DEBUG_MODE is True: print("buildPlan(), quarter:", quarter)
-                if DEBUG_MODE is True: print("buildPlan(), academicYear:", academicYear)
+                if VERBOSE_MODE is True: print("buildPlan(), currentYear:", currentYear)
+                if VERBOSE_MODE is True: print("buildPlan(), quarter:", quarter)
+                if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
                 plan.append({'year': academicYear, 'yearSchedule': []})
-                if DEBUG_MODE is True: print("Current plan:", plan)
+                if VERBOSE_MODE is True: print("Current plan:", plan)
             if quarter % 3 == 1:
                 year += 1
             plan[currentYear]['yearSchedule'].append({'quarter': terms[quarter], 'classes': []})
-            classCount = 0
-            balanceCount = 0
-            for key in maps:
-                if key == 'core':
-                    balanceCount = 0
-                for cID in self.metadata[key]:
-                    if self.feasible(cID, terms[quarter][0], year) and (classCount < maxClassCount):
-                        if DEBUG_MODE is True: print("buildPlan(), appending", cID, "to plan")
-                        prereqs = self.metadata[key][cID].getPrereqs()
-                        if not prereqs:
-                            prereqs = None
-                        plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata[key][cID].getCredits()})
-                        self.completeClass(cID)
-                        classCount += 1
-                        balanceCount += 1
-                    # in original c++ code this next if statement is in the beginning for emphases
-                    if balanceCount >= 2:
-                        break
-            if DEBUG_MODE is True: print("Current plan (end of while):", plan)
+            quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
+            satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses'}
+            for cID in self.metadata['required']:
+                satisfies = self.metadata['required'][cID].getSatisfies()
+                if self.feasible(cID, terms[quarter][0], year) and self.preferenceMet(quarterMap, satisfiesMap[satisfies]):
+                    if VERBOSE_MODE is True: print("buildPlan(), appending", cID, "to plan")
+                    prereqs = self.metadata['required'][cID].getPrereqs()
+                    if not prereqs:
+                        prereqs = None
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits()})
+                    self.completeClass(cID)
+                    quarterMap['classCount'] += 1
+                    if satisfies in satisfiesMap:
+                        quarterMap[satisfiesMap[satisfies]] += 1
+                if self.allPreferencesMet(quarterMap):
+                    break
+            if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
             if currentYear > 30:
-                if DEBUG_MODE is True: print("Cannot build plan. Exiting program.")
+                if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
                 sys.exit(1)
-        if DEBUG_MODE is True: print("buildPlan(): Plan complete!")
+        if VERBOSE_MODE is True: print("buildPlan(): Plan complete!")
         return plan
 
-def buildFourYearPlan(majorMap, coreMap, prevCompletedClassesMap, creditsCompleted):
+def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major):
     year = 2019
-    fourYearPlan = FourYearPlan(majorMap, coreMap, creditsCompleted)
+    fourYearPlan = FourYearPlan(requiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
     return fourYearPlan.buildPlan(year)
@@ -207,7 +210,7 @@ def replaceDashesWithSpacesInList(itemList):
         return itemList
 
 # Initialize Student INSERT SQL statement
-def sqlFromSurvey(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, classes):
+def sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, classes):
     try:
         query = ["INSERT INTO Student (StudentID, QuartersCompleted, MaxQuarters, MaxUnits, MajorEmphasis) VALUES (" + str(studentID) + ", " + str(quartersCompleted) + ", " + str(maxQuarters) + ", " + str(maxUnits) + ", \'" + majorAndEmphasis + "\');"]
         numberOfClasses = len(classes)
@@ -217,6 +220,18 @@ def sqlFromSurvey(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndE
         return query
     except:
         raise Exception("Could not generate SQL INSERT INTO statements")
+
+def initClassObj(queriedClass):
+    classID = queriedClass[0]
+    className = queriedClass[1]
+    classSatisfies = queriedClass[2]
+    quartersOffered = queriedClass[3]
+    creditGiven = queriedClass[4]
+    return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven)
+
+def queryPrereqs(queriedClass):
+    classID = queriedClass[0]
+    return "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
 
 def getMysqlConn():
     try:
@@ -303,7 +318,7 @@ def schedule():
         print(aClass)
 
 #   # Execute insert commands to MySQL
-#   sqlCommands = sqlFromSurvey(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, allClassesTaken)
+#   sqlCommands = sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, allClassesTaken)
 #   print("\nSQL commands:")
 #   for sqlCommand in sqlCommands:
 #       print(sqlCommand)
@@ -314,53 +329,33 @@ def schedule():
 #   print("\nSQL commands committed to database")
 
     # Query major classes and write to file
-    majorMap = {}
-    coreMap = {}
+    requiredMap = {}
     doneClassesMap = {}
     creditsCompleted = 0
-    queryMajorClasses = "SELECT a.CourseID, CourseName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + majorAndEmphasis + "\';"
-    cur.execute(queryMajorClasses)
-    queriedMajorClasses = cur.fetchall()
+    queryClasses = "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + majorAndEmphasis + "\' OR MajorName = \'Core\';"
+    cur.execute(queryClasses)
+    queriedClasses = cur.fetchall()
 
     # Get two random emphasis classes lol
-    queryTwoEmphasisClasses = "SELECT a.CourseID, CourseName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE a.CourseID = \'CSCI 168\' OR a.CourseID = \'COEN 166 and L\';"
+    queryTwoEmphasisClasses = "SELECT a.CourseID, CourseName, \'" + majorAndEmphasis + "\', QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE a.CourseID = \'CSCI 168\' OR a.CourseID = \'COEN 166 and L\';"
     cur.execute(queryTwoEmphasisClasses)
-    queriedMajorClasses += cur.fetchall()
+    queriedClasses += cur.fetchall()
 
-    for aClass in queriedMajorClasses:
+    for aClass in queriedClasses:
         classID = aClass[0]
-        creditGiven = aClass[3]
-        classObj = scuClass(classID, aClass[1], majorAndEmphasis, aClass[2], creditGiven)
-        queryPrereqs = "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
-        cur.execute(queryPrereqs)
+        if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
+        creditGiven = aClass[4]
+        classObj = initClassObj(aClass)
+        cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
-        majorMap[classID] = classObj
+        requiredMap[classID] = classObj
         if classID in allClassesTaken:
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
 
-    # Query core classes and write to file
-    queryCoreClasses = "SELECT a.CourseID, CourseName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'Core\';"
-    cur.execute(queryCoreClasses)
-    queriedCoreClasses = cur.fetchall()
-
-    for aClass in queriedCoreClasses:
-        classID = aClass[0]
-        creditGiven = aClass[3]
-        classObj = scuClass(classID, aClass[1], "Core", aClass[2], creditGiven)
-        queryPrereqs = "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
-        cur.execute(queryPrereqs)
-        queriedPrereqs = cur.fetchall()
-        for prereq in queriedPrereqs:
-            classObj.pushPreReq(prereq[0])
-        coreMap[classID] = classObj
-        if classID in allClassesTaken:
-            doneClassesMap[classID] = classObj
-            creditsCompleted += creditGiven
-
-    fourYearPlan = buildFourYearPlan(majorMap, coreMap, doneClassesMap, creditsCompleted)
+    fourYearPlan = buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, majorAndEmphasis)
 
     # Close connection to database
     cur.close()
