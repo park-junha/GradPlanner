@@ -6,13 +6,6 @@ import pymysql
 
 app = Flask(__name__)
 
-# Paths to JSON files containing survey questions and options
-surveysPath = 'setup/surveyQuestionJsons'
-csciEmphasesJson = surveysPath + '/csciEmphases.json'
-# prefersMajorClassesOnlyJson = surveysPath + '/prefersMajorClassesOnly.json'
-csciMajorReqsJson = surveysPath + '/csciMajorReqs.json'
-coreReqsJson = surveysPath + '/coreReqs.json'
-
 # Enable to print more info to console log
 VERBOSE_MODE = False
 
@@ -359,15 +352,6 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
 @app.route("/home")
 def index():
     return render_template('index.html')
-
-# Survey page
-@app.route("/survey")
-def survey():
-    csciEmphases = getJson(csciEmphasesJson)
-    csciMajorReqs = getJson(csciMajorReqsJson)
-    coreReqs = getJson(coreReqsJson)
-
-    return render_template('survey.html', csciEmphases=csciEmphases, csciMajorReqs=csciMajorReqs, coreReqs=coreReqs)
 
 # Input page (new survey page)
 @app.route("/selectmajor")
