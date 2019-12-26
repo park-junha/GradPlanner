@@ -198,6 +198,30 @@ def replaceDashesWithSpaces(item):
         print("Dashes of item could not be replaced")
         return item
 
+# Replace spaces with dashes in an item
+def replaceSpacesWithDashes(item):
+    try:
+        return item.replace(' ','-')
+    except:
+        print("Spaces of item could not be replaced")
+        return item
+
+# Replace commas with periods in an item
+def replaceCommasWithPeriods(item):
+    try:
+        return item.replace(',','.')
+    except:
+        print("Could not replace commas of item")
+        return item
+
+# Replace periods with commas in an item
+def replacePeriodsWithCommas(item):
+    try:
+        return item.replace('.',',')
+    except:
+        print("Could not replace periods of item")
+        return item
+
 # Replace dashes with spaces in a list
 def replaceDashesWithSpacesInList(itemList):
     try:
@@ -222,16 +246,24 @@ def sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEm
         raise Exception("Could not generate SQL INSERT INTO statements")
 
 def initClassObj(queriedClass):
-    classID = queriedClass[0]
-    className = queriedClass[1]
-    classSatisfies = queriedClass[2]
-    quartersOffered = queriedClass[3]
-    creditGiven = queriedClass[4]
-    return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven)
+    try:
+        classID = queriedClass[0]
+        className = queriedClass[1]
+        classSatisfies = queriedClass[2]
+        quartersOffered = queriedClass[3]
+        creditGiven = queriedClass[4]
+        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven)
+    except:
+        print("Could not initialize scuClass object from query tuple")
+        raise Exception("initClassObj(): Could not create scuClass object")
 
 def queryPrereqs(queriedClass):
-    classID = queriedClass[0]
-    return "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
+    try:
+        classID = queriedClass[0]
+        return "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
+    except:
+        print("Could not generate prerequisites query for class")
+        raise Exception("queryPrereqs(): Could not generate query")
 
 def getMysqlConn():
     try:
@@ -257,6 +289,70 @@ def getMysqlConn():
     except:
         raise Exception("Could not connect to MySQL server.")
 
+# Query supported majors
+def queryMajors():
+    return "SELECT MajorName FROM MajornEmphasis WHERE MajorName != \'Core\';"
+
+# Query requisites of major
+def queryClasses(major):
+    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\';"
+
+# Create HTML id element for a string
+def createId(item):
+    item_id = replaceCommasWithPeriods(item)
+    item_id = replaceSpacesWithDashes(item_id)
+    return item_id
+
+# Translate HTML id element for a string
+def translateId(item):
+    item_id = replacePeriodsWithCommas(item)
+    item_id = replaceDashesWithSpaces(item_id)
+    return item_id
+
+# Format queried majors to json
+def jsonifyMajors(queriedMajors):
+    majors = {"question": "Choose your major.", "options": [] }
+    for major in queriedMajors:
+        optionToAppend = {}
+        majorName = major[0]
+        optionToAppend["name"] = majorName
+        optionToAppend["id"] = createId(majorName)
+        majors["options"].append(optionToAppend)
+    return majors
+
+# Format queried classes to json
+def jsonifyClasses(queriedClasses):
+    classes = {"question": "Select all classes you've completed.", "options": [ [], [], [] ] }
+    columnCounter = 0
+    for item in queriedClasses:
+        optionToAppend = {}
+        classId = item[0]
+        optionToAppend["name"] = classId + ": " + item[1]
+        optionToAppend["id"] = createId(classId)
+        classes["options"][columnCounter].append(optionToAppend)
+        columnCounter = (columnCounter + 1) % len(classes["options"])
+    return classes
+
+# Build a four year plan
+def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
+    requiredMap = {}
+    doneClassesMap = {}
+    creditsCompleted = 0
+    for aClass in queriedClasses:
+        classID = aClass[0]
+        if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
+        creditGiven = aClass[4]
+        classObj = initClassObj(aClass)
+        cur.execute(queryPrereqs(aClass))
+        queriedPrereqs = cur.fetchall()
+        for prereq in queriedPrereqs:
+            classObj.pushPreReq(prereq[0])
+        requiredMap[classID] = classObj
+        if classID in allClassesTaken:
+            doneClassesMap[classID] = classObj
+            creditsCompleted += creditGiven
+    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major)
+
 # Home page
 @app.route("/")
 @app.route("/index")
@@ -273,6 +369,66 @@ def survey():
 
     return render_template('survey.html', csciEmphases=csciEmphases, csciMajorReqs=csciMajorReqs, coreReqs=coreReqs)
 
+# Input page (new survey page)
+@app.route("/selectmajor")
+def selectMajor():
+    # Connect to MySQL
+    db = getMysqlConn()
+    conn = db[0]
+    cur = db[1]
+
+    # Query all majors available in database
+    cur.execute(queryMajors())
+    queriedMajors = cur.fetchall()
+    questionMajors = jsonifyMajors(queriedMajors)
+
+    # Close connection to database
+    cur.close()
+    print("Cursor closed.")
+    conn.close()
+    print("Connection to database closed.")
+
+    return render_template('selectmajor.html', questionMajors=questionMajors)
+
+# Questionnaire after receiving major input
+@app.route("/selectrequisites")
+def selectRequisites():
+    # Connect to MySQL
+    db = getMysqlConn()
+    conn = db[0]
+    cur = db[1]
+
+    # Translate ID of input major to queryable item name
+    global userMajor
+    userMajor = translateId(request.args.get('major'))
+
+    # Query all requisites for major
+    cur.execute(queryClasses(userMajor))
+    queriedMajorClasses = cur.fetchall()
+    questionMajorClasses = jsonifyClasses(queriedMajorClasses)
+
+    # Query all core requirements
+    cur.execute(queryClasses("Core"))
+    queriedCores = cur.fetchall()
+    questionCores = jsonifyClasses(queriedCores)
+
+    print(queriedMajorClasses)
+    print(questionMajorClasses)
+    print(queriedCores)
+    print(questionCores)
+
+    # Store all queried tuples in global variable
+    global allQueriedClasses
+    allQueriedClasses = queriedMajorClasses + queriedCores
+
+    # Close connection to database
+    cur.close()
+    print("Cursor closed.")
+    conn.close()
+    print("Connection to database closed.")
+
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores)
+
 # Schedule page
 @app.route("/schedule")
 def schedule():
@@ -281,81 +437,14 @@ def schedule():
     conn = db[0]
     cur = db[1]
 
-    # Generate random student ID
-    # Currently only serves as an identifier for data entry
-    # No identifier uniqueness check currently implemented
-    studentID = random.randint(-1999999999,-1000000000)
-    print("Student ID (integer):", studentID)
+    global allQueriedClasses
+    global userMajor
 
-    # Get major and emphasis
-    major = "Computer-Science"
-    emphasis = request.args.get('csciEmphasis')
-
-    # Replace numberOfQuarters and maxUnits values with HTML values
-    quartersCompleted = 0
-    maxQuarters = 12
-    maxUnits = 19
-
-    # Preference on major/core classes only
-    classesPreferred = request.args.get('classPreferences')
-
-    # Return to survey page if no emphasis declared
-    # No error message is displayed currently
-    if emphasis == None:
-        return render_template('survey.html', csciEmphases=csciEmphases, csciMajorReqs=csciMajorReqs, coreReqs=coreReqs)
-    else:
-        majorAndEmphasis = concatenateMajorAndEmphasis(major, emphasis)
-
-    print("Major:", majorAndEmphasis)
-    print("Core/major preference:", classesPreferred)
-
-    # Initialize lists, replace dashes in names of classes with spaces
-    majorClassesTaken = replaceDashesWithSpacesInList(request.args.getlist('csciMajorReqsTaken'))
-    coresTaken = replaceDashesWithSpacesInList(request.args.getlist('coreReqsTaken'))
+    majorClassesTaken = replaceDashesWithSpacesInList(request.args.getlist('questionMajorClassesTaken'))
+    coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
-    print("\nAll classes taken:")
-    for aClass in allClassesTaken:
-        print(aClass)
 
-#   # Execute insert commands to MySQL
-#   sqlCommands = sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, allClassesTaken)
-#   print("\nSQL commands:")
-#   for sqlCommand in sqlCommands:
-#       print(sqlCommand)
-#       cur.execute(sqlCommand)
-
-#   # Commit commands to database
-#   conn.commit()
-#   print("\nSQL commands committed to database")
-
-    # Query major classes and write to file
-    requiredMap = {}
-    doneClassesMap = {}
-    creditsCompleted = 0
-    queryClasses = "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + majorAndEmphasis + "\' OR MajorName = \'Core\';"
-    cur.execute(queryClasses)
-    queriedClasses = cur.fetchall()
-
-    # Get two random emphasis classes lol
-    queryTwoEmphasisClasses = "SELECT a.CourseID, CourseName, \'" + majorAndEmphasis + "\', QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE a.CourseID = \'CSCI 168\' OR a.CourseID = \'COEN 166 and L\';"
-    cur.execute(queryTwoEmphasisClasses)
-    queriedClasses += cur.fetchall()
-
-    for aClass in queriedClasses:
-        classID = aClass[0]
-        if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
-        creditGiven = aClass[4]
-        classObj = initClassObj(aClass)
-        cur.execute(queryPrereqs(aClass))
-        queriedPrereqs = cur.fetchall()
-        for prereq in queriedPrereqs:
-            classObj.pushPreReq(prereq[0])
-        requiredMap[classID] = classObj
-        if classID in allClassesTaken:
-            doneClassesMap[classID] = classObj
-            creditsCompleted += creditGiven
-
-    fourYearPlan = buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, majorAndEmphasis)
+    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur)
 
     # Close connection to database
     cur.close()
@@ -364,6 +453,9 @@ def schedule():
     print("Connection to database closed.")
 
     return render_template('schedule.html', fourYearPlan=fourYearPlan)
+
+allQueriedMajors = None
+userMajor = None
 
 # Enable debugging when running
 if __name__ == '__main__':
