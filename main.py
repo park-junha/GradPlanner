@@ -76,6 +76,7 @@ class FourYearPlan:
         if cID in self.metadata['required']:
             self.metadata['doneClasses'].append(cID)
             self.metadata['credits'] += self.metadata['required'][cID].getCredits()
+            if VERBOSE_MODE is True: print("Total credits completed:", self.metadata['credits'])
 
     def getClass(self, cID): # scuClass return value
         if cID in self.metadata['required']:
@@ -98,7 +99,7 @@ class FourYearPlan:
 
     def planComplete(self):
         if self.metadata['credits'] < 175:
-            if VERBOSE_MODE is True: print("planComplete() return False because credits under 175")
+            if VERBOSE_MODE is True: print("planComplete() return False because credits:", self.metadata['credits'])
             return False
         for cID in self.metadata['required']:
             if cID not in self.metadata['doneClasses']:
@@ -140,7 +141,7 @@ class FourYearPlan:
                 year += 1
             plan[currentYear]['yearSchedule'].append({'quarter': terms[quarter], 'classes': []})
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
-            satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses'}
+            satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
             for cID in self.metadata['required']:
                 satisfies = self.metadata['required'][cID].getSatisfies()
                 if self.feasible(cID, terms[quarter][0], year) and self.preferenceMet(quarterMap, satisfiesMap[satisfies]):
@@ -315,7 +316,7 @@ def jsonifyMajors(queriedMajors):
 
 # Format queried classes to json
 def jsonifyClasses(queriedClasses):
-    classes = {"question": "Select all classes you've completed.", "options": [ [], [], [] ] }
+    classes = {"question": "Select all classes you've completed.", "options": [[],[],[]], "totalCredits": 0}
     columnCounter = 0
     for item in queriedClasses:
         optionToAppend = {}
@@ -324,6 +325,7 @@ def jsonifyClasses(queriedClasses):
         optionToAppend["id"] = createId(classId)
         classes["options"][columnCounter].append(optionToAppend)
         columnCounter = (columnCounter + 1) % len(classes["options"])
+        classes["totalCredits"] += item[4]
     return classes
 
 # Build a four year plan
@@ -331,10 +333,12 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
     requiredMap = {}
     doneClassesMap = {}
     creditsCompleted = 0
+    creditsInPlan = 0
     for aClass in queriedClasses:
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
+        creditsInPlan += creditGiven
         classObj = initClassObj(aClass)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
@@ -344,7 +348,26 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
         if classID in allClassesTaken:
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
+    numOfElectives = 0
+    while electiveCreditsNeeded(creditsInPlan, 175) > 0:
+        numOfElectives += 1
+        electiveKey = "Elective " + str(numOfElectives)
+        electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
+        requiredMap[electiveKey] = electiveObj
+        creditsInPlan += 4
     return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major)
+
+# Obtain number of additional elective credits needed
+def electiveCreditsNeeded(totalCredits, creditRequirement):
+    return creditRequirement - totalCredits
+
+# Generate message for credit total requisite satisfaction based on major/core classes needed
+def generateCreditsAlert(totalCredits):
+    creditRequirement = 175
+    message = "Total credits from above: " + str(totalCredits) + "."
+    if totalCredits < creditRequirement:
+        message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
+    return message
 
 # Home page
 @app.route("/")
@@ -396,10 +419,13 @@ def selectRequisites():
     queriedCores = cur.fetchall()
     questionCores = jsonifyClasses(queriedCores)
 
-    print(queriedMajorClasses)
-    print(questionMajorClasses)
-    print(queriedCores)
-    print(questionCores)
+    totalCredits = questionMajorClasses['totalCredits'] + questionCores['totalCredits']
+    creditsAlert = generateCreditsAlert(totalCredits)
+
+    if VERBOSE_MODE is True: print(queriedMajorClasses)
+    if VERBOSE_MODE is True: print(questionMajorClasses)
+    if VERBOSE_MODE is True: print(queriedCores)
+    if VERBOSE_MODE is True: print(questionCores)
 
     # Store all queried tuples in global variable
     global allQueriedClasses
@@ -411,7 +437,7 @@ def selectRequisites():
     conn.close()
     print("Connection to database closed.")
 
-    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores)
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert)
 
 # Schedule page
 @app.route("/schedule")
