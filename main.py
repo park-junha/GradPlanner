@@ -13,6 +13,7 @@ if any(arg in ['-v', '--verbose'] for arg in sys.argv):
     VERBOSE_MODE = True
 
 class scuClass:
+    # NEED TO MAKE SAT A LIST, NOT A SINGLE VARIABLE
     def __init__(self, cID = "", name = "", sat = "", quart = "", creds = 0):
         self.classInfo = {'classID': cID, 'fullName': name, 'satisfies': sat, 'quarters': quart, 'credits': creds}
         self.preReqs = []
@@ -149,7 +150,7 @@ class FourYearPlan:
                     prereqs = self.metadata['required'][cID].getPrereqs()
                     if not prereqs:
                         prereqs = None
-                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits()})
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
                     self.completeClass(cID)
                     quarterMap['classCount'] += 1
                     if satisfies in satisfiesMap:
