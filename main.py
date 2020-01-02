@@ -293,7 +293,7 @@ def queryMajors():
 
 # Query requisites of major
 def queryClasses(major):
-    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\';"
+    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\' ORDER BY b.RecommendedOrder ASC;"
 
 # Create HTML id element for a string
 def createId(item):
