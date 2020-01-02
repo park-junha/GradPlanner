@@ -128,6 +128,7 @@ class FourYearPlan:
         quarter = -1
         terms = ['Fall', 'Winter', 'Spring']
         while not self.planComplete():
+            enrolledClasses = []
             quarter += 1
             if quarter % 3 == 0:
                 quarter = 0
@@ -151,12 +152,14 @@ class FourYearPlan:
                     if not prereqs:
                         prereqs = None
                     plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
-                    self.completeClass(cID)
+                    enrolledClasses.append(cID)
                     quarterMap['classCount'] += 1
                     if satisfies in satisfiesMap:
                         quarterMap[satisfiesMap[satisfies]] += 1
                 if self.allPreferencesMet(quarterMap):
                     break
+            for cID in enrolledClasses:
+                self.completeClass(cID)
             if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
             if currentYear > 30:
                 if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
