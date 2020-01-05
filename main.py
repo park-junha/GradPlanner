@@ -12,6 +12,14 @@ VERBOSE_MODE = False
 if any(arg in ['-v', '--verbose'] for arg in sys.argv):
     VERBOSE_MODE = True
 
+# Set first command line argument as MySQL database password
+if len(sys.argv) == 2:
+    MYSQLPW = str(sys.argv[1])
+# Otherwise exit program
+else:
+    print("Usage: Enter password for MySQL server as 1st command line argument")
+    sys.exit(1)
+
 class scuClass:
     # NEED TO MAKE SAT A LIST, NOT A SINGLE VARIABLE
     def __init__(self, cID = "", name = "", sat = "", quart = "", creds = 0):
@@ -266,16 +274,19 @@ def queryPrereqs(queriedClass):
 def getMysqlConn():
     try:
         # MySQL database information
-        MYSQLHOST = 'localhost'
-        MYSQLUSER = 'root'
-        MYSQLDB = 'PlanToGrad'
-        MYSQLPW = None
+        MYSQLHOST = 'remotemysql.com'
+        MYSQLPORT = 3306
+        MYSQLUSER = 'ubxh2yqkZt'
+        MYSQLDB = 'ubxh2yqkZt'
+#       MYSQLPW = None
+
+        global MYSQLPW
 
         # MySQL connection
         print("Connecting to MySQL server...")
         conn = pymysql.connect( MYSQLHOST,
                                 user=MYSQLUSER,
-#                               port=MYSQLPORT,
+                                port=MYSQLPORT,
                                 passwd=MYSQLPW,
                                 db=MYSQLDB)
         print("Connected to MySQL server successfully.")

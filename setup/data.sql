@@ -1,4 +1,4 @@
-USE PlanToGrad;
+--  USE PlanToGrad;
 
 DELETE FROM MajornEmphasis;
 INSERT INTO MajornEmphasis
