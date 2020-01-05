@@ -22,9 +22,13 @@ else:
 
 class scuClass:
     # NEED TO MAKE SAT A LIST, NOT A SINGLE VARIABLE
-    def __init__(self, cID = "", name = "", sat = "", quart = "", creds = 0):
-        self.classInfo = {'classID': cID, 'fullName': name, 'satisfies': sat, 'quarters': quart, 'credits': creds}
+    def __init__(self, cID = "", name = "", sat = None, quart = "", creds = 0):
+        self.classInfo = {'classID': cID, 'fullName': name, 'quarters': quart, 'credits': creds}
         self.preReqs = []
+        if sat is None:
+            self.satisfies = []
+        else:
+            self.satisfies = [sat]
 
     def pushPreReq(self, cID):
         if VERBOSE_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
@@ -37,7 +41,7 @@ class scuClass:
         return self.classInfo['fullName']
 
     def getSatisfies(self):
-        return self.classInfo['satisfies']
+        return self.satisfies
 
     def getQuarters(self):
         return self.classInfo['quarters']
@@ -153,7 +157,8 @@ class FourYearPlan:
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
             satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
             for cID in self.metadata['required']:
-                satisfies = self.metadata['required'][cID].getSatisfies()
+                # Only stores first element from satisfies member of scuClass
+                satisfies = self.metadata['required'][cID].getSatisfies()[0]
                 if self.feasible(cID, terms[quarter][0], year) and self.preferenceMet(quarterMap, satisfiesMap[satisfies]):
                     if VERBOSE_MODE is True: print("buildPlan(), appending", cID, "to plan")
                     prereqs = self.metadata['required'][cID].getPrereqs()
