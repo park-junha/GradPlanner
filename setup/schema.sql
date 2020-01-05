@@ -1,4 +1,4 @@
-USE PlanToGrad;
+--  USE PlanToGrad;
 
 --  Drop Prereqs before Classes
 DROP TABLE IF EXISTS Prereqs;
