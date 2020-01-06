@@ -1,5 +1,9 @@
 --  USE PlanToGrad;
 
+--  Delete tables with foreign keys first
+DELETE FROM Prereqs;
+DELETE FROM MajorReqs;
+
 DELETE FROM MajornEmphasis;
 INSERT INTO MajornEmphasis
 (
@@ -698,7 +702,6 @@ VALUES
     0
 );
 
-DELETE FROM Prereqs;
 INSERT INTO Prereqs
 (
     PreReqName,
@@ -990,7 +993,6 @@ VALUES
     'Advanced Writing'
 );
 
-DELETE FROM MajorReqs;
 INSERT INTO MajorReqs
 (
     RecommendedOrder,

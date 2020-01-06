@@ -11,6 +11,7 @@ VERBOSE_MODE = False
 
 if any(arg in ['-v', '--verbose'] for arg in sys.argv):
     VERBOSE_MODE = True
+#VERBOSE_MODE = True
 
 # Set first command line argument as MySQL database password
 if len(sys.argv) == 2:
@@ -134,15 +135,35 @@ class FourYearPlan:
                 return False
         return True
 
-    def buildPlan(self, year):
+    def buildPlan(self, year, startQuarter):
         plan = []
-        currentYear = -1
-        quarter = -1
+        currentYear = 0
         terms = ['Fall', 'Winter', 'Spring']
+
+        # Set quarter based on startQuarter argument
+        try:
+            quarter = terms.index(startQuarter)
+        # Default to Fall if startQuarter is invalid
+        except:
+            print("startQuarter:", startQuarter, "is not valid. Defaulting to Fall.")
+            quarter = 0
+
+        # Set academic year (weird implementation)
+        if quarter == 0:
+            academicYear = str(year) + '-' + str(year + 1)
+        else:
+            academicYear = str(year-1) + '-' + str(year)
+
+        # Create a starting academic year in plan
+        plan.append({'year': academicYear, 'yearSchedule': []})
+
+        # Fill in empty quarters of the year if starting Winter or Spring
+        for emptyQuarter in range(quarter):
+            plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
+
         while not self.planComplete():
-            enrolledClasses = []
-            quarter += 1
-            if quarter % 3 == 0:
+            # Create a new academic year in the plan when starting in Fall
+            if quarter % 3 == 0 and quarter > 0:
                 quarter = 0
                 currentYear += 1
                 academicYear = str(year) + '-' + str(year + 1)
@@ -151,41 +172,67 @@ class FourYearPlan:
                 if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
                 plan.append({'year': academicYear, 'yearSchedule': []})
                 if VERBOSE_MODE is True: print("Current plan:", plan)
-            if quarter % 3 == 1:
-                year += 1
+
+            # Initialize list of enrolled classes for the quarter
+            enrolledClasses = []
+
+            # Initialize quarter object for the current quarter of the plan
             plan[currentYear]['yearSchedule'].append({'quarter': terms[quarter], 'classes': []})
+
+            # Hashmap for keeping track of how many classes enrolled for the quarter, separated by category
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
+
+            # Key-value pairs of what the class satisfies and the corresponding quarterMap key
             satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
+
+            # Go through all requisites to graduate
             for cID in self.metadata['required']:
                 # Only stores first element from satisfies member of scuClass
                 satisfies = self.metadata['required'][cID].getSatisfies()[0]
+
+                # Add class to plan if feasible and user preferences are met
                 if self.feasible(cID, terms[quarter][0], year) and self.preferenceMet(quarterMap, satisfiesMap[satisfies]):
+                    # Get pre-requisites of the class
                     if VERBOSE_MODE is True: print("buildPlan(), appending", cID, "to plan")
                     prereqs = self.metadata['required'][cID].getPrereqs()
                     if not prereqs:
                         prereqs = None
+                    # Append the class
                     plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
+                    # Add the class to the list of enrolled classes
                     enrolledClasses.append(cID)
+                    # Increment number of classes enrolled in the quarter
                     quarterMap['classCount'] += 1
+                    # Increment majorClasses or coreClasses in quarterMap, depending on which of those categories the class falls under
                     if satisfies in satisfiesMap:
                         quarterMap[satisfiesMap[satisfies]] += 1
+                # Break out of the for loop if all preferences for the quarter are met
                 if self.allPreferencesMet(quarterMap):
                     break
+            # Mark all enrolled classes for the quarter as complete
             for cID in enrolledClasses:
                 self.completeClass(cID)
             if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
             if currentYear > 30:
                 if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
                 sys.exit(1)
+            # Increment quarter by 1
+            quarter += 1
+            # Increment the year if Winter
+            if quarter % 3 == 1:
+                year += 1
         if VERBOSE_MODE is True: print("buildPlan(): Plan complete!")
+
+        # Fill in the remainder of the academic year with empty quarters
+        for emptyQuarter in range(quarter, len(terms)):
+            plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
         return plan
 
-def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major):
-    year = 2019
+def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
     fourYearPlan = FourYearPlan(requiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
-    return fourYearPlan.buildPlan(year)
+    return fourYearPlan.buildPlan(year, startQuarter)
 
 def getJson(jsonFileName):
     with open(jsonFileName, 'r') as data_f:
@@ -349,7 +396,7 @@ def jsonifyClasses(queriedClasses):
     return classes
 
 # Build a four year plan
-def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
+def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter, startYear):
     requiredMap = {}
     doneClassesMap = {}
     creditsCompleted = 0
@@ -375,7 +422,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur):
         electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
-    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major)
+    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed
 def electiveCreditsNeeded(totalCredits, creditRequirement):
@@ -384,7 +431,7 @@ def electiveCreditsNeeded(totalCredits, creditRequirement):
 # Generate message for credit total requisite satisfaction based on major/core classes needed
 def generateCreditsAlert(totalCredits):
     creditRequirement = 175
-    message = "Total credits from above: " + str(totalCredits) + "."
+    message = "Total credits from options: " + str(totalCredits) + "."
     if totalCredits < creditRequirement:
         message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
     return message
@@ -425,6 +472,12 @@ def selectRequisites():
     conn = db[0]
     cur = db[1]
 
+    # Quarters
+    terms = [{'name':'Fall','id':'Fall'}, {'name':'Winter','id':'Winter'}, {'name':'Spring','id':'Spring'}]
+
+    # Academic years
+    years = [{'name':'2019-2020','id':'2019'}, {'name':'2020-2021','id':'2020'}]
+
     # Translate ID of input major to queryable item name
     global userMajor
     userMajor = translateId(request.args.get('major'))
@@ -457,7 +510,7 @@ def selectRequisites():
     conn.close()
     print("Connection to database closed.")
 
-    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert)
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years)
 
 # Schedule page
 @app.route("/schedule")
@@ -474,7 +527,19 @@ def schedule():
     coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
 
-    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur)
+    startQuarter = request.args.get('startingQuarter')
+    startYear = int(request.args.get('academicYear'))
+
+    if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
+    if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
+
+    # Add current year by 1 if not Fall
+    if 'Fall' not in startQuarter:
+        startYear += 1
+
+    if VERBOSE_MODE is True: print("startYear:", startYear)
+
+    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear)
 
     # Close connection to database
     cur.close()
