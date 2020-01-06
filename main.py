@@ -134,25 +134,27 @@ class FourYearPlan:
                 return False
         return True
 
-    def buildPlan(self, year):
+    def buildPlan(self, year, startQuarter):
         plan = []
-        currentYear = -1
-        quarter = -1
+        currentYear = 0
         terms = ['Fall', 'Winter', 'Spring']
+        try:
+            quarter = terms.index(startQuarter)
+        except:
+            print("startQuarter:", startQuarter, "is not valid. Defaulting to Fall.")
+            quarter = 0
+
+        if quarter == 0:
+            academicYear = str(year) + '-' + str(year + 1)
+        else:
+            academicYear = str(year-1) + '-' + str(year)
+
+        plan.append({'year': academicYear, 'yearSchedule': []})
+        for emptyQuarter in range(quarter):
+            plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
+
         while not self.planComplete():
             enrolledClasses = []
-            quarter += 1
-            if quarter % 3 == 0:
-                quarter = 0
-                currentYear += 1
-                academicYear = str(year) + '-' + str(year + 1)
-                if VERBOSE_MODE is True: print("buildPlan(), currentYear:", currentYear)
-                if VERBOSE_MODE is True: print("buildPlan(), quarter:", quarter)
-                if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
-                plan.append({'year': academicYear, 'yearSchedule': []})
-                if VERBOSE_MODE is True: print("Current plan:", plan)
-            if quarter % 3 == 1:
-                year += 1
             plan[currentYear]['yearSchedule'].append({'quarter': terms[quarter], 'classes': []})
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
             satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
@@ -177,15 +179,28 @@ class FourYearPlan:
             if currentYear > 30:
                 if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
                 sys.exit(1)
+            quarter += 1
+            if quarter % 3 == 0:
+                quarter = 0
+                currentYear += 1
+                academicYear = str(year) + '-' + str(year + 1)
+                if VERBOSE_MODE is True: print("buildPlan(), currentYear:", currentYear)
+                if VERBOSE_MODE is True: print("buildPlan(), quarter:", quarter)
+                if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
+                plan.append({'year': academicYear, 'yearSchedule': []})
+                if VERBOSE_MODE is True: print("Current plan:", plan)
+            if quarter % 3 == 1:
+                year += 1
         if VERBOSE_MODE is True: print("buildPlan(): Plan complete!")
         return plan
 
 def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major):
-    year = 2019
+    year = 2020
+    startQuarter = "Winter"
     fourYearPlan = FourYearPlan(requiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
-    return fourYearPlan.buildPlan(year)
+    return fourYearPlan.buildPlan(year, startQuarter)
 
 def getJson(jsonFileName):
     with open(jsonFileName, 'r') as data_f:
