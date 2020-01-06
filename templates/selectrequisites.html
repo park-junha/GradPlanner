@@ -51,58 +51,77 @@
 
           <div class="requirements">
             <h4>{{ questionMajorClasses.question }}</h4>
-              <div class="card-columns d-flex justify-content-center">
-                {% for column in questionMajorClasses.options %}
-                  <div class="card survey_name">
-                    <div class="card-block">
-                      <div class="card-header">
-                        Course
-                      </div>
-                      <ul class="list-group list-group-flush">
-                        {% for class in column %}
-                          <li class="list-group-item">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="{{ class.id }}" name="questionMajorClassesTaken" value="{{ class.id }}">
-                              <label class="form-check-label" for="{{ class.id }}">
-                                {{ class.name }}
-                              </label>
-                            </div>
-                          </li>
-                        {% endfor %}
-                      </ul>
+            <div class="card-columns d-flex justify-content-center">
+              {% for column in questionMajorClasses.options %}
+                <div class="card survey_name">
+                  <div class="card-block">
+                    <div class="card-header">
+                      Major
                     </div>
+                    <ul class="list-group list-group-flush">
+                      {% for class in column %}
+                        <li class="list-group-item">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="{{ class.id }}" name="questionMajorClassesTaken" value="{{ class.id }}">
+                            <label class="form-check-label" for="{{ class.id }}">
+                              {{ class.name }}
+                            </label>
+                          </div>
+                        </li>
+                      {% endfor %}
+                    </ul>
                   </div>
-                {% endfor %}
-              </div>
-            </h4>
+                </div>
+              {% endfor %}
+            </div>
           </div>
 
           <div class="requirements">
             <h4>{{ questionCores.question }}</h4>
-              <div class="card-columns d-flex justify-content-center">
-                {% for column in questionCores.options %}
-                  <div class="card survey_name">
-                    <div class="card-block">
-                      <div class="card-header">
-                        Course
-                      </div>
-                      <ul class="list-group list-group-flush">
-                        {% for class in column %}
-                          <li class="list-group-item">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="{{ class.id }}" name="questionCoresTaken" value="{{ class.id }}">
-                              <label class="form-check-label" for="{{ class.id }}">
-                                {{ class.name }}
-                              </label>
-                            </div>
-                          </li>
-                        {% endfor %}
-                      </ul>
+            <div class="card-columns d-flex justify-content-center">
+              {% for column in questionCores.options %}
+                <div class="card survey_name">
+                  <div class="card-block">
+                    <div class="card-header">
+                      Core
                     </div>
+                    <ul class="list-group list-group-flush">
+                      {% for class in column %}
+                        <li class="list-group-item">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="{{ class.id }}" name="questionCoresTaken" value="{{ class.id }}">
+                            <label class="form-check-label" for="{{ class.id }}">
+                              {{ class.name }}
+                            </label>
+                          </div>
+                        </li>
+                      {% endfor %}
+                    </ul>
                   </div>
-                {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div>
+            <h4>Select the starting term and year</h4>
+            <div class="card survey_name">
+              <div class="card-header">
+                Term
               </div>
-            </h4>
+              <ul class="list-group list-group-flush">
+                {% for option in terms %}
+                  <li class="list-group-item">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="startingQuarter" id="{{ option.id     }}" value="{{ option.id }}">
+                      <label class="form-check-label" for="{{ option.id }}">
+                        {{ option.name }}
+                      </label>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
           </div>
 
       <div>
