@@ -154,6 +154,15 @@ class FourYearPlan:
             plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
 
         while not self.planComplete():
+            if quarter % 3 == 0 and quarter > 0:
+                quarter = 0
+                currentYear += 1
+                academicYear = str(year) + '-' + str(year + 1)
+                if VERBOSE_MODE is True: print("buildPlan(), currentYear:", currentYear)
+                if VERBOSE_MODE is True: print("buildPlan(), quarter:", quarter)
+                if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
+                plan.append({'year': academicYear, 'yearSchedule': []})
+                if VERBOSE_MODE is True: print("Current plan:", plan)
             enrolledClasses = []
             plan[currentYear]['yearSchedule'].append({'quarter': terms[quarter], 'classes': []})
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
@@ -180,18 +189,12 @@ class FourYearPlan:
                 if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
                 sys.exit(1)
             quarter += 1
-            if quarter % 3 == 0:
-                quarter = 0
-                currentYear += 1
-                academicYear = str(year) + '-' + str(year + 1)
-                if VERBOSE_MODE is True: print("buildPlan(), currentYear:", currentYear)
-                if VERBOSE_MODE is True: print("buildPlan(), quarter:", quarter)
-                if VERBOSE_MODE is True: print("buildPlan(), academicYear:", academicYear)
-                plan.append({'year': academicYear, 'yearSchedule': []})
-                if VERBOSE_MODE is True: print("Current plan:", plan)
             if quarter % 3 == 1:
                 year += 1
         if VERBOSE_MODE is True: print("buildPlan(): Plan complete!")
+
+        for emptyQuarter in range(quarter, len(terms)):
+            plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
         return plan
 
 def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major):
