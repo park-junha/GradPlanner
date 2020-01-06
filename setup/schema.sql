@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Prereqs
 
 CREATE TABLE IF NOT EXISTS MajorReqs
 (
+  RecommendedOrder INT NOT NULL,
   CourseID VARCHAR(255) NOT NULL,
   MajorName VARCHAR(255) NOT NULL,
   PRIMARY KEY (CourseID, MajorName),
