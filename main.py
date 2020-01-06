@@ -11,6 +11,7 @@ VERBOSE_MODE = False
 
 if any(arg in ['-v', '--verbose'] for arg in sys.argv):
     VERBOSE_MODE = True
+#VERBOSE_MODE = True
 
 # Set first command line argument as MySQL database password
 if len(sys.argv) == 2:
@@ -529,8 +530,14 @@ def schedule():
     startQuarter = request.args.get('startingQuarter')
     startYear = int(request.args.get('academicYear'))
 
-    if startQuarter is not 'Fall':
+    if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
+    if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
+
+    # Add current year by 1 if not Fall
+    if 'Fall' not in startQuarter:
         startYear += 1
+
+    if VERBOSE_MODE is True: print("startYear:", startYear)
 
     fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear)
 
