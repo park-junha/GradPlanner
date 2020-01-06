@@ -227,8 +227,7 @@ class FourYearPlan:
             plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
         return plan
 
-def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter):
-    year = 2020
+def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
     fourYearPlan = FourYearPlan(requiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
@@ -396,7 +395,7 @@ def jsonifyClasses(queriedClasses):
     return classes
 
 # Build a four year plan
-def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter):
+def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter, startYear):
     requiredMap = {}
     doneClassesMap = {}
     creditsCompleted = 0
@@ -422,7 +421,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
-    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter)
+    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed
 def electiveCreditsNeeded(totalCredits, creditRequirement):
@@ -475,6 +474,9 @@ def selectRequisites():
     # Quarters
     terms = [{'name':'Fall','id':'Fall'}, {'name':'Winter','id':'Winter'}, {'name':'Spring','id':'Spring'}]
 
+    # Academic years
+    years = [{'name':'2019-2020','id':'2019'}, {'name':'2020-2021','id':'2020'}]
+
     # Translate ID of input major to queryable item name
     global userMajor
     userMajor = translateId(request.args.get('major'))
@@ -507,7 +509,7 @@ def selectRequisites():
     conn.close()
     print("Connection to database closed.")
 
-    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms)
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years)
 
 # Schedule page
 @app.route("/schedule")
@@ -525,8 +527,12 @@ def schedule():
     allClassesTaken = majorClassesTaken + coresTaken
 
     startQuarter = request.args.get('startingQuarter')
+    startYear = int(request.args.get('academicYear'))
 
-    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter)
+    if startQuarter is not 'Fall':
+        startYear += 1
+
+    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear)
 
     # Close connection to database
     cur.close()
