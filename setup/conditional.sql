@@ -20,8 +20,8 @@ CSCIAlgReqs: BEGIN
         CourseID = 'MATH 176' OR
         CourseID = 'MATH 178' OR
         CourseID = 'MATH 101' OR
-        CourseID LIKE 'CSCI%' OR
-        CourseID LIKE 'COEN%'
+        CourseID LIKE 'CSCI 1##' OR
+        CourseID LIKE 'COEN 1##'
     ;
     IF ReqID = 'CSCI Emphasis IV' THEN
         SET ReqID = 'CSCI Emphasis V';
@@ -45,8 +45,8 @@ CSCIDataSciReqs: BEGIN
     FROM
         Classes
     WHERE
-        CourseID LIKE 'CSCI%' OR
-        CourseID LIKE 'COEN%'
+        CourseID LIKE 'CSCI 1##' OR
+        CourseID LIKE 'COEN 1##'
     ;
     IF ReqID = 'CSCI Emphasis IV' THEN
         SET ReqID = 'CSCI Emphasis V';
@@ -68,7 +68,7 @@ SELECT
 FROM
     Classes
 WHERE
-    CourseID LIKE 'CSCI%';
+    CourseID LIKE 'CSCI 1##';
 ;
 INSERT INTO ConditionalReqs
 (
@@ -83,8 +83,8 @@ SELECT
 FROM
     Classes
 WHERE
-    CourseID LIKE 'CSCI%' OR
-    CourseID LIKE 'COEN%'
+    CourseID LIKE 'CSCI 1##' OR
+    CourseID LIKE 'COEN 1##'
 ;
 
 --  CSCI Security Emphasis
@@ -104,8 +104,8 @@ CSCISecurityReqs: BEGIN
         Classes
     WHERE
         CourseID = 'MATH 175' OR
-        CourseID LIKE 'CSCI%' OR
-        CourseID LIKE 'COEN%'
+        CourseID LIKE 'CSCI 1##' OR
+        CourseID LIKE 'COEN 1##'
     ;
     IF ReqID = 'CSCI Emphasis IV' THEN
         SET ReqID = 'CSCI Emphasis V';
@@ -130,11 +130,45 @@ MATHGroups: BEGIN
         'Mathematics';
     FROM
         Classes
-    WHERE
-        --  Group A1
-        CourseID = 'MATH 102' OR
-        CourseID = 'MATH 105' OR
-        CourseID = 'MATH 153'
+    WHERE CASE
+        WHEN ReqID = 'MATH Group A1'
+        THEN
+        (
+            CourseID = 'MATH 102' OR
+            CourseID = 'MATH 105' OR
+            CourseID = 'MATH 153'
+        )
+        WHEN ReqID = 'MATH Group A2'
+        THEN
+        (
+            CourseID = 'MATH 103' OR
+            CourseID = 'MATH 111' OR
+        )
+        WHEN ReqID = 'MATH Group A3'
+        THEN
+        (
+            CourseID = 'MATH 101' OR
+            CourseID = 'MATH 113' OR
+            CourseID = 'MATH 122' OR
+            CourseID = 'MATH 125' OR
+            CourseID = 'MATH 144' OR
+            CourseID = 'MATH 155' OR
+            CourseID = 'MATH 165' OR
+            CourseID = 'MATH 166' OR
+            CourseID = 'MATH 174' OR
+            CourseID = 'MATH 176' OR
+            CourseID = 'MATH 177'
+        )
+        WHEN ReqID LIKE 'MATH Group B%'
+        THEN
+        (
+            (
+                CourseID LIKE 'MATH 1##' OR
+                CourseID LIKE 'CSCI 1##'
+            ) AND
+            CourseID != 'MATH 100'
+        )
+        END
     ;
     IF GroupNum < 4 THEN
         SET GroupNum = GroupNum + 1;

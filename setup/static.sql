@@ -1213,7 +1213,7 @@ VALUES
     'MATH 155'
 ),
 (
-    'CSCI 10',
+    'CSCI 10 and L',
     'MATH 166'
 ),
 (
@@ -1711,7 +1711,7 @@ VALUES
 ),
 (
     10,
-    'CSCI 10 & L',
+    'CSCI 10 and L',
     'Mathematics'
 ),
 (

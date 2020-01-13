@@ -5,15 +5,6 @@ DROP TABLE IF EXISTS Prereqs;
 DROP TABLE IF EXISTS MajorReqs;
 DROP TABLE IF EXISTS ConditionalReqs;
 
---  Drop FourYearPlan before Classes, Student
-DROP TABLE IF EXISTS FourYearPlan;
-
---  Drop CoursesTaken before Classes, Student
-DROP TABLE IF EXISTS CoursesTaken;
-
---  Drop Student before MajornEmphasis
-DROP TABLE IF EXISTS Student;
-
 DROP TABLE IF EXISTS MajornEmphasis;
 CREATE TABLE IF NOT EXISTS MajornEmphasis
 (
@@ -65,36 +56,3 @@ CREATE TABLE IF NOT EXISTS ConditionalReqs
     FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
     FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
 );
-
---  CREATE TABLE IF NOT EXISTS Student
---  (
---    StudentID INT NOT NULL,
---    Password INT,
---    ClassDifficulty INT,
---    QuartersCompleted INT NOT NULL,
---    MaxQuarters INT NOT NULL,
---    MaxUnits INT NOT NULL,
---    MajorEmphasis VARCHAR(255) NOT NULL,
---    PRIMARY KEY (StudentID),
---    FOREIGN KEY (MajorEmphasis) REFERENCES MajornEmphasis(MajorName)
---  );
-
---  CREATE TABLE IF NOT EXISTS FourYearPlan
---  (
---    PlanID INT NOT NULL,
---    GradDate DATE,
---    CourseID VARCHAR(255) NOT NULL,
---    StudentID INT NOT NULL,
---    PRIMARY KEY (PlanID),
---    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
---    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
---  );
-
---  CREATE TABLE IF NOT EXISTS CoursesTaken
---  (
---    CourseID VARCHAR(255) NOT NULL,
---    StudentID INT NOT NULL,
---    PRIMARY KEY (CourseID, StudentID),
---    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
---    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
---  );

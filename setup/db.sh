@@ -41,6 +41,7 @@ elif [[ $# -eq 1 ]]; then
     -c | --conditional-only)
         logon < conditional.sql;
         exit 0
+        ;;
     *)
         usage;
         exit 1
