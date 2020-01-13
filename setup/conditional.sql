@@ -117,7 +117,7 @@ END CSCISecurityReqs;
 SET GroupNum = 1;
 SET GroupLetter = 'A';
 MATHGroups: BEGIN
-    SET ReqID = CONCAT(GroupLetter, GroupNum);
+    SET ReqID = CONCAT('MATH Group ', GroupLetter, GroupNum);
     INSERT INTO ConditionalReqs
     (
         ConditionalID,
