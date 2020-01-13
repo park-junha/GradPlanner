@@ -14,7 +14,7 @@ if any(arg in ['-v', '--verbose'] for arg in sys.argv):
 #VERBOSE_MODE = True
 
 # Set first command line argument as MySQL database password
-if len(sys.argv) == 2:
+if len(sys.argv) >= 2:
     MYSQLPW = str(sys.argv[1])
 # Otherwise exit program
 else:
@@ -554,4 +554,5 @@ userMajor = None
 
 # Enable debugging when running
 if __name__ == '__main__':
+    if VERBOSE_MODE is True: print("VERBOSE_MODE is on!")
     app.run(debug=True)
