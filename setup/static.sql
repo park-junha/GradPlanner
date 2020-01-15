@@ -1,5 +1,3 @@
---  USE PlanToGrad;
-
 --  Delete tables with foreign keys first
 DELETE FROM Prereqs;
 DELETE FROM MajorReqs;
@@ -10,7 +8,7 @@ INSERT INTO MajornEmphasis
     MajorName,
     RequiredGPA,
     RequiredCredits,
-    MinEmpClasses,
+    MinConditionalClasses,
     MinMajorClasses
 )
 VALUES
@@ -18,29 +16,36 @@ VALUES
     'Computer Science, Algorithms and Complexity Emphasis',
     2,
     175,
-    5,
+    2,
     20
 ),
 (
     'Computer Science, Data Science Emphasis', 
     2,
     175,
-    5,
+    2,
     20
 ),
 (
     'Computer Science, Software Emphasis',
     2,
     175,
-    5,
+    2,
     20
 ),
 (
     'Computer Science, Security Emphasis',
     2,
     175,
-    5,
+    2,
     20
+),
+(
+    'Mathematics',
+    2,
+    175,
+    7,
+    18
 ),
 (
     'Core',
@@ -462,6 +467,23 @@ VALUES
     1
 ),
 (
+    'Differential Equations',
+    'MATH 22',
+    'FWS',
+    4,
+    0,
+    1
+),
+--  Only one of MATH 22, 23, or AMTH 106 may be taken for credit
+(
+    'Series and Differential Equations',
+    'MATH 23',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
     'Discrete Mathematics',
     'MATH 51',
     'FWS',
@@ -494,6 +516,46 @@ VALUES
     1
 ),
 (
+    'Advanced Calculus',
+    'MATH 102',
+    'F',
+    5,
+    0,
+    1
+),
+(
+    'Advanced Linear Algebra',
+    'MATH 103',
+    'F',
+    5,
+    0,
+    1
+),
+(
+    'Theory of Functions of a Complex Variable',
+    'MATH 105',
+    'WE',
+    5,
+    0,
+    0
+),
+(
+    'Abstract Algebra I',
+    'MATH 111',
+    'WE',
+    5,
+    0,
+    1
+),
+(
+    'Topology',
+    'MATH 113',
+    'SO',
+    5,
+    0,
+    1
+),
+(
     'Probability and Statistics I',
     'MATH 122',
     'FW',
@@ -505,6 +567,62 @@ VALUES
     'Probability and Statistics II',
     'MATH 123',
     'WS',
+    5,
+    0,
+    1
+),
+(
+    'Mathematical Finance',
+    'MATH 125',
+    'S',
+    5,
+    0,
+    1
+),
+(
+    'Partial Differential Equations',
+    'MATH 144',
+    'SO',
+    5,
+    0,
+    1
+),
+(
+    'Intermediate Analysis I',
+    'MATH 153',
+    'WO',
+    5,
+    0,
+    1
+),
+(
+    'Ordinary Differential Equations',
+    'MATH 155',
+    'SE',
+    5,
+    0,
+    1
+),
+(
+    'Linear Programming',
+    'MATH 165',
+    'WO',
+    5,
+    0,
+    0
+),
+(
+    'Numerical Analysis',
+    'MATH 166',
+    'W',
+    5,
+    0,
+    1
+),
+(
+    'Differential Geometry',
+    'MATH 174',
+    'SE',
     5,
     0,
     1
@@ -542,6 +660,22 @@ VALUES
     0
 ),
 (
+    'Physics for Scientists and Engineers I',
+    'PHYS 31',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+    'Physics for Scientists and Engineers II',
+    'PHYS 32',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
     'CSCI Emphasis IV',
     'CSCI Emphasis IV',
     'FWS',
@@ -552,6 +686,62 @@ VALUES
 (
     'CSCI Emphasis V',
     'CSCI Emphasis V',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group A1',
+    'MATH Group A1',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group A2',
+    'MATH Group A2',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group A3',
+    'MATH Group A3',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group B1',
+    'MATH Group B1',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group B2',
+    'MATH Group B2',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group B3',
+    'MATH Group B3',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'MATH Group B4',
+    'MATH Group B4',
     'FWS',
     5,
     0,
@@ -965,6 +1155,80 @@ VALUES
     'MATH 52'
 ),
 (
+    'MATH 14',
+    'MATH 102'
+),
+(
+    'MATH 51',
+    'MATH 102'
+),
+(
+    'MATH 53',
+    'MATH 102'
+),
+(
+    'MATH 53',
+    'MATH 103'
+),
+(
+    'MATH 52',
+    'MATH 111'
+),
+(
+    'MATH 53',
+    'MATH 111'
+),
+(
+    'MATH 14',
+    'MATH 113'
+),
+(
+    'MATH 51',
+    'MATH 113'
+),
+(
+    'MATH 53',
+    'MATH 125'
+),
+(
+    'MATH 122',
+    'MATH 125'
+),
+--  Prereq missing in catalog, found on CourseAvail Fall 2019
+(
+    'MATH 14',
+    'MATH 144'
+),
+(
+    'MATH 51',
+    'MATH 153'
+),
+--  either 102 or 105
+(
+    'MATH 102',
+    'MATH 153'
+),
+(
+    'MATH 53',
+    'MATH 155'
+),
+(
+    'CSCI 10 and L',
+    'MATH 166'
+),
+(
+    'MATH 53',
+    'MATH 166'
+),
+(
+    'MATH 53',
+    'MATH 174'
+),
+(
+    'PHYS 31',
+    'PHYS 32'
+),
+(
     'Language 1',
     'Language 2'
 ),
@@ -1006,22 +1270,22 @@ VALUES
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
 (
-    3,
+    2,
     'CSCI 60 and L',
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
 (
-    5,
+    3,
     'CSCI 61',
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
 (
-    2,
+    4,
     'MATH 11',
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
 (
-    4,
+    5,
     'MATH 12',
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
@@ -1106,22 +1370,22 @@ VALUES
     'Computer Science, Data Science Emphasis'
 ),
 (
-    3,
+    2,
     'CSCI 60 and L',
     'Computer Science, Data Science Emphasis'
 ),
 (
-    5,
+    3,
     'CSCI 61',
     'Computer Science, Data Science Emphasis'
 ),
 (
-    2,
+    4,
     'MATH 11',
     'Computer Science, Data Science Emphasis'
 ),
 (
-    4,
+    5,
     'MATH 12',
     'Computer Science, Data Science Emphasis'
 ),
@@ -1206,22 +1470,22 @@ VALUES
     'Computer Science, Software Emphasis'
 ),
 (
-    3,
+    2,
     'CSCI 60 and L',
     'Computer Science, Software Emphasis'
 ),
 (
-    5,
+    3,
     'CSCI 61',
     'Computer Science, Software Emphasis'
 ),
 (
-    2,
+    4,
     'MATH 11',
     'Computer Science, Software Emphasis'
 ),
 (
-    4,
+    5,
     'MATH 12',
     'Computer Science, Software Emphasis'
 ),
@@ -1306,22 +1570,22 @@ VALUES
     'Computer Science, Security Emphasis'
 ),
 (
-    3,
+    2,
     'CSCI 60 and L',
     'Computer Science, Security Emphasis'
 ),
 (
-    5,
+    3,
     'CSCI 61',
     'Computer Science, Security Emphasis'
 ),
 (
-    2,
+    4,
     'MATH 11',
     'Computer Science, Security Emphasis'
 ),
 (
-    4,
+    5,
     'MATH 12',
     'Computer Science, Security Emphasis'
 ),
@@ -1399,6 +1663,96 @@ VALUES
     20,
     'CSCI Emphasis V',
     'Computer Science, Security Emphasis'
+),
+(
+    1,
+    'MATH 11',
+    'Mathematics'
+),
+(
+    2,
+    'MATH 12',
+    'Mathematics'
+),
+(
+    3,
+    'MATH 13',
+    'Mathematics'
+),
+(
+    4,
+    'MATH 14',
+    'Mathematics'
+),
+(
+    5,
+    'PHYS 31',
+    'Mathematics'
+),
+(
+    6,
+    'PHYS 32',
+    'Mathematics'
+),
+(
+    7,
+    'MATH 51',
+    'Mathematics'
+),
+(
+    8,
+    'MATH 52',
+    'Mathematics'
+),
+(
+    9,
+    'MATH 53',
+    'Mathematics'
+),
+(
+    10,
+    'CSCI 10 and L',
+    'Mathematics'
+),
+(
+    11,
+    'MATH 23',
+    'Mathematics'
+),
+(
+    12,
+    'MATH Group A1',
+    'Mathematics'
+),
+(
+    13,
+    'MATH Group B1',
+    'Mathematics'
+),
+(
+    14,
+    'MATH Group A3',
+    'Mathematics'
+),
+(
+    15,
+    'MATH Group B2',
+    'Mathematics'
+),
+(
+    16,
+    'MATH Group A2',
+    'Mathematics'
+),
+(
+    17,
+    'MATH Group B3',
+    'Mathematics'
+),
+(
+    18,
+    'MATH Group B4',
+    'Mathematics'
 ),
 (
     1,
