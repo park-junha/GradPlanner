@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime, timedelta
 import sys
 import json
 import random
@@ -345,7 +346,7 @@ def getMysqlConn():
 
         # MySQL cursor for executing queries
         cur = conn.cursor()
-        print("Cursor initiated")
+        print("Cursor initiated.")
         return [conn, cur]
     except:
         raise Exception("Could not connect to MySQL server.")
@@ -481,6 +482,9 @@ def selectRequisites():
     # Translate ID of input major to queryable item name
     global userMajor
     userMajor = translateId(request.args.get('major'))
+    if userMajor is None:
+        print("No major declared. Defaulting to Undeclared major.")
+        userMajor = "Undeclared"
 
     # Query all requisites for major
     cur.execute(queryClasses(userMajor))
@@ -520,27 +524,50 @@ def schedule():
     conn = db[0]
     cur = db[1]
 
-    global allQueriedClasses
-    global userMajor
-
     majorClassesTaken = replaceDashesWithSpacesInList(request.args.getlist('questionMajorClassesTaken'))
     coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
 
-    startQuarter = request.args.get('startingQuarter')
-    startYear = int(request.args.get('academicYear'))
+    try:
+        startQuarter = request.args.get('startingQuarter')
+        if startQuarter is None:
+            raise Exception
+    except:
+        currentMonth = datetime.now().month
+        if currentMonth >= 10 and currentMonth <= 12:
+            startQuarter = "Winter"
+        elif currentMonth >= 1 and currentMonth <= 3:
+            startQuarter = "Spring"
+        else:
+            startQuarter = "Fall"
+        print("No user input for startQuarter.")
+        print("Current month:", str(currentMonth) + ". Defaulting to", startQuarter)
+
+    try:
+        startYear = int(request.args.get('academicYear'))
+    except:
+        currentYear = datetime.now().year
+        startYear = currentYear
+        if datetime.now().month < 4:
+            startYear -= 1
+        print("No user input for startYear.")
+        print("Current year:", str(currentYear) + ". Defaulting to", startYear)
+
     try:
         electiveUnits = int(request.args.get('electiveUnits'))
     except:
-        print("No user input for electiveUnits. Defaulting to 0.")
+        print("Invalid/no user input for electiveUnits. Defaulting to 0.")
         electiveUnits = 0
+
+    global allQueriedClasses
+    global userMajor
 
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
     if VERBOSE_MODE is True: print("electiveUnits:", electiveUnits)
 
     # Add current year by 1 if not Fall
-    if 'Fall' not in startQuarter:
+    if startQuarter != 'Fall':
         startYear += 1
 
     if VERBOSE_MODE is True: print("startYear:", startYear)
