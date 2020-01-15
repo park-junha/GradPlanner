@@ -1,6 +1,7 @@
 --  Delete tables with foreign keys first
 DELETE FROM Prereqs;
 DELETE FROM MajorReqs;
+DELETE FROM ConditionalReqs;
 
 DELETE FROM MajornEmphasis;
 INSERT INTO MajornEmphasis
@@ -676,63 +677,63 @@ VALUES
     1
 ),
 (
+    'Upper Division CSCI/COEN Course',
     'CSCI Emphasis IV',
-    'CSCI Emphasis IV',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'Upper Division CSCI/COEN Course',
     'CSCI Emphasis V',
-    'CSCI Emphasis V',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'MATH 102, 105, or 153',
     'MATH Group A1',
-    'MATH Group A1',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'MATH 103 or 111',
     'MATH Group A2',
-    'MATH Group A2',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'MATH 101, 113, 174, 176, 177, 122, 125, 144, 155, 165, or 166',
     'MATH Group A3',
-    'MATH Group A3',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'Upper Division MATH/CSCI Course',
     'MATH Group B1',
-    'MATH Group B1',
     'FWS',
     5,
     0,
     0
 ),
 (
+    'Upper Division MATH/CSCI Course',
     'MATH Group B2',
-    'MATH Group B2',
     'FWS',
     5,
     0,
     0
 ),
 (
-    'MATH Group B3',
+    'Upper Division MATH/CSCI Course',
     'MATH Group B3',
     'FWS',
     5,
@@ -740,7 +741,7 @@ VALUES
     0
 ),
 (
-    'MATH Group B4',
+    'Upper Division MATH/CSCI Course',
     'MATH Group B4',
     'FWS',
     5,
