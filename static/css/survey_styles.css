@@ -98,5 +98,7 @@ h4 {
 }
 
 .card-text-input {
+  width: 60%;
+  margin: auto;
   margin-top: 1rem;
 }
