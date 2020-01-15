@@ -10,7 +10,6 @@ function usage () {
     echo "--login, -l: log onto mysql server"
     echo "--reset, -r: setup or soft reset schema in database";
     echo "--hard-reset, -h: hard reset schema";
-    echo "--conditional-only, -c: only run conditional.sql";
 }
 
 function logon() {
@@ -19,8 +18,7 @@ function logon() {
 
 if [[ $# -eq 0 ]]; then
     usage;
-    logon;
-    exit 0
+    exit 1
 elif [[ $# -eq 1 ]]; then
     case $1 in
     -l | --login)
@@ -28,18 +26,11 @@ elif [[ $# -eq 1 ]]; then
         exit 0
         ;;
     -h | --hard-reset)
-        logon < schema.sql;
-        logon < static.sql;
-        logon < conditional.sql;
+        cat schema.sql data.sql | logon;
         exit 0
         ;;
     -r | --reset)
-        logon < static.sql;
-        logon < conditional.sql;
-        exit 0
-        ;;
-    -c | --conditional-only)
-        logon < conditional.sql;
+        logon < data.sql;
         exit 0
         ;;
     *)
