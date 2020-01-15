@@ -396,11 +396,11 @@ def jsonifyClasses(queriedClasses):
     return classes
 
 # Build a four year plan
-def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter, startYear):
+def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter, startYear, creditsCompleted = 0):
+    if VERBOSE_MODE is True: print("creditsCompleted:", creditsCompleted)
     requiredMap = {}
     doneClassesMap = {}
-    creditsCompleted = 0
-    creditsInPlan = 0
+    creditsInPlan = creditsCompleted
     for aClass in queriedClasses:
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
@@ -529,9 +529,15 @@ def schedule():
 
     startQuarter = request.args.get('startingQuarter')
     startYear = int(request.args.get('academicYear'))
+    try:
+        electiveUnits = int(request.args.get('electiveUnits'))
+    except:
+        print("No user input for electiveUnits. Defaulting to 0.")
+        electiveUnits = 0
 
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
+    if VERBOSE_MODE is True: print("electiveUnits:", electiveUnits)
 
     # Add current year by 1 if not Fall
     if 'Fall' not in startQuarter:
@@ -539,7 +545,7 @@ def schedule():
 
     if VERBOSE_MODE is True: print("startYear:", startYear)
 
-    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear)
+    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear, electiveUnits)
 
     # Close connection to database
     cur.close()
