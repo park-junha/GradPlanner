@@ -1,5 +1,6 @@
 --  Delete tables with foreign keys first
 DELETE FROM Prereqs;
+DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
 DELETE FROM ConditionalReqs;
 
@@ -54,6 +55,93 @@ VALUES
     0,
     0,
     0
+);
+
+INSERT INTO CoreReqs
+(
+    RecommendedOrder,
+    CoreReq
+)
+VALUES
+(
+    1,
+    'CTW 1',
+),
+(
+    2,
+    'Culture and Ideas 1',
+),
+(
+    3,
+    'Mathmatics',
+),
+(
+    4,
+    'CTW 2',
+),
+(
+    5,
+    'Culture and Ideas 2',
+),
+(
+    6,
+    'Diversity',
+),
+(
+    7,
+    'RTC 1',
+),
+(
+    8,
+    'Natural Science',
+),
+(
+    9,
+    'Social Science',
+),
+(
+    10,
+    'RTC 2',
+),
+(
+    11,
+    'Civic Engagement',
+),
+(
+    12,
+    'Language 1',
+),
+(
+    13,
+    'Advanced Writing',
+),
+(
+    14,
+    'Language 2',
+),
+(
+    15,
+    'Ethics',
+),
+(
+    16,
+    'Culture and Ideas 3',
+),
+(
+    17,
+    'Science, Technology, and Society',
+),
+(
+    18,
+    'ELSJ',
+),
+(
+    19,
+    'RTC 3',
+),
+(
+    20,
+    'Arts',
 );
 
 DELETE FROM Classes;
@@ -1761,43 +1849,28 @@ VALUES
     'Core'
 ),
 (
-    5,
+    2,
+    'Culture and Ideas 1',
+    'Core'
+),
+--  (
+--      3,
+--      'Mathmatics',
+--      'Core'
+--  ),
+(
+    4,
     'CTW 2',
     'Core'
 ),
 (
-    13,
-    'Advanced Writing',
-    'Core'
-),
-(
-    15,
-    'Ethics',
+    5,
+    'Culture and Ideas 2',
     'Core'
 ),
 (
     6,
     'Diversity',
-    'Core'
-),
-(
-    10,
-    'Arts',
-    'Core'
-),
-(
-    12,
-    'Language 1',
-    'Core'
-),
-(
-    14,
-    'Language 2',
-    'Core'
-),
-(
-    4,
-    'Natural Science',
     'Core'
 ),
 (
@@ -1807,12 +1880,7 @@ VALUES
 ),
 (
     8,
-    'RTC 2',
-    'Core'
-),
-(
-    17,
-    'RTC 3',
+    'Natural Science',
     'Core'
 ),
 (
@@ -1821,18 +1889,8 @@ VALUES
     'Core'
 ),
 (
-    2,
-    'Culture and Ideas 1',
-    'Core'
-),
-(
-    3,
-    'Culture and Ideas 2',
-    'Core'
-),
-(
-    16,
-    'Culture and Ideas 3',
+    10,
+    'RTC 2',
     'Core'
 ),
 (
@@ -1841,8 +1899,48 @@ VALUES
     'Core'
 ),
 (
+    12,
+    'Language 1',
+    'Core'
+),
+(
+    13,
+    'Advanced Writing',
+    'Core'
+),
+(
+    14,
+    'Language 2',
+    'Core'
+),
+(
+    15,
+    'Ethics',
+    'Core'
+),
+(
+    16,
+    'Culture and Ideas 3',
+    'Core'
+),
+--  (
+--      17,
+--      'Science, Technology, and Society',
+--      'Core'
+--  ),
+(
     18,
     'ELSJ',
+    'Core'
+),
+(
+    19,
+    'RTC 3',
+    'Core'
+),
+(
+    20,
+    'Arts',
     'Core'
 );
 
