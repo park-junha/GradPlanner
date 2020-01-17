@@ -15,8 +15,11 @@ Refer to the wiki: https://github.com/park-junha/PlanForGrad/wiki
 1. On your terminal, run `python3 main.py`, with the database password as your first command line argument.
 2. Navigate to `localhost:5000` on your browser to access the frontend.
 
+You may have to create and activate a virtual environment before running the above steps.
+
+### Common Errors
 Make sure all dependencies are installed. You can do this with `pip3 install -r requirements.txt`.
 
-Here: https://github.com/park-junha/PlanForGrad/wiki/Running
+Try using a virtual environment. You can follow steps on how to do that [here](https://github.com/park-junha/PlanForGrad/wiki/Running). You will also need to `source` the virtual environment before running the Python app every time.
 
-Contact jpark3@scu.edu if you are having difficulties running the app
+Contact jpark3@scu.edu if you are having difficulties running the app.
