@@ -1,4 +1,6 @@
 --  Delete tables with foreign keys first
+DELETE FROM CoreClasses;
+
 DELETE FROM Prereqs;
 DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
@@ -979,6 +981,21 @@ VALUES
     4,
     0,
     0
+);
+
+INSERT INTO CoreClasses
+(
+    CourseID,
+    CoreReq
+)
+VALUES
+(
+    'MATH 11',
+    'Mathematics'
+),
+(
+    'CSCI 10 and L',
+    'Science, Technology, and Society'
 );
 
 INSERT INTO Prereqs

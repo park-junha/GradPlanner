@@ -1,3 +1,6 @@
+--  Drop CpreClasses before CoreReqs
+DROP TABLE IF EXISTS CoreClasses;
+
 --  Drop Prereqs before Classes
 DROP TABLE IF EXISTS Prereqs;
 DROP TABLE IF EXISTS CoreReqs;
@@ -36,6 +39,14 @@ CREATE TABLE IF NOT EXISTS CoreReqs
     CoreReq VARCHAR(255) NOT NULL,
     SuggestedClass VARCHAR(255) NOT NULL,
 --  FOREIGN KEY (SuggestedClass) REFERENCE Classes(CourseID)
+);
+
+CREATE TABLE IF NOT EXISTS CoreClasses
+(
+    CourseID VARCHAR(255) NOT NULL,
+    CoreReq VARCHAR(255) NOT NULL,
+    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
+    FOREIGN KEY (CoreReq) REFERENCES CoreReqs(CoreReq)
 );
 
 CREATE TABLE IF NOT EXISTS Prereqs
