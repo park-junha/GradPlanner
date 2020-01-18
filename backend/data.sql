@@ -59,91 +59,134 @@ VALUES
     0
 );
 
+--  Fill in 'fillin' sections with actual classes
 INSERT INTO CoreReqs
 (
     RecommendedOrder,
-    CoreReq
+    CoreReq,
+    LeastCreditGiven,
+    SuggestedClass
 )
 VALUES
 (
     1,
     'CTW 1',
+    4,
+    'ENGL 11'
 ),
 (
     2,
     'Culture and Ideas 1',
+    4,
+    'HIST 11'
 ),
 (
     3,
     'Mathmatics',
+    4,
+    'MATH 11'
 ),
 (
     4,
     'CTW 2',
+    4,
+    'ENGL 12'
 ),
 (
     5,
     'Culture and Ideas 2',
+    4,
+    'HIST 12'
 ),
 (
     6,
     'Diversity',
+    4,
+    'fillin'
 ),
 (
     7,
     'RTC 1',
+    4,
+    'fillin'
 ),
 (
     8,
     'Natural Science',
+    4,
+    'CHEM 11'
 ),
 (
     9,
     'Social Science',
+    4,
+    'fillin'
 ),
 (
     10,
     'RTC 2',
+    5,
+    'fillin'
 ),
 (
     11,
     'Civic Engagement',
+    4,
+    'fillin'
 ),
 (
     12,
     'Language 1',
+    4,
+    'fillin'
 ),
 (
     13,
     'Advanced Writing',
+    4,
+    'fillin'
 ),
 (
     14,
     'Language 2',
+    4,
+    'fillin'
 ),
 (
     15,
     'Ethics',
+    4,
+    'fillin'
 ),
 (
     16,
     'Culture and Ideas 3',
+    4,
+    'fillin'
 ),
 (
     17,
     'Science, Technology, and Society',
+    4,
+    'fillin'
 ),
 (
     18,
     'ELSJ',
+    4,
+    'ANTH 3'
 ),
 (
     19,
     'RTC 3',
+    4,
+    'fillin'
 ),
 (
     20,
     'Arts',
+    4,
+    'fillin'
 );
 
 DELETE FROM Classes;

@@ -37,8 +37,9 @@ CREATE TABLE IF NOT EXISTS CoreReqs
 (
     RecommendedOrder INT NOT NULL,
     CoreReq VARCHAR(255) NOT NULL,
+    LeastCreditGiven INT NOT NULL,
     SuggestedClass VARCHAR(255) NOT NULL,
---  FOREIGN KEY (SuggestedClass) REFERENCE Classes(CourseID)
+    FOREIGN KEY (SuggestedClass) REFERENCES Classes(CourseID)
 );
 
 CREATE TABLE IF NOT EXISTS CoreClasses

@@ -357,7 +357,41 @@ def queryMajors():
 
 # Query requisites of major
 def queryClasses(major):
-    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\' ORDER BY b.RecommendedOrder ASC;"
+    query = """
+            SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID
+            WHERE MajorName = \'""" + major + """\'
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
+
+# Query core requirements
+def queryCores(major):
+    # IMPORTANT: test if this works
+    query = """
+            SELECT CoreReq, LeastCreditGiven, SuggestedClass, RecommendedOrder
+            FROM CoreReqs AS a
+            LEFT JOIN (
+                SELECT CoreReq
+                FROM CoreClasses AS b
+                LEFT JOIN MajorReqs AS c
+                ON b.CourseID = c.CourseID
+                AND MajorName = \'"""+ major + """\') AS SatisfiedReqs
+            ON a.CoreReq = SatisfiedReqs.CoreReq
+            WHERE a.CoreReq <> SatisfiedReq
+            ORDER BY a.RecommendedOrder ASC;"""
+    return query
+
+# Query suggested courses for core requirements
+def querySuggestedCores(major):
+    # IMPORTANT: test if this works
+    query = """
+            SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            LEFT JOIN (""" + queryCores(major) + """) AS SuggestedCores
+            ON a.CourseID = SuggestedCores.SuggestedClass
+            ORDER BY SuggestedCores.RecommendedOrder ASC;"""
+    return query
 
 # Create HTML id element for a string
 def createId(item):
@@ -394,6 +428,20 @@ def jsonifyClasses(queriedClasses):
         classes["options"][columnCounter].append(optionToAppend)
         columnCounter = (columnCounter + 1) % len(classes["options"])
         classes["totalCredits"] += item[4]
+    return classes
+
+# Format queried cores to json
+def jsonifyCores(queriedClasses):
+    classes = {"question": "Select all core requirements you've completed.", "options": [[],[],[]], "totalCredits": 0}
+    columnCounter = 0
+    for item in queriedClasses:
+        optionToAppend = {}
+        classId = item[0]
+        optionToAppend["name"] = classId
+        optionToAppend["id"] = createId(classId)
+        classes["options"][columnCounter].append(optionToAppend)
+        columnCounter = (columnCounter + 1) % len(classes["options"])
+        classes["totalCredits"] += item[1]
     return classes
 
 # Build a four year plan
@@ -492,9 +540,9 @@ def selectRequisites():
     questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
     # Query all core requirements
-    cur.execute(queryClasses("Core"))
+    cur.execute(queryCores(userMajor))
     queriedCores = cur.fetchall()
-    questionCores = jsonifyClasses(queriedCores)
+    questionCores = jsonifyCores(queriedCores)
 
     totalCredits = questionMajorClasses['totalCredits'] + questionCores['totalCredits']
     creditsAlert = generateCreditsAlert(totalCredits)
@@ -504,9 +552,11 @@ def selectRequisites():
     if VERBOSE_MODE is True: print(queriedCores)
     if VERBOSE_MODE is True: print(questionCores)
 
+'''
     # Store all queried tuples in global variable
     global allQueriedClasses
     allQueriedClasses = queriedMajorClasses + queriedCores
+'''
 
     # Close connection to database
     cur.close()
@@ -559,7 +609,20 @@ def schedule():
         print("Invalid/no user input for electiveUnits. Defaulting to 0.")
         electiveUnits = 0
 
+    # Query all requisites for major
+    cur.execute(queryClasses(userMajor))
+    queriedMajorClasses = cur.fetchall()
+
+    # Query all core requirements and suggested classes
+    cur.execute(querySuggestedCores(userMajor))
+    queriedSuggestedCores = cur.fetchall()
+
+    allQueriedClasses = queriedMajorClasses + queriedSuggestedCores
+
+'''
     global allQueriedClasses
+'''
+
     global userMajor
 
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
