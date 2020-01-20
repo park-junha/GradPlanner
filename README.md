@@ -1,17 +1,15 @@
-**IMPORTANT: Temporarily using remotemysql.com for remote database.** To run the web app locally, enter the password to the database as the first command line argument (retrieve it from jpark3@scu.edu)
-
 # GradPlanner 
 
-Cloned from repository (for CSCI 187 project): https://github.com/xiaogong1/Course-Planner
+A web application that generates a four-year plan for Santa Clara University students based on their needs. It is now open for beta testing - you can visit it [here!](http:gradplanner.herokuapp.com)
 
-A web application that generates a four-year plan for Santa Clara University students based on their needs.
-
-Originally named PlanForGrad.
+Originally named PlanForGrad. Cloned from repository (for CSCI 187 project): https://github.com/xiaogong1/Course-Planner
 
 ## Setup
 Refer to the wiki: https://github.com/park-junha/PlanForGrad/wiki
 
 ## Running
+**IMPORTANT: Temporarily using remotemysql.com for remote database.** To run the web app locally, enter the password to the database as the first command line argument (retrieve it from jpark3@scu.edu)
+
 1. On your terminal, run `python3 main.py`, with the database password as your first command line argument.
 2. Navigate to `localhost:5000` on your browser to access the frontend.
 
