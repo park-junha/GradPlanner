@@ -480,14 +480,15 @@ def selectRequisites():
     years = [{'name':'2019-2020','id':'2019'}, {'name':'2020-2021','id':'2020'}]
 
     # Translate ID of input major to queryable item name
-    global userMajor
-    userMajor = translateId(request.args.get('major'))
-    if userMajor is None:
+    userMajor = {}
+    userMajor['id'] = request.args.get('major')
+    if userMajor['id'] is None:
         print("No major declared. Defaulting to Undeclared major.")
-        userMajor = "Undeclared"
+        userMajor['id'] = "Undeclared"
+    userMajor['name'] = translateId(userMajor['id'])
 
     # Query all requisites for major
-    cur.execute(queryClasses(userMajor))
+    cur.execute(queryClasses(userMajor['name']))
     queriedMajorClasses = cur.fetchall()
     questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
@@ -514,7 +515,7 @@ def selectRequisites():
     conn.close()
     print("Connection to database closed.")
 
-    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years)
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years, userMajor=userMajor)
 
 # Schedule page
 @app.route("/schedule")
@@ -527,6 +528,8 @@ def schedule():
     majorClassesTaken = replaceDashesWithSpacesInList(request.args.getlist('questionMajorClassesTaken'))
     coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
+
+    print(request.args.get('major'))
 
     try:
         startQuarter = request.args.get('startingQuarter')
