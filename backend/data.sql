@@ -1,5 +1,8 @@
 --  Delete tables with foreign keys first
+DELETE FROM CoreClasses;
+
 DELETE FROM Prereqs;
+DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
 DELETE FROM ConditionalReqs;
 
@@ -54,6 +57,136 @@ VALUES
     0,
     0,
     0
+);
+
+--  Fill in 'fillin' sections with actual classes
+INSERT INTO CoreReqs
+(
+    RecommendedOrder,
+    CoreReq,
+    LeastCreditGiven,
+    SuggestedClass
+)
+VALUES
+(
+    1,
+    'CTW 1',
+    4,
+    'ENGL 11'
+),
+(
+    2,
+    'Culture and Ideas 1',
+    4,
+    'HIST 11'
+),
+(
+    3,
+    'Mathmatics',
+    4,
+    'MATH 11'
+),
+(
+    4,
+    'CTW 2',
+    4,
+    'ENGL 12'
+),
+(
+    5,
+    'Culture and Ideas 2',
+    4,
+    'HIST 12'
+),
+(
+    6,
+    'Diversity',
+    4,
+    'fillin'
+),
+(
+    7,
+    'RTC 1',
+    4,
+    'fillin'
+),
+(
+    8,
+    'Natural Science',
+    4,
+    'CHEM 11'
+),
+(
+    9,
+    'Social Science',
+    4,
+    'fillin'
+),
+(
+    10,
+    'RTC 2',
+    5,
+    'fillin'
+),
+(
+    11,
+    'Civic Engagement',
+    4,
+    'fillin'
+),
+(
+    12,
+    'Language 1',
+    4,
+    'fillin'
+),
+(
+    13,
+    'Advanced Writing',
+    4,
+    'fillin'
+),
+(
+    14,
+    'Language 2',
+    4,
+    'fillin'
+),
+(
+    15,
+    'Ethics',
+    4,
+    'fillin'
+),
+(
+    16,
+    'Culture and Ideas 3',
+    4,
+    'fillin'
+),
+(
+    17,
+    'Science, Technology, and Society',
+    4,
+    'fillin'
+),
+(
+    18,
+    'ELSJ',
+    4,
+    'ANTH 3'
+),
+(
+    19,
+    'RTC 3',
+    4,
+    'fillin'
+),
+(
+    20,
+    'Arts',
+    4,
+    'fillin'
 );
 
 DELETE FROM Classes;
@@ -891,6 +1024,21 @@ VALUES
     4,
     0,
     0
+);
+
+INSERT INTO CoreClasses
+(
+    CourseID,
+    CoreReq
+)
+VALUES
+(
+    'MATH 11',
+    'Mathematics'
+),
+(
+    'CSCI 10 and L',
+    'Science, Technology, and Society'
 );
 
 INSERT INTO Prereqs
@@ -1761,43 +1909,28 @@ VALUES
     'Core'
 ),
 (
-    5,
+    2,
+    'Culture and Ideas 1',
+    'Core'
+),
+--  (
+--      3,
+--      'Mathmatics',
+--      'Core'
+--  ),
+(
+    4,
     'CTW 2',
     'Core'
 ),
 (
-    13,
-    'Advanced Writing',
-    'Core'
-),
-(
-    15,
-    'Ethics',
+    5,
+    'Culture and Ideas 2',
     'Core'
 ),
 (
     6,
     'Diversity',
-    'Core'
-),
-(
-    10,
-    'Arts',
-    'Core'
-),
-(
-    12,
-    'Language 1',
-    'Core'
-),
-(
-    14,
-    'Language 2',
-    'Core'
-),
-(
-    4,
-    'Natural Science',
     'Core'
 ),
 (
@@ -1807,12 +1940,7 @@ VALUES
 ),
 (
     8,
-    'RTC 2',
-    'Core'
-),
-(
-    17,
-    'RTC 3',
+    'Natural Science',
     'Core'
 ),
 (
@@ -1821,18 +1949,8 @@ VALUES
     'Core'
 ),
 (
-    2,
-    'Culture and Ideas 1',
-    'Core'
-),
-(
-    3,
-    'Culture and Ideas 2',
-    'Core'
-),
-(
-    16,
-    'Culture and Ideas 3',
+    10,
+    'RTC 2',
     'Core'
 ),
 (
@@ -1841,8 +1959,48 @@ VALUES
     'Core'
 ),
 (
+    12,
+    'Language 1',
+    'Core'
+),
+(
+    13,
+    'Advanced Writing',
+    'Core'
+),
+(
+    14,
+    'Language 2',
+    'Core'
+),
+(
+    15,
+    'Ethics',
+    'Core'
+),
+(
+    16,
+    'Culture and Ideas 3',
+    'Core'
+),
+--  (
+--      17,
+--      'Science, Technology, and Society',
+--      'Core'
+--  ),
+(
     18,
     'ELSJ',
+    'Core'
+),
+(
+    19,
+    'RTC 3',
+    'Core'
+),
+(
+    20,
+    'Arts',
     'Core'
 );
 

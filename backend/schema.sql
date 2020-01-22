@@ -1,5 +1,9 @@
+--  Drop CpreClasses before CoreReqs
+DROP TABLE IF EXISTS CoreClasses;
+
 --  Drop Prereqs before Classes
 DROP TABLE IF EXISTS Prereqs;
+DROP TABLE IF EXISTS CoreReqs;
 
 --  Drop MajorReqs before Classes, MajornEmphasis
 DROP TABLE IF EXISTS MajorReqs;
@@ -29,6 +33,23 @@ CREATE TABLE IF NOT EXISTS Classes
     PRIMARY KEY (CourseID)
 );
 
+CREATE TABLE IF NOT EXISTS CoreReqs
+(
+    RecommendedOrder INT NOT NULL,
+    CoreReq VARCHAR(255) NOT NULL,
+    LeastCreditGiven INT NOT NULL,
+    SuggestedClass VARCHAR(255) NOT NULL,
+    FOREIGN KEY (SuggestedClass) REFERENCES Classes(CourseID)
+);
+
+CREATE TABLE IF NOT EXISTS CoreClasses
+(
+    CourseID VARCHAR(255) NOT NULL,
+    CoreReq VARCHAR(255) NOT NULL,
+    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
+    FOREIGN KEY (CoreReq) REFERENCES CoreReqs(CoreReq)
+);
+
 CREATE TABLE IF NOT EXISTS Prereqs
 (
     PreReqName VARCHAR(255) NOT NULL,
@@ -56,3 +77,4 @@ CREATE TABLE IF NOT EXISTS ConditionalReqs
     FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
     FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
 );
+
