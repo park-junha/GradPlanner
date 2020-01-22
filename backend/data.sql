@@ -768,8 +768,8 @@ VALUES
     1
 ),
 (
-    'Mathematics',
-    'Mathematics',
+    'Mathematics Core',
+    'Mathematics Core',
     'FWS',
     4,
     0,
@@ -1917,7 +1917,7 @@ VALUES
 ),
 (
     3,
-    'Mathematics',
+    'Mathematics Core',
     'Core'
 ),
 (
