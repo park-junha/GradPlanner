@@ -36,6 +36,11 @@ class scuClass:
         if VERBOSE_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
         self.preReqs.append(cID)
 
+    # Takes another scuObject with same cID as input and combines satisfies
+    # Doesn't check for duplicates
+    def doubleDip(self, obj):
+        self.satisfies.extend(obj.getSatisfies())
+
     def getID(self):
         return self.classInfo['classID']
 
@@ -207,7 +212,7 @@ class FourYearPlan:
                     if not prereqs:
                         prereqs = None
                     # Append the class
-                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': self.metadata['required'][cID].getSatisfies()})
                     # Add the class to the list of enrolled classes
                     enrolledClasses.append(cID)
                     # Increment number of classes enrolled in the quarter
@@ -222,9 +227,9 @@ class FourYearPlan:
             for cID in enrolledClasses:
                 self.completeClass(cID)
             if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
-            if currentYear > 30:
-                if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
-                sys.exit(1)
+            if currentYear > 10:
+                print("Cannot build plan. Exiting program.")
+                raise Exception("Cannot build plan within 10 years.")
             # Increment quarter by 1
             quarter += 1
             # Increment the year if Winter
@@ -466,16 +471,25 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
-        creditsInPlan += creditGiven
         classObj = initClassObj(aClass)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
-        requiredMap[classID] = classObj
+        # Check if double dip
+        if classID in requiredMap:
+            if VERBOSE_MODE is True: print("Class double dips")
+            requiredMap[classID].doubleDip(classObj)
+            creditGiven = 0
+        else:
+            if VERBOSE_MODE is True: print("Class added to requiredMap")
+            requiredMap[classID] = classObj
+        if VERBOSE_MODE is True: requiredMap[classID].printDetails()
+        creditsInPlan += creditGiven
         if (classID in allClassesTaken and aClass[2] == major) or (aClass[2] in allClassesTaken and aClass[2] != major):
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     numOfElectives = 0
     while electiveCreditsNeeded(creditsInPlan, 175) > 0:
         numOfElectives += 1
@@ -483,6 +497,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed

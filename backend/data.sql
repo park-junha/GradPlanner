@@ -50,13 +50,6 @@ VALUES
     175,
     7,
     18
-),
-(
-    'Core',
-    0,
-    0,
-    0,
-    0
 );
 
 DELETE FROM Classes;
@@ -70,6 +63,30 @@ INSERT INTO Classes
     HasPrereqs
 )
 VALUES
+(
+    'Intro to Cultural Anthropology',
+    'ANTH 3',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Basic Drawing',
+    'ARTS 30',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Cultural Competence & Humility',
+    'CHST 4',
+    'FWS',
+    4,
+    0,
+    0
+),
 (
     'Introduction to Computer Science',
     'CSCI 10 and L',
@@ -439,6 +456,46 @@ VALUES
     1
 ),
 (
+    'Technology and Communication',
+    'COMM 12',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Critical Thinking & Writing I',
+    'ENGL 1A',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Critical Thinking & Writing II',
+    'ENGL 2A',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+    'Cultures and Ideas I',
+    'HIST 11A',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Cultures and Ideas II',
+    'HIST 12A',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
     'Calculus and Analytic Geometry I',
     'MATH 11',
     'FWS',
@@ -664,6 +721,14 @@ VALUES
     0
 ),
 (
+    'Hands-On Physics!',
+    'PHYS 1',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
     'Physics for Scientists and Engineers I',
     'PHYS 31',
     'FWS',
@@ -675,6 +740,30 @@ VALUES
     'Physics for Scientists and Engineers II',
     'PHYS 32',
     'FWS',
+    4,
+    0,
+    1
+),
+(
+    'Ways of Understanding Religion',
+    'RSOC 9',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Elementary Spanish I',
+    'SPAN 1',
+    'F',
+    4,
+    0,
+    1
+),
+(
+    'Elementary Spanish II',
+    'SPAN 2',
+    'W',
     4,
     0,
     1
@@ -752,88 +841,16 @@ VALUES
     0
 ),
 (
-    'CTW 1',
-    'CTW 1',
+    'Advanced Writing',
+    'Advanced Writing',
     'FWS',
     4,
     0,
     0
-),
-(
-    'CTW 2',
-    'CTW 2',
-    'FWS',
-    4,
-    0,
-    1
-),
-(
-    'Mathematics Core',
-    'Mathematics Core',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Advanced Writing',
-    'Advanced Writing',
-    'FWS',
-    5,
-    0,
-    1
 ),
 (
     'Ethics',
     'Ethics',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Diversity',
-    'Diversity',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Arts',
-    'Arts',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Language 1',
-    'Language 1',
-    'F',
-    4,
-    0,
-    0
-),
-(
-    'Language 2',
-    'Language 2',
-    'W',
-    4,
-    0,
-    1
-),
-(
-    'Natural Science',
-    'Natural Science',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'RTC 1',
-    'RTC 1',
     'FWS',
     4,
     0,
@@ -845,7 +862,7 @@ VALUES
     'FWS',
     4,
     0,
-    1
+    0
 ),
 (
     'RTC 3',
@@ -853,51 +870,11 @@ VALUES
     'FWS',
     5,
     88,
-    1
-),
-(
-    'Social Science',
-    'Social Science',
-    'FWS',
-    4,
-    0,
     0
-),
-(
-    'Culture and Ideas 1',
-    'Culture and Ideas 1',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Culture and Ideas 2',
-    'Culture and Ideas 2',
-    'FWS',
-    4,
-    0,
-    1
 ),
 (
     'Culture and Ideas 3',
     'Culture and Ideas 3',
-    'FWS',
-    4,
-    0,
-    1
-),
-(
-    'Civic Engagement',
-    'Civic Engagement',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Science, Technology, and Society',
-    'Science, Technology, and Society',
     'FWS',
     4,
     0,
@@ -912,7 +889,6 @@ VALUES
     0
 );
 
---  Fill in 'fillin' sections with actual classes
 INSERT INTO CoreReqs
 (
     RecommendedOrder,
@@ -925,13 +901,13 @@ VALUES
     1,
     'CTW 1',
     4,
-    'CTW 1'
+    'ENGL 1A'
 ),
 (
     2,
     'Culture and Ideas 1',
     4,
-    'Culture and Ideas 1'
+    'HIST 11A'
 ),
 (
     3,
@@ -943,55 +919,55 @@ VALUES
     4,
     'CTW 2',
     4,
-    'CTW 2'
+    'ENGL 2A'
 ),
 (
     5,
     'Culture and Ideas 2',
     4,
-    'Culture and Ideas 2'
+    'HIST 12A'
 ),
 (
     6,
     'Diversity',
     4,
-    'Diversity'
+    'CHST 4'
 ),
 (
     7,
     'RTC 1',
     4,
-    'RTC 1'
+    'RSOC 9'
 ),
 (
     8,
-    'Natural Science',
+    'Arts',
     4,
-    'Natural Science'
+    'ARTS 30'
 ),
 (
     9,
     'Social Science',
     4,
-    'Social Science'
+    'ANTH 3'
 ),
 (
     10,
     'RTC 2',
-    5,
+    4,
     'RTC 2'
 ),
 (
     11,
     'Civic Engagement',
     4,
-    'Civic Engagement'
+    'CHST 4'
 ),
 (
     12,
     'Language 1',
     4,
-    'Language 1'
+    'SPAN 1'
 ),
 (
     13,
@@ -1003,7 +979,7 @@ VALUES
     14,
     'Language 2',
     4,
-    'Language 2'
+    'SPAN 2'
 ),
 (
     15,
@@ -1021,14 +997,13 @@ VALUES
     17,
     'Science, Technology, and Society',
     4,
-    'Science, Technology, and Society'
+    'COMM 12'
 ),
 (
     18,
     'ELSJ',
     4,
-    'ELSJ'
---  'ANTH 3'
+    'ANTH 3'
 ),
 (
     19,
@@ -1038,9 +1013,9 @@ VALUES
 ),
 (
     20,
-    'Arts',
+    'Natural Science',
     4,
-    'Arts'
+    'PHYS 1'
 );
 
 INSERT INTO Prereqs
@@ -1380,32 +1355,16 @@ VALUES
     'PHYS 32'
 ),
 (
-    'Language 1',
-    'Language 2'
+    'ENGL 1A',
+    'ENGL 2A'
 ),
 (
-    'RTC 1',
-    'RTC 2'
+    'HIST 11A',
+    'HIST 12A'
 ),
 (
-    'RTC 2',
-    'RTC 3'
-),
-(
-    'Culture and Ideas 1',
-    'Culture and Ideas 2'
-),
-(
-    'Culture and Ideas 2',
-    'Culture and Ideas 3'
-),
-(
-    'CTW 1',
-    'CTW 2'
-),
-(
-    'CTW 2',
-    'Advanced Writing'
+    'SPAN 1',
+    'SPAN 2'
 );
 
 INSERT INTO MajorReqs
@@ -1904,106 +1863,6 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
-),
-(
-    1,
-    'CTW 1',
-    'Core'
-),
-(
-    2,
-    'Culture and Ideas 1',
-    'Core'
-),
-(
-    3,
-    'Mathematics Core',
-    'Core'
-),
-(
-    4,
-    'CTW 2',
-    'Core'
-),
-(
-    5,
-    'Culture and Ideas 2',
-    'Core'
-),
-(
-    6,
-    'Diversity',
-    'Core'
-),
-(
-    7,
-    'RTC 1',
-    'Core'
-),
-(
-    8,
-    'Natural Science',
-    'Core'
-),
-(
-    9,
-    'Social Science',
-    'Core'
-),
-(
-    10,
-    'RTC 2',
-    'Core'
-),
-(
-    11,
-    'Civic Engagement',
-    'Core'
-),
-(
-    12,
-    'Language 1',
-    'Core'
-),
-(
-    13,
-    'Advanced Writing',
-    'Core'
-),
-(
-    14,
-    'Language 2',
-    'Core'
-),
-(
-    15,
-    'Ethics',
-    'Core'
-),
-(
-    16,
-    'Culture and Ideas 3',
-    'Core'
-),
-(
-    17,
-    'Science, Technology, and Society',
-    'Core'
-),
-(
-    18,
-    'ELSJ',
-    'Core'
-),
-(
-    19,
-    'RTC 3',
-    'Core'
-),
-(
-    20,
-    'Arts',
-    'Core'
 );
 
 INSERT INTO CoreClasses
@@ -2019,6 +1878,10 @@ VALUES
 (
     'CSCI 10 and L',
     'Science, Technology, and Society'
+),
+(
+    'PHYS 31',
+    'Natural Science'
 );
 
 DELETE FROM ConditionalReqs;
