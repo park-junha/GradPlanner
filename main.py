@@ -36,6 +36,11 @@ class scuClass:
         if VERBOSE_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
         self.preReqs.append(cID)
 
+    # Takes another scuObject with same cID as input and combines satisfies
+    # Doesn't check for duplicates
+    def doubleDip(self, obj):
+        self.satisfies.extend(obj.getSatisfies())
+
     def getID(self):
         return self.classInfo['classID']
 
@@ -186,6 +191,14 @@ class FourYearPlan:
             # Key-value pairs of what the class satisfies and the corresponding quarterMap key
             satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
 
+            # List of all core requirements
+            # HARD CODED -- might want to change to fetching data from database
+            coreRequisites = ["CTW 1", "CTW 2", "Mathematics Core", "Culture and Ideas 1", "Culture and Ideas 2", "Diversity", "RTC 1", "RTC 2", "Social Science", "Natural Science", "Language 1", "Language 2", "Advanced Writing", "Civic Engagement", "Ethics", "Culture and Ideas 3", "ELSJ", "RTC 3", "Arts", "Science, Technology, and Society"]
+
+            # Add each core requisite as a key with value coreClasses to satisfiesMap
+            for coreRequisite in coreRequisites:
+                satisfiesMap[coreRequisite] = 'coreClasses'
+
             # Go through all requisites to graduate
             for cID in self.metadata['required']:
                 # Only stores first element from satisfies member of scuClass
@@ -199,7 +212,7 @@ class FourYearPlan:
                     if not prereqs:
                         prereqs = None
                     # Append the class
-                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': self.metadata['required'][cID].getSatisfies()})
                     # Add the class to the list of enrolled classes
                     enrolledClasses.append(cID)
                     # Increment number of classes enrolled in the quarter
@@ -214,9 +227,9 @@ class FourYearPlan:
             for cID in enrolledClasses:
                 self.completeClass(cID)
             if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
-            if currentYear > 30:
-                if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
-                sys.exit(1)
+            if currentYear > 10:
+                print("Cannot build plan. Exiting program.")
+                raise Exception("Cannot build plan within 10 years.")
             # Increment quarter by 1
             quarter += 1
             # Increment the year if Winter
@@ -353,11 +366,49 @@ def getMysqlConn():
 
 # Query supported majors
 def queryMajors():
-    return "SELECT MajorName FROM MajornEmphasis WHERE MajorName != \'Core\';"
+    query = """
+            SELECT MajorName
+            FROM MajornEmphasis
+            WHERE MajorName != \'Core\';"""
+    return query
 
 # Query requisites of major
 def queryClasses(major):
-    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\' ORDER BY b.RecommendedOrder ASC;"
+    query = """
+            SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            LEFT JOIN MajorReqs AS b
+            ON a.CourseID = b.CourseID
+            WHERE MajorName = \'""" + major + """\'
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
+
+# Query core requisities not already satisfied by major classes
+def queryCores(major):
+    query = """
+            SELECT CoreReq, LeastCreditGiven FROM CoreReqs
+            WHERE (CoreReq) NOT IN (
+                SELECT CoreReq FROM CoreClasses
+                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+                WHERE MajorName = \'""" + major + """\'
+            )
+            ORDER BY RecommendedOrder ASC;"""
+    return query
+
+# Query suggested classes for core requirements
+def queryCoreSuggestions(major):
+    query = """
+            SELECT a.CourseID, CourseName, CoreReq, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            RIGHT JOIN CoreReqs AS b
+            ON a.CourseID = b.SuggestedClass
+            WHERE (CoreReq) NOT IN (
+                SELECT CoreReq FROM CoreClasses
+                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+                WHERE MajorName = \'""" + major + """\'
+            )
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
 
 # Create HTML id element for a string
 def createId(item):
@@ -383,6 +434,20 @@ def jsonifyMajors(queriedMajors):
     return majors
 
 # Format queried classes to json
+def jsonifyCores(queriedCores):
+    classes = {"question": "Select all cores you've completed.", "options": [[],[],[]], "totalCredits": 0}
+    columnCounter = 0
+    for item in queriedCores:
+        optionToAppend = {}
+        classId = item[0]
+        optionToAppend["name"] = classId
+        optionToAppend["id"] = createId(classId)
+        classes["options"][columnCounter].append(optionToAppend)
+        columnCounter = (columnCounter + 1) % len(classes["options"])
+        classes["totalCredits"] += item[1]
+    return classes
+
+# Format queried classes to json
 def jsonifyClasses(queriedClasses):
     classes = {"question": "Select all classes you've completed.", "options": [[],[],[]], "totalCredits": 0}
     columnCounter = 0
@@ -406,16 +471,25 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
-        creditsInPlan += creditGiven
         classObj = initClassObj(aClass)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
-        requiredMap[classID] = classObj
-        if classID in allClassesTaken:
+        # Check if double dip
+        if classID in requiredMap:
+            if VERBOSE_MODE is True: print("Class double dips")
+            requiredMap[classID].doubleDip(classObj)
+            creditGiven = 0
+        else:
+            if VERBOSE_MODE is True: print("Class added to requiredMap")
+            requiredMap[classID] = classObj
+        if VERBOSE_MODE is True: requiredMap[classID].printDetails()
+        creditsInPlan += creditGiven
+        if (classID in allClassesTaken and aClass[2] == major) or (aClass[2] in allClassesTaken and aClass[2] != major):
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     numOfElectives = 0
     while electiveCreditsNeeded(creditsInPlan, 175) > 0:
         numOfElectives += 1
@@ -423,6 +497,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed
@@ -493,9 +568,9 @@ def selectRequisites():
     questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
     # Query all core requirements
-    cur.execute(queryClasses("Core"))
+    cur.execute(queryCores(userMajor['name']))
     queriedCores = cur.fetchall()
-    questionCores = jsonifyClasses(queriedCores)
+    questionCores = jsonifyCores(queriedCores)
 
     totalCredits = questionMajorClasses['totalCredits'] + questionCores['totalCredits']
     creditsAlert = generateCreditsAlert(totalCredits)
@@ -564,12 +639,10 @@ def schedule():
     # Query all requisites for major
     cur.execute(queryClasses(userMajor))
     queriedMajorClasses = cur.fetchall()
-    questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
     # Query all core requirements
-    cur.execute(queryClasses("Core"))
+    cur.execute(queryCoreSuggestions(userMajor))
     queriedCores = cur.fetchall()
-    questionCores = jsonifyClasses(queriedCores)
 
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
