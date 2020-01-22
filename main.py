@@ -222,9 +222,9 @@ class FourYearPlan:
             for cID in enrolledClasses:
                 self.completeClass(cID)
             if VERBOSE_MODE is True: print("Current plan (end of while):", plan)
-            if currentYear > 30:
-                if VERBOSE_MODE is True: print("Cannot build plan. Exiting program.")
-                sys.exit(1)
+            if currentYear > 10:
+                print("Cannot build plan. Exiting program.")
+                raise Exception("Cannot build plan within 10 years.")
             # Increment quarter by 1
             quarter += 1
             # Increment the year if Winter
@@ -476,6 +476,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         if (classID in allClassesTaken and aClass[2] == major) or (aClass[2] in allClassesTaken and aClass[2] != major):
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     numOfElectives = 0
     while electiveCreditsNeeded(creditsInPlan, 175) > 0:
         numOfElectives += 1
@@ -483,6 +484,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
+        if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
     return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed
