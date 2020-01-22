@@ -480,14 +480,15 @@ def selectRequisites():
     years = [{'name':'2019-2020','id':'2019'}, {'name':'2020-2021','id':'2020'}]
 
     # Translate ID of input major to queryable item name
-    global userMajor
-    userMajor = translateId(request.args.get('major'))
-    if userMajor is None:
+    userMajor = {}
+    userMajor['id'] = request.args.get('major')
+    if userMajor['id'] is None:
         print("No major declared. Defaulting to Undeclared major.")
-        userMajor = "Undeclared"
+        userMajor['id'] = "Undeclared"
+    userMajor['name'] = translateId(userMajor['id'])
 
     # Query all requisites for major
-    cur.execute(queryClasses(userMajor))
+    cur.execute(queryClasses(userMajor['name']))
     queriedMajorClasses = cur.fetchall()
     questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
@@ -504,8 +505,7 @@ def selectRequisites():
     if VERBOSE_MODE is True: print(queriedCores)
     if VERBOSE_MODE is True: print(questionCores)
 
-    # Store all queried tuples in global variable
-    global allQueriedClasses
+    # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
 
     # Close connection to database
@@ -514,7 +514,7 @@ def selectRequisites():
     conn.close()
     print("Connection to database closed.")
 
-    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years)
+    return render_template('selectrequisites.html', questionMajorClasses=questionMajorClasses, questionCores=questionCores, creditsAlert=creditsAlert, terms=terms, years=years, userMajor=userMajor)
 
 # Schedule page
 @app.route("/schedule")
@@ -527,6 +527,8 @@ def schedule():
     majorClassesTaken = replaceDashesWithSpacesInList(request.args.getlist('questionMajorClassesTaken'))
     coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
+
+    userMajor = translateId(request.args.get('inputtedMajor'))
 
     try:
         startQuarter = request.args.get('startingQuarter')
@@ -559,8 +561,18 @@ def schedule():
         print("Invalid/no user input for electiveUnits. Defaulting to 0.")
         electiveUnits = 0
 
-    global allQueriedClasses
-    global userMajor
+    # Query all requisites for major
+    cur.execute(queryClasses(userMajor))
+    queriedMajorClasses = cur.fetchall()
+    questionMajorClasses = jsonifyClasses(queriedMajorClasses)
+
+    # Query all core requirements
+    cur.execute(queryClasses("Core"))
+    queriedCores = cur.fetchall()
+    questionCores = jsonifyClasses(queriedCores)
+
+    # Combine tuples of all queried classes
+    allQueriedClasses = queriedMajorClasses + queriedCores
 
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
@@ -581,9 +593,6 @@ def schedule():
     print("Connection to database closed.")
 
     return render_template('schedule.html', fourYearPlan=fourYearPlan)
-
-allQueriedMajors = None
-userMajor = None
 
 # Enable debugging when running
 if __name__ == '__main__':
