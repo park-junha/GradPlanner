@@ -59,136 +59,6 @@ VALUES
     0
 );
 
---  Fill in 'fillin' sections with actual classes
-INSERT INTO CoreReqs
-(
-    RecommendedOrder,
-    CoreReq,
-    LeastCreditGiven,
-    SuggestedClass
-)
-VALUES
-(
-    1,
-    'CTW 1',
-    4,
-    'ENGL 11'
-),
-(
-    2,
-    'Culture and Ideas 1',
-    4,
-    'HIST 11'
-),
-(
-    3,
-    'Mathmatics',
-    4,
-    'MATH 11'
-),
-(
-    4,
-    'CTW 2',
-    4,
-    'ENGL 12'
-),
-(
-    5,
-    'Culture and Ideas 2',
-    4,
-    'HIST 12'
-),
-(
-    6,
-    'Diversity',
-    4,
-    'fillin'
-),
-(
-    7,
-    'RTC 1',
-    4,
-    'fillin'
-),
-(
-    8,
-    'Natural Science',
-    4,
-    'CHEM 11'
-),
-(
-    9,
-    'Social Science',
-    4,
-    'fillin'
-),
-(
-    10,
-    'RTC 2',
-    5,
-    'fillin'
-),
-(
-    11,
-    'Civic Engagement',
-    4,
-    'fillin'
-),
-(
-    12,
-    'Language 1',
-    4,
-    'fillin'
-),
-(
-    13,
-    'Advanced Writing',
-    4,
-    'fillin'
-),
-(
-    14,
-    'Language 2',
-    4,
-    'fillin'
-),
-(
-    15,
-    'Ethics',
-    4,
-    'fillin'
-),
-(
-    16,
-    'Culture and Ideas 3',
-    4,
-    'fillin'
-),
-(
-    17,
-    'Science, Technology, and Society',
-    4,
-    'fillin'
-),
-(
-    18,
-    'ELSJ',
-    4,
-    'ANTH 3'
-),
-(
-    19,
-    'RTC 3',
-    4,
-    'fillin'
-),
-(
-    20,
-    'Arts',
-    4,
-    'fillin'
-);
-
 DELETE FROM Classes;
 INSERT INTO Classes
 (
@@ -898,6 +768,14 @@ VALUES
     1
 ),
 (
+    'Mathematics',
+    'Mathematics',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
     'Advanced Writing',
     'Advanced Writing',
     'FWS',
@@ -932,7 +810,7 @@ VALUES
 (
     'Language 1',
     'Language 1',
-    'FWS',
+    'F',
     4,
     0,
     0
@@ -940,7 +818,7 @@ VALUES
 (
     'Language 2',
     'Language 2',
-    'FWS',
+    'W',
     4,
     0,
     1
@@ -1018,6 +896,14 @@ VALUES
     0
 ),
 (
+    'Science, Technology, and Society',
+    'Science, Technology, and Society',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
     'Experiential Learning and Social Justice',
     'ELSJ',
     'FWS',
@@ -1026,19 +912,135 @@ VALUES
     0
 );
 
-INSERT INTO CoreClasses
+--  Fill in 'fillin' sections with actual classes
+INSERT INTO CoreReqs
 (
-    CourseID,
-    CoreReq
+    RecommendedOrder,
+    CoreReq,
+    LeastCreditGiven,
+    SuggestedClass
 )
 VALUES
 (
-    'MATH 11',
-    'Mathematics'
+    1,
+    'CTW 1',
+    4,
+    'CTW 1'
 ),
 (
-    'CSCI 10 and L',
+    2,
+    'Culture and Ideas 1',
+    4,
+    'Culture and Ideas 1'
+),
+(
+    3,
+    'Mathematics',
+    4,
+    'MATH 11'
+),
+(
+    4,
+    'CTW 2',
+    4,
+    'CTW 2'
+),
+(
+    5,
+    'Culture and Ideas 2',
+    4,
+    'Culture and Ideas 2'
+),
+(
+    6,
+    'Diversity',
+    4,
+    'Diversity'
+),
+(
+    7,
+    'RTC 1',
+    4,
+    'RTC 1'
+),
+(
+    8,
+    'Natural Science',
+    4,
+    'Natural Science'
+),
+(
+    9,
+    'Social Science',
+    4,
+    'Social Science'
+),
+(
+    10,
+    'RTC 2',
+    5,
+    'RTC 2'
+),
+(
+    11,
+    'Civic Engagement',
+    4,
+    'Civic Engagement'
+),
+(
+    12,
+    'Language 1',
+    4,
+    'Language 1'
+),
+(
+    13,
+    'Advanced Writing',
+    4,
+    'Advanced Writing'
+),
+(
+    14,
+    'Language 2',
+    4,
+    'Language 2'
+),
+(
+    15,
+    'Ethics',
+    4,
+    'Ethics'
+),
+(
+    16,
+    'Culture and Ideas 3',
+    4,
+    'Culture and Ideas 3'
+),
+(
+    17,
+    'Science, Technology, and Society',
+    4,
     'Science, Technology, and Society'
+),
+(
+    18,
+    'ELSJ',
+    4,
+    'ELSJ'
+--  'ANTH 3'
+),
+(
+    19,
+    'RTC 3',
+    4,
+    'RTC 3'
+),
+(
+    20,
+    'Arts',
+    4,
+    'Arts'
 );
 
 INSERT INTO Prereqs
@@ -1913,11 +1915,11 @@ VALUES
     'Culture and Ideas 1',
     'Core'
 ),
---  (
---      3,
---      'Mathmatics',
---      'Core'
---  ),
+(
+    3,
+    'Mathematics',
+    'Core'
+),
 (
     4,
     'CTW 2',
@@ -1983,11 +1985,11 @@ VALUES
     'Culture and Ideas 3',
     'Core'
 ),
---  (
---      17,
---      'Science, Technology, and Society',
---      'Core'
---  ),
+(
+    17,
+    'Science, Technology, and Society',
+    'Core'
+),
 (
     18,
     'ELSJ',
@@ -2002,6 +2004,21 @@ VALUES
     20,
     'Arts',
     'Core'
+);
+
+INSERT INTO CoreClasses
+(
+    CourseID,
+    CoreReq
+)
+VALUES
+(
+    'MATH 11',
+    'Mathematics'
+),
+(
+    'CSCI 10 and L',
+    'Science, Technology, and Society'
 );
 
 DELETE FROM ConditionalReqs;
