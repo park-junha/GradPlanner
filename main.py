@@ -36,6 +36,11 @@ class scuClass:
         if VERBOSE_MODE is True: print("scuClass.pushPreReq(): Appending " + cID + " as prereq to scuClass object")
         self.preReqs.append(cID)
 
+    # Takes another scuObject with same cID as input and combines satisfies
+    # Doesn't check for duplicates
+    def doubleDip(self, obj):
+        self.satisfies.extend(obj.getSatisfies())
+
     def getID(self):
         return self.classInfo['classID']
 
@@ -207,7 +212,7 @@ class FourYearPlan:
                     if not prereqs:
                         prereqs = None
                     # Append the class
-                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': [satisfies]})
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': self.metadata['required'][cID].getSatisfies()})
                     # Add the class to the list of enrolled classes
                     enrolledClasses.append(cID)
                     # Increment number of classes enrolled in the quarter
@@ -397,11 +402,6 @@ def queryCoreSuggestions(major):
             FROM Classes AS a
             RIGHT JOIN CoreReqs AS b
             ON a.CourseID = b.SuggestedClass
-            WHERE (CoreReq) NOT IN (
-                SELECT CoreReq FROM CoreClasses
-                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
-                WHERE MajorName = \'""" + major + """\'
-            )
             ORDER BY b.RecommendedOrder ASC;"""
     return query
 
@@ -466,13 +466,21 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
-        creditsInPlan += creditGiven
         classObj = initClassObj(aClass)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
-        requiredMap[classID] = classObj
+        # Check if double dip
+        if classID in requiredMap:
+            if VERBOSE_MODE is True: print("Class double dips")
+            requiredMap[classID].doubleDip(classObj)
+            creditGiven = 0
+        else:
+            if VERBOSE_MODE is True: print("Class added to requiredMap")
+            requiredMap[classID] = classObj
+        if VERBOSE_MODE is True: requiredMap[classID].printDetails()
+        creditsInPlan += creditGiven
         if (classID in allClassesTaken and aClass[2] == major) or (aClass[2] in allClassesTaken and aClass[2] != major):
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven

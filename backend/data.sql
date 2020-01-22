@@ -50,13 +50,6 @@ VALUES
     175,
     7,
     18
-),
-(
-    'Core',
-    0,
-    0,
-    0,
-    0
 );
 
 DELETE FROM Classes;
@@ -81,6 +74,14 @@ VALUES
 (
     'Basic Drawing',
     'ARTS 30',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+    'Cultural Competence & Humility',
+    'CHST 4',
     'FWS',
     4,
     0,
@@ -744,6 +745,14 @@ VALUES
     1
 ),
 (
+    'Ways of Understanding Religion',
+    'RSOC 9',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
     'Elementary Spanish I',
     'SPAN 1',
     'F',
@@ -832,88 +841,16 @@ VALUES
     0
 ),
 (
-    'CTW 1',
-    'CTW 1',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'CTW 2',
-    'CTW 2',
-    'FWS',
-    4,
-    0,
-    1
-),
-(
-    'Mathematics Core',
-    'Mathematics Core',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
     'Advanced Writing',
     'Advanced Writing',
     'FWS',
-    5,
+    4,
     0,
     0
 ),
 (
     'Ethics',
     'Ethics',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Diversity',
-    'Diversity',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Arts',
-    'Arts',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Language 1',
-    'Language 1',
-    'F',
-    4,
-    0,
-    0
-),
-(
-    'Language 2',
-    'Language 2',
-    'W',
-    4,
-    0,
-    1
-),
-(
-    'Natural Science',
-    'Natural Science',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'RTC 1',
-    'RTC 1',
     'FWS',
     4,
     0,
@@ -936,48 +873,8 @@ VALUES
     0
 ),
 (
-    'Social Science',
-    'Social Science',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Culture and Ideas 1',
-    'Culture and Ideas 1',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Culture and Ideas 2',
-    'Culture and Ideas 2',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
     'Culture and Ideas 3',
     'Culture and Ideas 3',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Civic Engagement',
-    'Civic Engagement',
-    'FWS',
-    4,
-    0,
-    0
-),
-(
-    'Science, Technology, and Society',
-    'Science, Technology, and Society',
     'FWS',
     4,
     0,
@@ -1034,13 +931,13 @@ VALUES
     6,
     'Diversity',
     4,
-    'Diversity'
+    'CHST 4'
 ),
 (
     7,
     'RTC 1',
     4,
-    'RTC 1'
+    'RSOC 9'
 ),
 (
     8,
@@ -1052,7 +949,7 @@ VALUES
     9,
     'Social Science',
     4,
-    'Social Science'
+    'ANTH 3'
 ),
 (
     10,
@@ -1064,7 +961,7 @@ VALUES
     11,
     'Civic Engagement',
     4,
-    'Civic Engagement'
+    'CHST 4'
 ),
 (
     12,
@@ -1456,10 +1353,6 @@ VALUES
 (
     'PHYS 31',
     'PHYS 32'
-),
-(
-    'Language 1',
-    'Language 2'
 ),
 (
     'ENGL 1A',
@@ -1970,106 +1863,6 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
-),
-(
-    1,
-    'CTW 1',
-    'Core'
-),
-(
-    2,
-    'Culture and Ideas 1',
-    'Core'
-),
-(
-    3,
-    'Mathematics Core',
-    'Core'
-),
-(
-    4,
-    'CTW 2',
-    'Core'
-),
-(
-    5,
-    'Culture and Ideas 2',
-    'Core'
-),
-(
-    6,
-    'Diversity',
-    'Core'
-),
-(
-    7,
-    'RTC 1',
-    'Core'
-),
-(
-    8,
-    'Natural Science',
-    'Core'
-),
-(
-    9,
-    'Social Science',
-    'Core'
-),
-(
-    10,
-    'RTC 2',
-    'Core'
-),
-(
-    11,
-    'Civic Engagement',
-    'Core'
-),
-(
-    12,
-    'Language 1',
-    'Core'
-),
-(
-    13,
-    'Advanced Writing',
-    'Core'
-),
-(
-    14,
-    'Language 2',
-    'Core'
-),
-(
-    15,
-    'Ethics',
-    'Core'
-),
-(
-    16,
-    'Culture and Ideas 3',
-    'Core'
-),
-(
-    17,
-    'Science, Technology, and Society',
-    'Core'
-),
-(
-    18,
-    'ELSJ',
-    'Core'
-),
-(
-    19,
-    'RTC 3',
-    'Core'
-),
-(
-    20,
-    'Arts',
-    'Core'
 );
 
 INSERT INTO CoreClasses
