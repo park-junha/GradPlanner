@@ -402,6 +402,11 @@ def queryCoreSuggestions(major):
             FROM Classes AS a
             RIGHT JOIN CoreReqs AS b
             ON a.CourseID = b.SuggestedClass
+            WHERE (CoreReq) NOT IN (
+                SELECT CoreReq FROM CoreClasses
+                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+                WHERE MajorName = \'""" + major + """\'
+            )
             ORDER BY b.RecommendedOrder ASC;"""
     return query
 
