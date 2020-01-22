@@ -353,11 +353,49 @@ def getMysqlConn():
 
 # Query supported majors
 def queryMajors():
-    return "SELECT MajorName FROM MajornEmphasis WHERE MajorName != \'Core\';"
+    query = """
+            SELECT MajorName
+            FROM MajornEmphasis
+            WHERE MajorName != \'Core\';"""
+    return query
 
 # Query requisites of major
 def queryClasses(major):
-    return "SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven FROM Classes AS a LEFT JOIN MajorReqs AS b ON a.CourseID = b.CourseID WHERE MajorName = \'" + major + "\' ORDER BY b.RecommendedOrder ASC;"
+    query = """
+            SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            LEFT JOIN MajorReqs AS b
+            ON a.CourseID = b.CourseID
+            WHERE MajorName = \'""" + major + """\'
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
+
+# Query core requisities not already satisfied by major classes
+def queryCores(major):
+    query = """
+            SELECT CoreReq, LeastCreditGiven FROM CoreReqs
+            WHERE (CoreReq) NOT IN (
+                SELECT CoreReq FROM CoreClasses
+                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+                WHERE MajorName = \'""" + major + """\'
+            )
+            ORDER BY RecommendedOrder ASC;"""
+    return query
+
+# Query suggested classes for core requirements
+def queryCoreSuggestions(major):
+    query = """
+            SELECT a.CourseID, CourseName, CoreReq, QuarterOffered, CreditGiven
+            FROM Classes AS a
+            RIGHT JOIN CoreReqs AS b
+            ON a.CourseID = b.SuggestedClass
+            WHERE (CoreReq) NOT IN (
+                SELECT CoreReq FROM CoreClasses
+                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+                WHERE MajorName = \'""" + major + """\'
+            )
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
 
 # Create HTML id element for a string
 def createId(item):
@@ -381,6 +419,20 @@ def jsonifyMajors(queriedMajors):
         optionToAppend["id"] = createId(majorName)
         majors["options"].append(optionToAppend)
     return majors
+
+# Format queried classes to json
+def jsonifyCores(queriedCores):
+    classes = {"question": "Select all cores you've completed.", "options": [[],[],[]], "totalCredits": 0}
+    columnCounter = 0
+    for item in queriedCores:
+        optionToAppend = {}
+        classId = item[0]
+        optionToAppend["name"] = classId
+        optionToAppend["id"] = createId(classId)
+        classes["options"][columnCounter].append(optionToAppend)
+        columnCounter = (columnCounter + 1) % len(classes["options"])
+        classes["totalCredits"] += item[1]
+    return classes
 
 # Format queried classes to json
 def jsonifyClasses(queriedClasses):
@@ -413,7 +465,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
         requiredMap[classID] = classObj
-        if classID in allClassesTaken:
+        if (classID in allClassesTaken and aClass[2] == major) or (aClass[2] in allClassesTaken and aClass[2] != major):
             doneClassesMap[classID] = classObj
             creditsCompleted += creditGiven
     numOfElectives = 0
@@ -493,9 +545,9 @@ def selectRequisites():
     questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
     # Query all core requirements
-    cur.execute(queryClasses("Core"))
+    cur.execute(queryCores(userMajor['name']))
     queriedCores = cur.fetchall()
-    questionCores = jsonifyClasses(queriedCores)
+    questionCores = jsonifyCores(queriedCores)
 
     totalCredits = questionMajorClasses['totalCredits'] + questionCores['totalCredits']
     creditsAlert = generateCreditsAlert(totalCredits)
@@ -564,12 +616,10 @@ def schedule():
     # Query all requisites for major
     cur.execute(queryClasses(userMajor))
     queriedMajorClasses = cur.fetchall()
-    questionMajorClasses = jsonifyClasses(queriedMajorClasses)
 
     # Query all core requirements
-    cur.execute(queryClasses("Core"))
+    cur.execute(queryCoreSuggestions(userMajor))
     queriedCores = cur.fetchall()
-    questionCores = jsonifyClasses(queriedCores)
 
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores

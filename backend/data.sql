@@ -935,7 +935,7 @@ VALUES
 ),
 (
     3,
-    'Mathematics',
+    'Mathematics Core',
     4,
     'MATH 11'
 ),
@@ -2014,7 +2014,7 @@ INSERT INTO CoreClasses
 VALUES
 (
     'MATH 11',
-    'Mathematics'
+    'Mathematics Core'
 ),
 (
     'CSCI 10 and L',
