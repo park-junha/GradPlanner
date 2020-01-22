@@ -505,8 +505,7 @@ def selectRequisites():
     if VERBOSE_MODE is True: print(queriedCores)
     if VERBOSE_MODE is True: print(questionCores)
 
-    # Store all queried tuples in global variable
-    global allQueriedClasses
+    # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
 
     # Close connection to database
@@ -529,7 +528,7 @@ def schedule():
     coresTaken = replaceDashesWithSpacesInList(request.args.getlist('questionCoresTaken'))
     allClassesTaken = majorClassesTaken + coresTaken
 
-    print(request.args.get('major'))
+    userMajor = translateId(request.args.get('inputtedMajor'))
 
     try:
         startQuarter = request.args.get('startingQuarter')
@@ -562,8 +561,18 @@ def schedule():
         print("Invalid/no user input for electiveUnits. Defaulting to 0.")
         electiveUnits = 0
 
-    global allQueriedClasses
-    global userMajor
+    # Query all requisites for major
+    cur.execute(queryClasses(userMajor))
+    queriedMajorClasses = cur.fetchall()
+    questionMajorClasses = jsonifyClasses(queriedMajorClasses)
+
+    # Query all core requirements
+    cur.execute(queryClasses("Core"))
+    queriedCores = cur.fetchall()
+    questionCores = jsonifyClasses(queriedCores)
+
+    # Combine tuples of all queried classes
+    allQueriedClasses = queriedMajorClasses + queriedCores
 
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
@@ -584,9 +593,6 @@ def schedule():
     print("Connection to database closed.")
 
     return render_template('schedule.html', fourYearPlan=fourYearPlan)
-
-allQueriedMajors = None
-userMajor = None
 
 # Enable debugging when running
 if __name__ == '__main__':
