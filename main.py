@@ -186,6 +186,14 @@ class FourYearPlan:
             # Key-value pairs of what the class satisfies and the corresponding quarterMap key
             satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
 
+            # List of all core requirements
+            # HARD CODED -- might want to change to fetching data from database
+            coreRequisites = ["CTW 1", "CTW 2", "Mathematics Core", "Culture and Ideas 1", "Culture and Ideas 2", "Diversity", "RTC 1", "RTC 2", "Social Science", "Natural Science", "Language 1", "Language 2", "Advanced Writing", "Civic Engagement", "Ethics", "Culture and Ideas 3", "ELSJ", "RTC 3", "Arts", "Science, Technology, and Society"]
+
+            # Add each core requisite as a key with value coreClasses to satisfiesMap
+            for coreRequisite in coreRequisites:
+                satisfiesMap[coreRequisite] = 'coreClasses'
+
             # Go through all requisites to graduate
             for cID in self.metadata['required']:
                 # Only stores first element from satisfies member of scuClass
