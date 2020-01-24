@@ -20,7 +20,7 @@
                   </div>
                   <ul class="list-group list-group-flush">
                     {% for classDict in quarterDict['classes'] %}
-                      <li class="list-group-item" id="freshman_fall_course_1">{{ classDict['name'] }}
+                      <li class="list-group-item" id="freshman_fall_course_1">{% if classDict['isCore'] == True %}{% block coreSuggestedLabel %}<b>Suggested: </b>{% endblock coreSuggestedLabel %}{% endif %}{{ classDict['name'] }}
                         {% if classDict['units'] > 0 %}
                             <ul>
                               <li>Units: {{ classDict['units'] }}</li>

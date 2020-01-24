@@ -24,8 +24,8 @@ else:
 
 class scuClass:
     # NEED TO MAKE SAT A LIST, NOT A SINGLE VARIABLE
-    def __init__(self, cID = "", name = "", sat = None, quart = "", creds = 0):
-        self.classInfo = {'classID': cID, 'fullName': name, 'quarters': quart, 'credits': creds}
+    def __init__(self, cID = "", name = "", sat = None, quart = "", creds = 0, isCore = False):
+        self.classInfo = {'classID': cID, 'fullName': name, 'quarters': quart, 'credits': creds, 'isCore': isCore}
         self.preReqs = []
         if sat is None:
             self.satisfies = []
@@ -58,6 +58,9 @@ class scuClass:
 
     def getPrereqs(self):
         return self.preReqs
+
+    def getIsCore(self):
+        return self.classInfo['isCore']
 
     def printDetails(self):
         print("Class ID:", self.getID())
@@ -212,7 +215,7 @@ class FourYearPlan:
                     if not prereqs:
                         prereqs = None
                     # Append the class
-                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': self.metadata['required'][cID].getSatisfies()})
+                    plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['required'][cID].getCredits(), 'satisfies': self.metadata['required'][cID].getSatisfies(), 'isCore': self.metadata['required'][cID].getIsCore()})
                     # Add the class to the list of enrolled classes
                     enrolledClasses.append(cID)
                     # Increment number of classes enrolled in the quarter
@@ -317,14 +320,14 @@ def sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEm
     except:
         raise Exception("Could not generate SQL INSERT INTO statements")
 
-def initClassObj(queriedClass):
+def initClassObj(queriedClass, isCore):
     try:
         classID = queriedClass[0]
         className = queriedClass[1]
         classSatisfies = queriedClass[2]
         quartersOffered = queriedClass[3]
         creditGiven = queriedClass[4]
-        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven)
+        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore)
     except:
         print("Could not initialize scuClass object from query tuple")
         raise Exception("initClassObj(): Could not create scuClass object")
@@ -462,16 +465,18 @@ def jsonifyClasses(queriedClasses):
     return classes
 
 # Build a four year plan
-def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter, startYear, creditsCompleted = 0):
+def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter, startYear, creditsCompleted = 0):
     if VERBOSE_MODE is True: print("creditsCompleted:", creditsCompleted)
     requiredMap = {}
     doneClassesMap = {}
     creditsInPlan = creditsCompleted
-    for aClass in queriedClasses:
+    for aClassObject in classMetadata:
+        aClass = aClassObject['classTuple']
+        isCore = aClassObject['isCore']
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
-        classObj = initClassObj(aClass)
+        classObj = initClassObj(aClass, isCore)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
@@ -494,7 +499,7 @@ def createFourYearPlan(queriedClasses, allClassesTaken, major, cur, startQuarter
     while electiveCreditsNeeded(creditsInPlan, 175) > 0:
         numOfElectives += 1
         electiveKey = "Elective " + str(numOfElectives)
-        electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4))
+        electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4), False)
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
         if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
@@ -511,6 +516,12 @@ def generateCreditsAlert(totalCredits):
     if totalCredits < creditRequirement:
         message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
     return message
+
+def createClassMetadata(classTuples, isCore):
+    classMetadata = []
+    for classTuple in classTuples:
+        classMetadata.append({'classTuple': classTuple, 'isCore': isCore})
+    return classMetadata
 
 # Home page
 @app.route("/")
@@ -647,6 +658,10 @@ def schedule():
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
 
+    classMetadata = []
+    classMetadata.extend(createClassMetadata(queriedMajorClasses, False))
+    classMetadata.extend(createClassMetadata(queriedCores, True))
+
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
     if VERBOSE_MODE is True: print("electiveUnits:", electiveUnits)
@@ -657,7 +672,7 @@ def schedule():
 
     if VERBOSE_MODE is True: print("startYear:", startYear)
 
-    fourYearPlan = createFourYearPlan(allQueriedClasses, allClassesTaken, userMajor, cur, startQuarter, startYear, electiveUnits)
+    fourYearPlan = createFourYearPlan(classMetadata, allClassesTaken, userMajor, cur, startQuarter, startYear, electiveUnits)
 
     # Close connection to database
     cur.close()
