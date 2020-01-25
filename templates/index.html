@@ -10,16 +10,23 @@
   <!--------------------------Body section------------------------------>
   <section id="body_content">
     <div class="body_texts">
+      <div class="under_construction">
+        <img class="sign_under_construction" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction">
+        <h4>More awesome features will coming soon</h4>
+      </div>
       <div class="intro">
-        <h1 = class= "software_name">Course Planner</h1>
+        <h1 class= "software_name">Course Planner</h1>
         <h4>Create your four year plans for SCU</h4>
         <p>Start by press the "Get Started" button to enter all your preferences</p>
       </div>
       <div>
-        <button class="btn btn-secondary btn-lg get_started_button" type="button" name="button">
-          <a href="{{ url_for('selectMajor') }}">Get Started</a>
+        <button class="btn btn-secondary btn-lg get_started_button" type="button" name="button" onclick="location.href = '{{ url_for('selectMajor') }}'">
+          Get Started
         </button>
       </div>
+    </div>
+    <div class="version">
+      <h4 class="version-text">V 0.5.2</h4>
     </div>
   </section>
 </body>

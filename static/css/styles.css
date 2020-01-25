@@ -62,6 +62,10 @@ body {
   border-width: 0px;
 }
 
+.home {
+  background-color: #b30738;
+  border-width: 0px;
+}
 /*-------------------------------Body Section------------------*/
 #body_content {
   text-align: center;
@@ -74,5 +78,16 @@ body {
   margin-bottom: 50px;
 }
 
-.get_started_button {
+.under_construction {
+  margin: 40px 0;
+}
+
+.sign_under_construction {
+  width: 5rem;
+}
+
+.version-text {
+  text-align: right;
+  bottom: 0;
+  position: absolute;
 }
