@@ -6,6 +6,8 @@ DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
 DELETE FROM ConditionalReqs;
 
+DELETE FROM MinorReqs;
+
 DELETE FROM MajornEmphasis;
 INSERT INTO MajornEmphasis
 (
@@ -50,6 +52,19 @@ VALUES
     175,
     7,
     18
+);
+
+DELETE FROM Minors;
+INSERT INTO Minors
+(
+    MinorName
+)
+VALUES
+(
+    'Mathematics'
+),
+(
+    'Computer Science'
 );
 
 DELETE FROM Classes;
@@ -785,6 +800,22 @@ VALUES
     0
 ),
 (
+    'Upper Division CSCI Course',
+    'CSCI Upper I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'Upper Division CSCI Course',
+    'CSCI Upper II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
     'MATH 102, 105, or 153',
     'MATH Group A1',
     'FWS',
@@ -835,6 +866,30 @@ VALUES
 (
     'Upper Division MATH/CSCI Course',
     'MATH Group B4',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'Upper Division MATH Course',
+    'MATH Group C1',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'Upper Division MATH Course',
+    'MATH Group C2',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+    'Upper Division MATH Course',
+    'MATH Group C3',
     'FWS',
     5,
     0,
@@ -1863,6 +1918,94 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
+);
+
+INSERT INTO MinorReqs
+(
+    RecommendedOrder,
+    CourseID,
+    MinorName
+)
+VALUES
+(
+    1,
+    'MATH 11',
+    'Mathematics'
+),
+(
+    2,
+    'MATH 12',
+    'Mathematics'
+),
+(
+    3,
+    'MATH 13',
+    'Mathematics'
+),
+(
+    4,
+    'MATH 14',
+    'Mathematics'
+),
+(
+    5,
+    'MATH 53',
+    'Mathematics'
+),
+(
+    6,
+    'MATH Group C1',
+    'Mathematics'
+),
+(
+    7,
+    'MATH Group C2',
+    'Mathematics'
+),
+(
+    8,
+    'MATH Group C3',
+    'Mathematics'
+),
+(
+    1,
+    'CSCI 10 & L',
+    'Computer Science'
+),
+(
+    2,
+    'CSCI 60 & L',
+    'Computer Science'
+),
+(
+    3,
+    'CSCI 61',
+    'Computer Science'
+),
+(
+    4,
+    'MATH 51',
+    'Computer Science'
+),
+(
+    5,
+    'COEN 20 & L',
+    'Computer Science'
+),
+(
+    6,
+    'CSCI Upper I',
+    'Computer Science'
+),
+(
+    7,
+    'CSCI Upper II',
+    'Computer Science'
+),
+(
+    8,
+    'CSCI Emphasis IV',
+    'Computer Science'
 );
 
 INSERT INTO CoreClasses
