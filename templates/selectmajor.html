@@ -1,7 +1,7 @@
 {% extends "main.html" %} {% block content %}
 
 <head>
-  <title>SCU Course Planner</title>
+  <title>SCU Grad Planner</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/survey_styles.css') }}">
   <script src="{{ url_for('static', filename='js/survey.js') }}"></script>
 </head>
@@ -35,7 +35,9 @@
         </div>
       </div>
       <div>
-        <input type="submit" value="Submit" />
+        <button class="btn btn-secondary btn-lg get_started_button" type="submit">Submit</button>
+
+        <!--<input type="submit" value="Submit" />-->
       </div>
     </form>
 

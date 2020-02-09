@@ -58,10 +58,19 @@ h2 {
 }
 
 /*----------------------------Schedule------------------------*/
+.first-shown-year {
+  margin-top: 120px;
+}
 .Four-Year-Schedule {
   width: 30rem;
 }
 
-.save_button {
+.feedback_button {
   text-align: center;
+  margin-top: 50px;
+}
+
+.feedback-img {
+  width: 10%;
+  padding-right: 30px;
 }

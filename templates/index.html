@@ -1,8 +1,8 @@
 {% extends "main.html" %} {% block content %}
 
 <head>
-  <title>SCU Course Planner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>SCU Grad Planner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index_styles.css') }}">
 </head>
 
 <body>
@@ -11,12 +11,11 @@
   <section id="body_content">
     <div class="body_texts">
       <div class="under_construction">
-        <img class="sign_under_construction" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction">
-        <h4>More awesome features will be coming soon</h4>
+        <h4><img class="sign_under_construction_left" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction">More awesome features will be coming soon<img class="sign_under_construction_right" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction"></h4>
       </div>
       <div class="intro">
-        <h1 class= "software_name">Course Planner</h1>
-        <h4>Create your four year plans for SCU</h4>
+        <h1 class= "software_name">Grad Planner</h1>
+        <h4 class="under_construction_message">Create your four year plans for SCU</h4>
         <p>Start by press the "Get Started" button to enter all your preferences</p>
       </div>
       <div>
@@ -24,6 +23,9 @@
           Get Started
         </button>
       </div>
+    </div>
+    <div class="bottom-image">
+      <img class="graduation-img" src="{{ url_for('static', filename='img/home-button-img.jpg') }}" alt="graduation image">
     </div>
   </section>
 </body>

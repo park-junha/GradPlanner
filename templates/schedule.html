@@ -1,7 +1,7 @@
 {% extends "main.html" %} {% block content %}
 
 <head>
-  <title>SCU Course Planner</title>
+  <title>SCU Grad Planner</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/schedule_styles.css') }}">
 </head>
 
@@ -9,7 +9,7 @@
   <section id="body">
     <div class="container">
       {% for yearDict in fourYearPlan %}
-        <div class="{{ yearDict['year'] }}">
+        <div class="{{ yearDict['year'] }} first-shown-year">
           <h2 class="year_title">{{ yearDict['year'] }}</h2>
           <div class="card-columns d-flex justify-content-center">
             {% for quarterDict in yearDict['yearSchedule'] %}
@@ -53,8 +53,8 @@
           </div>
         </div>
       {% endfor %}
-      <div>
-        <button class="btn btn-secondary btn-lg save_button" type="button" name="button">Save</button>
+      <div class="feedback_button">
+        <button class="btn btn-secondary btn-lg" type="button" name="button" onclick ="window.open('https://docs.google.com/forms/d/1mu73PP8GWZPTFMBpU6t6EGmz7f6GfIz0yLDOJk9eGto/','_blank')" target="_blank"><img class="feedback-img" src="{{ url_for('static', filename='img/mail-512.png') }}">Feedback</button>
       </div>
     </div>
   </section>
