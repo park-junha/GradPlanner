@@ -12,22 +12,36 @@ DROP TABLE IF EXISTS ConditionalReqs;
 --  Drop MinorReqs before Classes, Minors
 DROP TABLE IF EXISTS MinorReqs;
 
+--  Drop MajornEmphasis before SCUSchools
 DROP TABLE IF EXISTS MajornEmphasis;
+DROP TABLE IF EXISTS Minors;
+
+DROP TABLE IF EXISTS SCUSchools;
+CREATE TABLE IF NOT EXISTS SCUSchools
+(
+    SchoolName VARCHAR(255) NOT NULL,
+    SchoolID VARCHAR(4) NOT NULL,
+    PRIMARY KEY (SchoolID)
+);
+
 CREATE TABLE IF NOT EXISTS MajornEmphasis
 (
     MajorName VARCHAR(255) NOT NULL,
+    SchoolID VARCHAR(255) NOT NULL,
     RequiredGPA INT NOT NULL,
     RequiredCredits INT NOT NULL,
     MinConditionalClasses INT NOT NULL,
     MinMajorClasses INT NOT NULL,
-    PRIMARY KEY (MajorName)
+    PRIMARY KEY (MajorName),
+    FOREIGN KEY (SchoolID) REFERENCES SCUSchools(SchoolID)
 );
 
-DROP TABLE IF EXISTS Minors;
 CREATE TABLE IF NOT EXISTS Minors
 (
     MinorName VARCHAR(255) NOT NULL,
-    PRIMARY KEY (MinorName)
+    SchoolID VARCHAR(255) NOT NULL,
+    PRIMARY KEY (MinorName),
+    FOREIGN KEY (SchoolID) REFERENCES SCUSchools(SchoolID)
 );
 
 DROP TABLE IF EXISTS Classes;

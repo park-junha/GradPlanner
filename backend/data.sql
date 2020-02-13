@@ -9,9 +9,32 @@ DELETE FROM ConditionalReqs;
 DELETE FROM MinorReqs;
 
 DELETE FROM MajornEmphasis;
+DELETE FROM Minors;
+
+DELETE FROM SCUSchools;
+INSERT INTO SCUSchools
+(
+    SchoolName,
+    SchoolID
+)
+VALUES
+(
+    'The College of Arts and Sciences',
+    'ASCI'
+),
+(
+    'The School of Engineering',
+    'ENGR'
+),
+(
+    'The Leavey School of Business',
+    'BUSN'
+);
+
 INSERT INTO MajornEmphasis
 (
     MajorName,
+    SchoolID,
     RequiredGPA,
     RequiredCredits,
     MinConditionalClasses,
@@ -20,6 +43,7 @@ INSERT INTO MajornEmphasis
 VALUES
 (
     'Computer Science, Algorithms and Complexity Emphasis',
+    'ASCI',
     2,
     175,
     2,
@@ -27,6 +51,7 @@ VALUES
 ),
 (
     'Computer Science, Data Science Emphasis', 
+    'ASCI',
     2,
     175,
     2,
@@ -34,6 +59,7 @@ VALUES
 ),
 (
     'Computer Science, Software Emphasis',
+    'ASCI',
     2,
     175,
     2,
@@ -41,6 +67,7 @@ VALUES
 ),
 (
     'Computer Science, Security Emphasis',
+    'ASCI',
     2,
     175,
     2,
@@ -48,23 +75,26 @@ VALUES
 ),
 (
     'Mathematics',
+    'ASCI',
     2,
     175,
     7,
     18
 );
 
-DELETE FROM Minors;
 INSERT INTO Minors
 (
-    MinorName
+    MinorName,
+    SchoolID
 )
 VALUES
 (
-    'Mathematics'
+    'Mathematics',
+    'ASCI'
 ),
 (
-    'Computer Science'
+    'Computer Science',
+    'ASCI'
 );
 
 DELETE FROM Classes;
