@@ -9,6 +9,9 @@ DROP TABLE IF EXISTS CoreReqs;
 DROP TABLE IF EXISTS MajorReqs;
 DROP TABLE IF EXISTS ConditionalReqs;
 
+--  Drop MinorReqs before Classes, Minors
+DROP TABLE IF EXISTS MinorReqs;
+
 DROP TABLE IF EXISTS MajornEmphasis;
 CREATE TABLE IF NOT EXISTS MajornEmphasis
 (
@@ -18,6 +21,13 @@ CREATE TABLE IF NOT EXISTS MajornEmphasis
     MinConditionalClasses INT NOT NULL,
     MinMajorClasses INT NOT NULL,
     PRIMARY KEY (MajorName)
+);
+
+DROP TABLE IF EXISTS Minors;
+CREATE TABLE IF NOT EXISTS Minors
+(
+    MinorName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (MinorName)
 );
 
 DROP TABLE IF EXISTS Classes;
@@ -67,6 +77,16 @@ CREATE TABLE IF NOT EXISTS MajorReqs
     PRIMARY KEY (CourseID, MajorName),
     FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
     FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
+);
+
+CREATE TABLE IF NOT EXISTS MinorReqs
+(
+    RecommendedOrder INT NOT NULL,
+    CourseID VARCHAR(255) NOT NULL,
+    MinorName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (CourseID, MinorName),
+    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
+    FOREIGN KEY (MinorName) REFERENCES Minors(MinorName)
 );
 
 CREATE TABLE IF NOT EXISTS ConditionalReqs
