@@ -380,7 +380,6 @@ def queryMajors(school):
             SELECT MajorName
             FROM MajornEmphasis
             WHERE SchoolID = \'""" + school + """\';"""
-    print(query)
     return query
 
 # Query requisites of major
