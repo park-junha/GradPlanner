@@ -9,7 +9,7 @@
 <body>
   <!---------------------------body section-------------------------->
   <section id="body_content">
-    <form action="/selectrequisites">
+    <form action="/selectmajor">
       <div class="body_texts">
         <div class="contexts">
           <div class="top_title">
@@ -17,13 +17,13 @@
           </div>
           <div class="card survey_name">
             <div class="card-header">
-              {{ questionMajors.question }}
+              {{ questionSchools.question }}
             </div>
             <ul class="list-group list-group-flush">
-              {% for option in questionMajors.options %}
+              {% for option in questionSchools.options %}
                 <li class="list-group-item">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="major" id="{{ option.id }}" value="{{ option.id }}">
+                    <input class="form-check-input" type="radio" name="school" id="{{ option.id }}" value="{{ option.id }}">
                     <label class="form-check-label" for="{{ option.id }}">
                       {{ option.name }}
                     </label>

@@ -2,3 +2,12 @@ body {
   background-color: #f6f6f6;
   margin-bottom: 50px;
 }
+
+.Course_Planner_Navbar {
+  background-color: #b30738;
+  padding: 0rem;
+  width: 100%;
+  top: 0;
+  position: fixed;
+  z-index: 100;
+}
