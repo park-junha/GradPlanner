@@ -367,12 +367,20 @@ def getMysqlConn():
     except:
         raise Exception("Could not connect to MySQL server.")
 
+# Query schools
+def querySchools():
+    query = """
+            SELECT SchoolID, SchoolName
+            FROM SCUSchools;"""
+    return query
+
 # Query supported majors
-def queryMajors():
+def queryMajors(school):
     query = """
             SELECT MajorName
             FROM MajornEmphasis
-            WHERE MajorName != \'Core\';"""
+            WHERE SchoolID = \'""" + school + """\';"""
+    print(query)
     return query
 
 # Query requisites of major
@@ -424,6 +432,16 @@ def translateId(item):
     item_id = replacePeriodsWithCommas(item)
     item_id = replaceDashesWithSpaces(item_id)
     return item_id
+
+# Format queried schools to json
+def jsonifySchools(queriedSchools):
+    schools = {"question": "Choose your school.", "options": [] }
+    for school in queriedSchools:
+        optionToAppend = {}
+        optionToAppend["name"] = school[1]
+        optionToAppend["id"] = school[0]
+        schools["options"].append(optionToAppend)
+    return schools
 
 # Format queried majors to json
 def jsonifyMajors(queriedMajors):
@@ -530,16 +548,43 @@ def createClassMetadata(classTuples, isCore):
 def index():
     return render_template('index.html')
 
+# SCU Undergraduate School selection page
+@app.route("/selectschool")
+def selectSchool():
+    # Connect to MySQL
+    db = getMysqlConn()
+    conn = db[0]
+    cur = db[1]
+
+    # Query schools from database
+    cur.execute(querySchools())
+    queriedSchools = cur.fetchall()
+    questionSchools = jsonifySchools(queriedSchools)
+
+    # Close connection to database
+    cur.close()
+    print("Cursor closed.")
+    conn.close()
+    print("Connection to database closed.")
+
+    return render_template('selectschool.html', questionSchools=questionSchools)
+
 # Input page (new survey page)
 @app.route("/selectmajor")
 def selectMajor():
+    # Get school input
+    school = request.args.get('school')
+
+    if school is None:
+        return redirect(url_for('selectSchool'))
+
     # Connect to MySQL
     db = getMysqlConn()
     conn = db[0]
     cur = db[1]
 
     # Query all majors available in database
-    cur.execute(queryMajors())
+    cur.execute(queryMajors(school))
     queriedMajors = cur.fetchall()
     questionMajors = jsonifyMajors(queriedMajors)
 
