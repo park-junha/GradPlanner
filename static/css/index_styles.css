@@ -34,6 +34,10 @@ body {
 .Course_Planner_Navbar {
   background-color: #b30738;
   padding: 0rem;
+  width: 100%;
+  top 0;
+  position: fixed;
+  z-index: 100;
 }
 
 .school_name {
@@ -71,7 +75,7 @@ body {
   text-align: center;
 }
 .intro {
-  padding-top: 80px;
+  padding-top: 50px;
 }
 
 .software_name {
@@ -79,15 +83,31 @@ body {
 }
 
 .under_construction {
-  margin: 40px 0;
+  margin: 20px 0;
+  display: inline-block;
+
 }
 
-.sign_under_construction {
-  width: 5rem;
+.sign_under_construction_left {
+  width: 3rem;
+  float: left;
+  margin-right: 20px;
 }
 
-.version-text {
+.sign_under_construction_right {
+  width: 3rem;
+  float: right;
+  margin-left: 20px;
+}
+
+.graduation-img {
+  width: 100%;
+  height: auto;
+  margin-top: 50px;
+}
+
+/* .version-text {
   text-align: right;
-  bottom: 0;
+  top: 0;
   position: absolute;
-}
+} */
