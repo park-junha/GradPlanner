@@ -1969,12 +1969,12 @@ VALUES
 ),
 (
     1,
-    'CSCI 10 & L',
+    'CSCI 10 and L',
     'Computer Science'
 ),
 (
     2,
-    'CSCI 60 & L',
+    'CSCI 60 and L',
     'Computer Science'
 ),
 (
@@ -1989,7 +1989,7 @@ VALUES
 ),
 (
     5,
-    'COEN 20 & L',
+    'COEN 20 and L',
     'Computer Science'
 ),
 (
