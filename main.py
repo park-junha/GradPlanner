@@ -24,8 +24,8 @@ else:
 
 class scuClass:
     # NEED TO MAKE SAT A LIST, NOT A SINGLE VARIABLE
-    def __init__(self, cID = "", name = "", sat = None, quart = "", creds = 0, isCore = False):
-        self.classInfo = {'classID': cID, 'fullName': name, 'quarters': quart, 'credits': creds, 'isCore': isCore}
+    def __init__(self, cID = "", name = "", sat = None, quart = "", creds = 0, isCore = False, isRequired = True):
+        self.classInfo = {'classID': cID, 'fullName': name, 'quarters': quart, 'credits': creds, 'isCore': isCore, 'isRequired': isRequired}
         self.preReqs = []
         if sat is None:
             self.satisfies = []
@@ -90,9 +90,10 @@ class scuClass:
 
 class FourYearPlan:
     # All constructor arguments are hash maps except for creditsAlreadyDone
-    def __init__(self, required, creditsAlreadyDone, major):
-        self.metadata = {'required': required, 'doneClasses': [], 'credits': creditsAlreadyDone, 'major': major}
+    def __init__(self, required, notRequired, creditsAlreadyDone, major):
+        self.metadata = {'required': required, 'notRequired': notRequired, 'doneClasses': [], 'credits': creditsAlreadyDone, 'major': major}
         self.preferences = {'maxClassCount': 4, 'maxMajorClasses': 2, 'maxCoreClasses': 2}
+        self.minUnits = 12
         self.quarters = ["F","W","S","F","W","S","F","W","S","F","W","S"]
 
     def completeClass(self, cID):
@@ -100,10 +101,18 @@ class FourYearPlan:
             self.metadata['doneClasses'].append(cID)
             self.metadata['credits'] += self.metadata['required'][cID].getCredits()
             if VERBOSE_MODE is True: print("Total credits completed:", self.metadata['credits'])
+        elif cID in self.metadata['notRequired']:
+            self.metadata['doneClasses'].append(cID)
+            self.metadata['credits'] += self.metadata['notRequired'][cID].getCredits()
+            if VERBOSE_MODE is True: print("Total credits completed:", self.metadata['credits'])
 
     def getClass(self, cID): # scuClass return value
         if cID in self.metadata['required']:
             return self.metadata['required'][cID]
+
+    def getNotRequiredClass(self, cID): # scuClass return value
+        if cID in self.metadata['notRequired']:
+            return self.metadata['notRequired'][cID]
 
     def feasible(self, cID, quarter, year):
         if VERBOSE_MODE is True: print("feasible(), cID:", cID)
@@ -119,6 +128,21 @@ class FourYearPlan:
             return False
         if VERBOSE_MODE is True: print("feasible() return", self.getClass(cID).available(quarter, year))
         return self.getClass(cID).available(quarter, year)
+
+    def feasibleNotRequired(self, cID, quarter, year):
+        if VERBOSE_MODE is True: print("feasible(), cID:", cID)
+        if VERBOSE_MODE is True: print("feasible(), quarter:", quarter)
+        if VERBOSE_MODE is True: print("feasible(), year:", year)
+        if VERBOSE_MODE is True: print("feasible(), self.metadata['doneClasses']:", self.metadata['doneClasses'])
+        if VERBOSE_MODE is True: print("feasible(), self.getClass(cID).getPrereqs():", self.getNotRequiredClass(cID).getPrereqs())
+        if cID in self.metadata['doneClasses']:
+            if VERBOSE_MODE is True: print("feasible() return False because class is done")
+            return False
+        if any(prereq not in self.metadata['doneClasses'] for prereq in self.getNotRequiredClass(cID).getPrereqs()):
+            if VERBOSE_MODE is True: print("feasible() return False because prereqs not met")
+            return False
+        if VERBOSE_MODE is True: print("feasible() return", self.getNotRequiredClass(cID).available(quarter, year))
+        return self.getNotRequiredClass(cID).available(quarter, year)
 
     def planComplete(self):
         if self.metadata['credits'] < 175:
@@ -192,7 +216,7 @@ class FourYearPlan:
             quarterMap = {'classCount': 0, 'majorClasses': 0, 'coreClasses': 0}
 
             # Key-value pairs of what the class satisfies and the corresponding quarterMap key
-            satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses'}
+            satisfiesMap = {self.metadata['major']: 'majorClasses', 'Core': 'coreClasses', 'Unit Requirement': 'coreClasses', 'Highly Recommended': 'majorClasses'}
 
             # List of all core requirements
             # HARD CODED -- might want to change to fetching data from database
@@ -201,6 +225,8 @@ class FourYearPlan:
             # Add each core requisite as a key with value coreClasses to satisfiesMap
             for coreRequisite in coreRequisites:
                 satisfiesMap[coreRequisite] = 'coreClasses'
+
+            unitsInQuarter = 0
 
             # Go through all requisites to graduate
             for cID in self.metadata['required']:
@@ -220,12 +246,46 @@ class FourYearPlan:
                     enrolledClasses.append(cID)
                     # Increment number of classes enrolled in the quarter
                     quarterMap['classCount'] += 1
+                    unitsInQuarter += self.metadata['required'][cID].getCredits()
                     # Increment majorClasses or coreClasses in quarterMap, depending on which of those categories the class falls under
                     if satisfies in satisfiesMap:
                         quarterMap[satisfiesMap[satisfies]] += 1
                 # Break out of the for loop if all preferences for the quarter are met
                 if self.allPreferencesMet(quarterMap):
                     break
+
+            # Iterate through the non-required classes if fewer than minimum units per quarter are scheduled
+            while unitsInQuarter < self.minUnits:
+                if VERBOSE_MODE is True: print("buildPlan(), adding recommended classes to satisfy minimum unit per quarter requirement")
+                # Go through all requisites to graduate
+                for cID in self.metadata['notRequired']:
+                    # Stop appending classes if more than minimum units per quarter
+                    if unitsInQuarter >= self.minUnits:
+                        break
+
+                    # Only stores first element from satisfies member of scuClass
+                    satisfies = self.metadata['notRequired'][cID].getSatisfies()[0]
+
+                    # Add class to plan if feasible and user preferences are met
+                    if self.feasibleNotRequired(cID, terms[quarter][0], year):
+                        # Get pre-requisites of the class
+                        if VERBOSE_MODE is True: print("buildPlan(), appending", cID, "to plan")
+                        prereqs = self.metadata['notRequired'][cID].getPrereqs()
+                        if not prereqs:
+                            prereqs = None
+                        # Append the class
+                        plan[currentYear]['yearSchedule'][quarter]['classes'].append({'name': cID, 'prereqs': prereqs, 'units': self.metadata['notRequired'][cID].getCredits(), 'satisfies': self.metadata['notRequired'][cID].getSatisfies(), 'isCore': self.metadata['notRequired'][cID].getIsCore()})
+                        # Add the class to the list of enrolled classes
+                        enrolledClasses.append(cID)
+                        # Increment number of classes enrolled in the quarter
+                        quarterMap['classCount'] += 1
+                        unitsInQuarter += self.metadata['notRequired'][cID].getCredits()
+                        # Increment majorClasses or coreClasses in quarterMap, depending on which of those categories the class falls under
+                        if satisfies in satisfiesMap:
+                            quarterMap[satisfiesMap[satisfies]] += 1
+                # If still less than minimum units per quarter, throw a warning in CONSOLE
+                print("WARNING: NOT ENOUGH CLASSES ON SOME QUARTERS")
+
             # Mark all enrolled classes for the quarter as complete
             for cID in enrolledClasses:
                 self.completeClass(cID)
@@ -245,8 +305,8 @@ class FourYearPlan:
             plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
         return plan
 
-def buildFourYearPlan(requiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
-    fourYearPlan = FourYearPlan(requiredMap, creditsCompleted, major)
+def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
+    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
     return fourYearPlan.buildPlan(year, startQuarter)
@@ -320,14 +380,14 @@ def sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEm
     except:
         raise Exception("Could not generate SQL INSERT INTO statements")
 
-def initClassObj(queriedClass, isCore):
+def initClassObj(queriedClass, isCore, isRequired):
     try:
         classID = queriedClass[0]
         className = queriedClass[1]
         classSatisfies = queriedClass[2]
         quartersOffered = queriedClass[3]
         creditGiven = queriedClass[4]
-        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore)
+        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore, isRequired)
     except:
         print("Could not initialize scuClass object from query tuple")
         raise Exception("initClassObj(): Could not create scuClass object")
@@ -420,6 +480,17 @@ def queryCoreSuggestions(major):
             ORDER BY b.RecommendedOrder ASC;"""
     return query
 
+# Query highly recommended classes of major
+def queryRecommendedClasses(major):
+    query = """
+            SELECT a.CourseID, CourseName, \'Highly Recommended\', QuarterOffered, CreditGiven
+            FROM Classes AS a
+            LEFT JOIN HighlySuggestedClasses AS b
+            ON a.CourseID = b.CourseID
+            WHERE MajorName = \'""" + major + """\'
+            ORDER BY b.RecommendedOrder ASC;"""
+    return query
+
 # Create HTML id element for a string
 def createId(item):
     item_id = replaceCommasWithPeriods(item)
@@ -485,19 +556,24 @@ def jsonifyClasses(queriedClasses):
 def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter, startYear, creditsCompleted = 0):
     if VERBOSE_MODE is True: print("creditsCompleted:", creditsCompleted)
     requiredMap = {}
+    notRequiredMap = {}
     doneClassesMap = {}
     creditsInPlan = creditsCompleted
     for aClassObject in classMetadata:
         aClass = aClassObject['classTuple']
         isCore = aClassObject['isCore']
+        isRequired = aClassObject['isRequired']
         classID = aClass[0]
         if VERBOSE_MODE is True: print("Handling queried tuple:", aClass)
         creditGiven = aClass[4]
-        classObj = initClassObj(aClass, isCore)
+        classObj = initClassObj(aClass, isCore, isRequired)
         cur.execute(queryPrereqs(aClass))
         queriedPrereqs = cur.fetchall()
         for prereq in queriedPrereqs:
             classObj.pushPreReq(prereq[0])
+        if isRequired is False:
+            notRequiredMap[classID] = classObj
+            continue
         # Check if double dip
         if classID in requiredMap:
             if VERBOSE_MODE is True: print("Class double dips")
@@ -516,11 +592,11 @@ def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter,
     while electiveCreditsNeeded(creditsInPlan, 175) > 0:
         numOfElectives += 1
         electiveKey = "Elective " + str(numOfElectives)
-        electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4), False)
+        electiveObj = initClassObj(('Elective', 'Elective', 'Unit Requirement', 'FWS', 4), False, False)
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
         if VERBOSE_MODE is True: print("creditsInPlan:", creditsInPlan)
-    return buildFourYearPlan(requiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
+    return buildFourYearPlan(requiredMap, notRequiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
 # Obtain number of additional elective credits needed
 def electiveCreditsNeeded(totalCredits, creditRequirement):
@@ -534,10 +610,10 @@ def generateCreditsAlert(totalCredits):
         message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
     return message
 
-def createClassMetadata(classTuples, isCore):
+def createClassMetadata(classTuples, isCore, isRequired):
     classMetadata = []
     for classTuple in classTuples:
-        classMetadata.append({'classTuple': classTuple, 'isCore': isCore})
+        classMetadata.append({'classTuple': classTuple, 'isCore': isCore, 'isRequired': isRequired})
     return classMetadata
 
 # Home page
@@ -699,13 +775,19 @@ def schedule():
     cur.execute(queryCoreSuggestions(userMajor))
     queriedCores = cur.fetchall()
 
+    # Query highly recommended classes for major
+    cur.execute(queryRecommendedClasses(userMajor))
+    queriedRecommendedClasses = cur.fetchall()
+
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
 
     classMetadata = []
-    classMetadata.extend(createClassMetadata(queriedMajorClasses, False))
-    classMetadata.extend(createClassMetadata(queriedCores, True))
+    classMetadata.extend(createClassMetadata(queriedMajorClasses, False, True))
+    classMetadata.extend(createClassMetadata(queriedCores, True, True))
+    classMetadata.extend(createClassMetadata(queriedRecommendedClasses, False, False))
 
+    if VERBOSE_MODE is True: print("classMetadata:", classMetadata)
     if VERBOSE_MODE is True: print("startQuarter:", startQuarter)
     if VERBOSE_MODE is True: print("startQuarter is string:", isinstance(startQuarter, str))
     if VERBOSE_MODE is True: print("electiveUnits:", electiveUnits)
