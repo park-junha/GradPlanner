@@ -1987,6 +1987,21 @@ VALUES
     'Computer Science, Algorithms and Complexity Emphasis'
 ),
 (
+    5,
+    'CSCI 181',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    6,
+    'MATH 101',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    7,
+    'MATH 103',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
     1,
     'CSCI 164',
     'Computer Science, Data Science Emphasis'
@@ -2003,6 +2018,16 @@ VALUES
 ),
 (
     4,
+    'COEN 122 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    5,
+    'COEN 178 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    6,
     'COEN 146 and L',
     'Computer Science, Data Science Emphasis'
 ),
@@ -2013,22 +2038,32 @@ VALUES
 ),
 (
     2,
-    'COEN 161 and L',
+    'COEN 122 and L',
     'Computer Science, Software Emphasis'
 ),
 (
     3,
-    'CSCI 183',
+    'COEN 161 and L',
     'Computer Science, Software Emphasis'
 ),
 (
     4,
-    'CSCI 168',
+    'CSCI 183',
     'Computer Science, Software Emphasis'
 ),
 (
     5,
+    'CSCI 168',
+    'Computer Science, Software Emphasis'
+),
+(
+    6,
     'CSCI 164',
+    'Computer Science, Software Emphasis'
+),
+(
+    7,
+    'CSCI 184',
     'Computer Science, Software Emphasis'
 ),
 (
@@ -2054,6 +2089,16 @@ VALUES
 (
     5,
     'COEN 178 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    6,
+    'COEN 122 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    7,
+    'CSCI 169',
     'Computer Science, Security Emphasis'
 );
 
