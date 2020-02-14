@@ -94,7 +94,6 @@ class FourYearPlan:
         self.metadata = {'required': required, 'notRequired': notRequired, 'doneClasses': [], 'credits': creditsAlreadyDone, 'major': major}
         self.preferences = {'maxClassCount': 4, 'maxMajorClasses': 2, 'maxCoreClasses': 2}
         self.minUnits = 12
-        self.quarters = ["F","W","S","F","W","S","F","W","S","F","W","S"]
 
     def completeClass(self, cID):
         if cID in self.metadata['required']:
@@ -127,7 +126,15 @@ class FourYearPlan:
             if VERBOSE_MODE is True: print("feasible() return False because prereqs not met")
             return False
         if VERBOSE_MODE is True: print("feasible() return", self.getClass(cID).available(quarter, year))
-        return self.getClass(cID).available(quarter, year)
+        # If fall, pass year as argument
+        # If not, pass year-1
+        # scuClass.available() takes school year's beginning year as argument
+        # But year is the actual year, not school year
+        # This is a workaround solution
+        if quarter is 'F':
+            return self.getClass(cID).available(quarter, year)
+        else:
+            return self.getClass(cID).available(quarter, year-1)
 
     def feasibleNotRequired(self, cID, quarter, year):
         if VERBOSE_MODE is True: print("feasible(), cID:", cID)
