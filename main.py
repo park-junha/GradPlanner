@@ -172,6 +172,7 @@ class FourYearPlan:
         plan = []
         currentYear = 0
         terms = ['Fall', 'Winter', 'Spring']
+        warning = None
 
         # Set quarter based on startQuarter argument
         try:
@@ -283,8 +284,11 @@ class FourYearPlan:
                         # Increment majorClasses or coreClasses in quarterMap, depending on which of those categories the class falls under
                         if satisfies in satisfiesMap:
                             quarterMap[satisfiesMap[satisfies]] += 1
-                # If still less than minimum units per quarter, throw a warning in CONSOLE
-                print("WARNING: NOT ENOUGH CLASSES ON SOME QUARTERS")
+                # If still less than minimum units per quarter, throw a warning
+                if unitsInQuarter < self.minUnits:
+                    warning = "WARNING: Could not schedule " + str(self.minUnits) + " units per quarter"
+                    print(warning)
+                    break
 
             # Mark all enrolled classes for the quarter as complete
             for cID in enrolledClasses:
@@ -303,7 +307,7 @@ class FourYearPlan:
         # Fill in the remainder of the academic year with empty quarters
         for emptyQuarter in range(quarter, len(terms)):
             plan[currentYear]['yearSchedule'].append({'quarter': terms[emptyQuarter], 'classes': []})
-        return plan
+        return {'warning': warning, 'plan': plan}
 
 def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
     fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
