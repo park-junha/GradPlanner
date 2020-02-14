@@ -8,7 +8,12 @@
 <body>
   <section id="body">
     <div class="container">
-      {% for yearDict in fourYearPlan %}
+      {% if fourYearPlan.warning is not none %}
+      <div>
+        <h2>{{ fourYearPlan.warning }}</h2>
+      </div>
+      {% endif %}
+      {% for yearDict in fourYearPlan.plan %}
         <div class="{{ yearDict['year'] }} first-shown-year">
           <h2 class="year_title">{{ yearDict['year'] }}</h2>
           <div class="card-columns d-flex justify-content-center">

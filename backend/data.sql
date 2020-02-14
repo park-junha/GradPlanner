@@ -4,6 +4,7 @@ DELETE FROM CoreClasses;
 DELETE FROM Prereqs;
 DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
+DELETE FROM HighlySuggestedClasses;
 DELETE FROM ConditionalReqs;
 
 DELETE FROM MinorReqs;
@@ -610,6 +611,14 @@ VALUES
     'MATH 53',
     'FWS',
     4,
+    0,
+    1
+),
+(
+    'Writing in the Mathematical Sciences',
+    'MATH 100',
+    'FWS',
+    5,
     0,
     1
 ),
@@ -1948,6 +1957,149 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
+);
+
+INSERT INTO HighlySuggestedClasses
+(
+    RecommendedOrder,
+    CourseID,
+    MajorName
+)
+VALUES
+(
+    1,
+    'MATH 175',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    2,
+    'MATH 176',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    3,
+    'MATH 178',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    4,
+    'CSCI 165',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    5,
+    'CSCI 181',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    6,
+    'MATH 101',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    7,
+    'MATH 103',
+    'Computer Science, Algorithms and Complexity Emphasis'
+),
+(
+    1,
+    'CSCI 164',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    2,
+    'CSCI 166',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    3,
+    'COEN 166 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    4,
+    'COEN 122 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    5,
+    'COEN 178 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    6,
+    'COEN 146 and L',
+    'Computer Science, Data Science Emphasis'
+),
+(
+    1,
+    'COEN 178 and L',
+    'Computer Science, Software Emphasis'
+),
+(
+    2,
+    'COEN 122 and L',
+    'Computer Science, Software Emphasis'
+),
+(
+    3,
+    'COEN 161 and L',
+    'Computer Science, Software Emphasis'
+),
+(
+    4,
+    'CSCI 183',
+    'Computer Science, Software Emphasis'
+),
+(
+    5,
+    'CSCI 168',
+    'Computer Science, Software Emphasis'
+),
+(
+    6,
+    'CSCI 164',
+    'Computer Science, Software Emphasis'
+),
+(
+    7,
+    'CSCI 184',
+    'Computer Science, Software Emphasis'
+),
+(
+    1,
+    'COEN 146 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    2,
+    'COEN 152 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    3,
+    'COEN 161 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    4,
+    'MATH 175',
+    'Computer Science, Security Emphasis'
+),
+(
+    5,
+    'COEN 178 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    6,
+    'COEN 122 and L',
+    'Computer Science, Security Emphasis'
+),
+(
+    7,
+    'CSCI 169',
+    'Computer Science, Security Emphasis'
 );
 
 INSERT INTO MinorReqs

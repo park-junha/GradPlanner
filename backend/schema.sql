@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS CoreReqs;
 
 --  Drop MajorReqs before Classes, MajornEmphasis
 DROP TABLE IF EXISTS MajorReqs;
+DROP TABLE IF EXISTS HighlySuggestedClasses;
 DROP TABLE IF EXISTS ConditionalReqs;
 
 --  Drop MinorReqs before Classes, Minors
@@ -17,6 +18,8 @@ DROP TABLE IF EXISTS MajornEmphasis;
 DROP TABLE IF EXISTS Minors;
 
 DROP TABLE IF EXISTS SCUSchools;
+
+--  This table stores the undergraduate schools of SCU
 CREATE TABLE IF NOT EXISTS SCUSchools
 (
     SchoolName VARCHAR(255) NOT NULL,
@@ -24,6 +27,7 @@ CREATE TABLE IF NOT EXISTS SCUSchools
     PRIMARY KEY (SchoolID)
 );
 
+--  This table stores SCU majors
 CREATE TABLE IF NOT EXISTS MajornEmphasis
 (
     MajorName VARCHAR(255) NOT NULL,
@@ -36,6 +40,7 @@ CREATE TABLE IF NOT EXISTS MajornEmphasis
     FOREIGN KEY (SchoolID) REFERENCES SCUSchools(SchoolID)
 );
 
+--  This table stores SCU minors
 CREATE TABLE IF NOT EXISTS Minors
 (
     MinorName VARCHAR(255) NOT NULL,
@@ -44,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Minors
     FOREIGN KEY (SchoolID) REFERENCES SCUSchools(SchoolID)
 );
 
+--  This table stores SCU classes
 DROP TABLE IF EXISTS Classes;
 CREATE TABLE IF NOT EXISTS Classes
 (
@@ -57,6 +63,7 @@ CREATE TABLE IF NOT EXISTS Classes
     PRIMARY KEY (CourseID)
 );
 
+--  This table stores the core requirements (not the classes)
 CREATE TABLE IF NOT EXISTS CoreReqs
 (
     RecommendedOrder INT NOT NULL,
@@ -67,6 +74,7 @@ CREATE TABLE IF NOT EXISTS CoreReqs
     FOREIGN KEY (SuggestedClass) REFERENCES Classes(CourseID)
 );
 
+--  This table defines what classes satisfy what core requirements
 CREATE TABLE IF NOT EXISTS CoreClasses
 (
     CourseID VARCHAR(255) NOT NULL,
@@ -75,6 +83,7 @@ CREATE TABLE IF NOT EXISTS CoreClasses
     FOREIGN KEY (CoreReq) REFERENCES CoreReqs(CoreReq)
 );
 
+--  This table defines what classes are prereqs for another class
 CREATE TABLE IF NOT EXISTS Prereqs
 (
     PreReqName VARCHAR(255) NOT NULL,
@@ -83,6 +92,7 @@ CREATE TABLE IF NOT EXISTS Prereqs
     FOREIGN KEY (CourseID) REFERENCES Classes(CourseID)
 );
 
+--  This table decides what classes are required for a major
 CREATE TABLE IF NOT EXISTS MajorReqs
 (
     RecommendedOrder INT NOT NULL,
@@ -93,6 +103,18 @@ CREATE TABLE IF NOT EXISTS MajorReqs
     FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
 );
 
+--  This table decides what classes are recommended for a major
+CREATE TABLE IF NOT EXISTS HighlySuggestedClasses
+(
+    RecommendedOrder INT NOT NULL,
+    CourseID VARCHAR(255) NOT NULL,
+    MajorName VARCHAR(255) NOT NULL,
+    PRIMARY KEY (CourseID, MajorName),
+    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
+    FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
+);
+
+--  This table decides what classes are required for a minor
 CREATE TABLE IF NOT EXISTS MinorReqs
 (
     RecommendedOrder INT NOT NULL,
@@ -103,6 +125,7 @@ CREATE TABLE IF NOT EXISTS MinorReqs
     FOREIGN KEY (MinorName) REFERENCES Minors(MinorName)
 );
 
+--  Unused table originally intended to fill in things like "MATH Group A1"
 CREATE TABLE IF NOT EXISTS ConditionalReqs
 (
     ConditionalID VARCHAR(255) NOT NULL,
