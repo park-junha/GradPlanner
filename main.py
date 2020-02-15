@@ -44,15 +44,17 @@ def getMysqlConn():
     except:
         raise Exception("Could not connect to MySQL server.")
 
-# String manipulation lambdas
+# String manipulation / list comprehension lambdas
 replaceDashesWithSpaces = lambda item : item.replace('-',' ')
 replaceSpacesWithDashes = lambda item : item.replace(' ','-')
 replaceCommasWithPeriods = lambda item : item.replace(',','.')
 replacePeriodsWithCommas = lambda item : item.replace('.',',')
+replaceDashesWithSpacesInList = lambda itemList : [ replaceDashesWithSpaces(item) for item in itemList ]
 concatenateMajorAndEmphasis = lambda major, emphasis : replaceDashesWithSpaces(major) + ", " + replaceDashesWithSpaces(emphasis) + " Emphasis"
 createId = lambda item : replaceSpacesWithDashes(replaceCommasWithPeriods(item))
 translateId = lambda item : replaceDashesWithSpaces(replacePeriodsWithCommas(item))
 electiveCreditsNeeded = lambda totalCredits, creditRequirement : creditRequirement - totalCredits
+createClassMetadata = lambda classTuples, isCore, isRequired : [ {'classTuple': classTuple, 'isCore': isCore, 'isRequired': isRequired} for classTuple in classTuples ]
 
 # MySQL queries
 querySchools = lambda : """
@@ -103,23 +105,16 @@ WHERE CourseID=\'""" + queriedClass[0] + "\'"
 # Initialize scuClass object
 initClassObj = lambda queriedClass, isCore, isRequired : scuClass(queriedClass[0], queriedClass[1], queriedClass[2], queriedClass[3], queriedClass[4], isCore, isRequired)
 
+# API lambdas
+jsonifySchools = lambda queriedSchools : {"question": "Choose your school.", "options": [ {'name': school[1], 'id': school[0]} for school in queriedSchools ] }
+jsonifyMajors = lambda queriedMajors : {"question": "Choose your major.", "options": [ {'name': major[0], 'id': createId(major[0])} for major in queriedMajors ] }
+
 # Create FourYearPlan object and build the schedule
 def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
     fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
     for doneClass in prevCompletedClassesMap:
         fourYearPlan.completeClass(doneClass)
     return fourYearPlan.buildPlan(year, startQuarter)
-
-# Replace dashes with spaces in a list
-def replaceDashesWithSpacesInList(itemList):
-    try:
-        returnList = []
-        for item in itemList:
-            returnList.append(replaceDashesWithSpaces(item))
-        return returnList
-    except:
-        print("Could not replace dashes with spaces in list")
-        return itemList
 
 # Generate message for credit total requisite satisfaction based on major/core classes needed
 def generateCreditsAlert(totalCredits):
@@ -128,34 +123,6 @@ def generateCreditsAlert(totalCredits):
     if totalCredits < creditRequirement:
         message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
     return message
-
-# Organize data on a list of tuples to a dictionary
-def createClassMetadata(classTuples, isCore, isRequired):
-    classMetadata = []
-    for classTuple in classTuples:
-        classMetadata.append({'classTuple': classTuple, 'isCore': isCore, 'isRequired': isRequired})
-    return classMetadata
-
-# Format queried schools to json
-def jsonifySchools(queriedSchools):
-    schools = {"question": "Choose your school.", "options": [] }
-    for school in queriedSchools:
-        optionToAppend = {}
-        optionToAppend["name"] = school[1]
-        optionToAppend["id"] = school[0]
-        schools["options"].append(optionToAppend)
-    return schools
-
-# Format queried majors to json
-def jsonifyMajors(queriedMajors):
-    majors = {"question": "Choose your major.", "options": [] }
-    for major in queriedMajors:
-        optionToAppend = {}
-        majorName = major[0]
-        optionToAppend["name"] = majorName
-        optionToAppend["id"] = createId(majorName)
-        majors["options"].append(optionToAppend)
-    return majors
 
 # Format queried classes to json
 def jsonifyCores(queriedCores):
