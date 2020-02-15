@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
-from fouryearplan import FourYearPlan, scuClass
+from gradplanner import FourYearPlan, scuClass
 
 import sys
 import json
@@ -15,7 +15,7 @@ if len(sys.argv) >= 2:
 # Otherwise exit program
 else:
     print("Usage: Enter password for MySQL server as 1st command line argument")
-    sys.exit(1)
+    raise Exception("No database password entered")
 
 def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
     fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
@@ -23,51 +23,14 @@ def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, cred
         fourYearPlan.completeClass(doneClass)
     return fourYearPlan.buildPlan(year, startQuarter)
 
-def getJson(jsonFileName):
-    with open(jsonFileName, 'r') as data_f:
-        dictFromJson = json.load(data_f)
-    return dictFromJson
-
-# Replace dashes with spaces in major and emphasis and then concatenate them
-def concatenateMajorAndEmphasis(major, emphasis):
-    try:
-        major = replaceDashesWithSpaces(major)
-        emphasis = replaceDashesWithSpaces(emphasis)
-        return major + ", " + emphasis + " Emphasis"
-    except:
-        raise TypeError("Major and emphasis could not be concatenated")
-
-# Replace dashes with spaces in an item
-def replaceDashesWithSpaces(item):
-    try:
-        return item.replace('-',' ')
-    except:
-        print("Dashes of item could not be replaced")
-        return item
-
-# Replace spaces with dashes in an item
-def replaceSpacesWithDashes(item):
-    try:
-        return item.replace(' ','-')
-    except:
-        print("Spaces of item could not be replaced")
-        return item
-
-# Replace commas with periods in an item
-def replaceCommasWithPeriods(item):
-    try:
-        return item.replace(',','.')
-    except:
-        print("Could not replace commas of item")
-        return item
-
-# Replace periods with commas in an item
-def replacePeriodsWithCommas(item):
-    try:
-        return item.replace('.',',')
-    except:
-        print("Could not replace periods of item")
-        return item
+replaceDashesWithSpaces = lambda item : item.replace('-',' ')
+replaceSpacesWithDashes = lambda item : item.replace(' ','-')
+replaceCommasWithPeriods = lambda item : item.replace(',','.')
+replacePeriodsWithCommas = lambda item : item.replace('.',',')
+concatenateMajorAndEmphasis = lambda major, emphasis : replaceDashesWithSpaces(major) + ", " + replaceDashesWithSpaces(emphasis) + " Emphasis"
+createId = lambda item : replaceSpacesWithDashes(replaceCommasWithPeriods(item))
+translateId = lambda item : replaceDashesWithSpaces(replacePeriodsWithCommas(item))
+electiveCreditsNeeded = lambda totalCredits, creditRequirement : creditRequirement - totalCredits
 
 # Replace dashes with spaces in a list
 def replaceDashesWithSpacesInList(itemList):
@@ -203,18 +166,6 @@ def queryRecommendedClasses(major):
             ORDER BY b.RecommendedOrder ASC;"""
     return query
 
-# Create HTML id element for a string
-def createId(item):
-    item_id = replaceCommasWithPeriods(item)
-    item_id = replaceSpacesWithDashes(item_id)
-    return item_id
-
-# Translate HTML id element for a string
-def translateId(item):
-    item_id = replacePeriodsWithCommas(item)
-    item_id = replaceDashesWithSpaces(item_id)
-    return item_id
-
 # Format queried schools to json
 def jsonifySchools(queriedSchools):
     schools = {"question": "Choose your school.", "options": [] }
@@ -303,9 +254,6 @@ def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter,
         creditsInPlan += 4
     return buildFourYearPlan(requiredMap, notRequiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
 
-# Obtain number of additional elective credits needed
-def electiveCreditsNeeded(totalCredits, creditRequirement):
-    return creditRequirement - totalCredits
 
 # Generate message for credit total requisite satisfaction based on major/core classes needed
 def generateCreditsAlert(totalCredits):
