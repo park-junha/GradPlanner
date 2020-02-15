@@ -7,6 +7,7 @@ import json
 import random
 import pymysql
 
+# Flask app
 app = Flask(__name__)
 
 # Set first command line argument as MySQL database password
@@ -17,64 +18,7 @@ else:
     print("Usage: Enter password for MySQL server as 1st command line argument")
     raise Exception("No database password entered")
 
-def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
-    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
-    for doneClass in prevCompletedClassesMap:
-        fourYearPlan.completeClass(doneClass)
-    return fourYearPlan.buildPlan(year, startQuarter)
-
-replaceDashesWithSpaces = lambda item : item.replace('-',' ')
-replaceSpacesWithDashes = lambda item : item.replace(' ','-')
-replaceCommasWithPeriods = lambda item : item.replace(',','.')
-replacePeriodsWithCommas = lambda item : item.replace('.',',')
-concatenateMajorAndEmphasis = lambda major, emphasis : replaceDashesWithSpaces(major) + ", " + replaceDashesWithSpaces(emphasis) + " Emphasis"
-createId = lambda item : replaceSpacesWithDashes(replaceCommasWithPeriods(item))
-translateId = lambda item : replaceDashesWithSpaces(replacePeriodsWithCommas(item))
-electiveCreditsNeeded = lambda totalCredits, creditRequirement : creditRequirement - totalCredits
-
-# Replace dashes with spaces in a list
-def replaceDashesWithSpacesInList(itemList):
-    try:
-        returnList = []
-        for item in itemList:
-            returnList.append(replaceDashesWithSpaces(item))
-        return returnList
-    except:
-        print("Could not replace dashes with spaces in list")
-        return itemList
-
-# Initialize Student INSERT SQL statement
-def sqlToStudent(studentID, quartersCompleted, maxQuarters, maxUnits, majorAndEmphasis, classes):
-    try:
-        query = ["INSERT INTO Student (StudentID, QuartersCompleted, MaxQuarters, MaxUnits, MajorEmphasis) VALUES (" + str(studentID) + ", " + str(quartersCompleted) + ", " + str(maxQuarters) + ", " + str(maxUnits) + ", \'" + majorAndEmphasis + "\');"]
-        numberOfClasses = len(classes)
-        for classesIndex in range(numberOfClasses):
-            value = "INSERT INTO CoursesTaken (CourseID, StudentID) VALUES (\'" + classes[classesIndex] + "\', " + str(studentID) + ");"
-            query.append(value)
-        return query
-    except:
-        raise Exception("Could not generate SQL INSERT INTO statements")
-
-def initClassObj(queriedClass, isCore, isRequired):
-    try:
-        classID = queriedClass[0]
-        className = queriedClass[1]
-        classSatisfies = queriedClass[2]
-        quartersOffered = queriedClass[3]
-        creditGiven = queriedClass[4]
-        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore, isRequired)
-    except:
-        print("Could not initialize scuClass object from query tuple")
-        raise Exception("initClassObj(): Could not create scuClass object")
-
-def queryPrereqs(queriedClass):
-    try:
-        classID = queriedClass[0]
-        return "SELECT PreReqName from Prereqs where CourseID=\'" + classID + "\'"
-    except:
-        print("Could not generate prerequisites query for class")
-        raise Exception("queryPrereqs(): Could not generate query")
-
+# Create a connection and cursor objects to database
 def getMysqlConn():
     try:
         # MySQL database information
@@ -102,69 +46,104 @@ def getMysqlConn():
     except:
         raise Exception("Could not connect to MySQL server.")
 
-# Query schools
-def querySchools():
-    query = """
-            SELECT SchoolID, SchoolName
-            FROM SCUSchools;"""
-    return query
+# Create FourYearPlan object and build the schedule
+def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
+    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
+    for doneClass in prevCompletedClassesMap:
+        fourYearPlan.completeClass(doneClass)
+    return fourYearPlan.buildPlan(year, startQuarter)
 
-# Query supported majors
-def queryMajors(school):
-    query = """
-            SELECT MajorName
-            FROM MajornEmphasis
-            WHERE SchoolID = \'""" + school + """\';"""
-    return query
+# Initialize scuClass objects
+def initClassObj(queriedClass, isCore, isRequired):
+    try:
+        classID = queriedClass[0]
+        className = queriedClass[1]
+        classSatisfies = queriedClass[2]
+        quartersOffered = queriedClass[3]
+        creditGiven = queriedClass[4]
+        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore, isRequired)
+    except:
+        print("Could not initialize scuClass object from query tuple")
+        raise Exception("initClassObj(): Could not create scuClass object")
 
-# Query requisites of major
-def queryClasses(major):
-    query = """
-            SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
-            FROM Classes AS a
-            LEFT JOIN MajorReqs AS b
-            ON a.CourseID = b.CourseID
-            WHERE MajorName = \'""" + major + """\'
-            ORDER BY b.RecommendedOrder ASC;"""
-    return query
+# String manipulation lambdas
+replaceDashesWithSpaces = lambda item : item.replace('-',' ')
+replaceSpacesWithDashes = lambda item : item.replace(' ','-')
+replaceCommasWithPeriods = lambda item : item.replace(',','.')
+replacePeriodsWithCommas = lambda item : item.replace('.',',')
+concatenateMajorAndEmphasis = lambda major, emphasis : replaceDashesWithSpaces(major) + ", " + replaceDashesWithSpaces(emphasis) + " Emphasis"
+createId = lambda item : replaceSpacesWithDashes(replaceCommasWithPeriods(item))
+translateId = lambda item : replaceDashesWithSpaces(replacePeriodsWithCommas(item))
+electiveCreditsNeeded = lambda totalCredits, creditRequirement : creditRequirement - totalCredits
 
-# Query core requisities not already satisfied by major classes
-def queryCores(major):
-    query = """
-            SELECT CoreReq, LeastCreditGiven FROM CoreReqs
-            WHERE (CoreReq) NOT IN (
-                SELECT CoreReq FROM CoreClasses
-                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
-                WHERE MajorName = \'""" + major + """\'
-            )
-            ORDER BY RecommendedOrder ASC;"""
-    return query
+# MySQL queries
+querySchools = lambda : """
+SELECT SchoolID, SchoolName
+FROM SCUSchools;"""
+queryMajors = lambda school : """
+SELECT MajorName
+FROM MajornEmphasis
+WHERE SchoolID = \'""" + school + """\';"""
+queryClasses = lambda major : """
+SELECT a.CourseID, CourseName, MajorName, QuarterOffered, CreditGiven
+FROM Classes AS a
+LEFT JOIN MajorReqs AS b
+ON a.CourseID = b.CourseID
+WHERE MajorName = \'""" + major + """\'
+ORDER BY b.RecommendedOrder ASC;"""
+queryCores = lambda major : """
+SELECT CoreReq, LeastCreditGiven FROM CoreReqs
+WHERE (CoreReq) NOT IN (
+    SELECT CoreReq FROM CoreClasses
+    LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+    WHERE MajorName = \'""" + major + """\'
+)
+ORDER BY RecommendedOrder ASC;"""
+queryCoreSuggestions = lambda major : """
+SELECT a.CourseID, CourseName, CoreReq, QuarterOffered, CreditGiven
+FROM Classes AS a
+RIGHT JOIN CoreReqs AS b
+ON a.CourseID = b.SuggestedClass
+WHERE (CoreReq) NOT IN (
+    SELECT CoreReq FROM CoreClasses
+    LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
+    WHERE MajorName = \'""" + major + """\'
+)
+ORDER BY b.RecommendedOrder ASC;"""
+queryRecommendedClasses = lambda major : """
+SELECT a.CourseID, CourseName, \'Highly Recommended\', QuarterOffered, CreditGiven
+FROM Classes AS a
+LEFT JOIN HighlySuggestedClasses AS b
+ON a.CourseID = b.CourseID
+WHERE MajorName = \'""" + major + """\'
+ORDER BY b.RecommendedOrder ASC;"""
+queryPrereqs = lambda queriedClass: "SELECT PreReqName from Prereqs where CourseID=\'" + queriedClass[0] + "\'"
 
-# Query suggested classes for core requirements
-def queryCoreSuggestions(major):
-    query = """
-            SELECT a.CourseID, CourseName, CoreReq, QuarterOffered, CreditGiven
-            FROM Classes AS a
-            RIGHT JOIN CoreReqs AS b
-            ON a.CourseID = b.SuggestedClass
-            WHERE (CoreReq) NOT IN (
-                SELECT CoreReq FROM CoreClasses
-                LEFT JOIN MajorReqs ON MajorReqs.CourseID = CoreClasses.CourseID
-                WHERE MajorName = \'""" + major + """\'
-            )
-            ORDER BY b.RecommendedOrder ASC;"""
-    return query
+# Replace dashes with spaces in a list
+def replaceDashesWithSpacesInList(itemList):
+    try:
+        returnList = []
+        for item in itemList:
+            returnList.append(replaceDashesWithSpaces(item))
+        return returnList
+    except:
+        print("Could not replace dashes with spaces in list")
+        return itemList
 
-# Query highly recommended classes of major
-def queryRecommendedClasses(major):
-    query = """
-            SELECT a.CourseID, CourseName, \'Highly Recommended\', QuarterOffered, CreditGiven
-            FROM Classes AS a
-            LEFT JOIN HighlySuggestedClasses AS b
-            ON a.CourseID = b.CourseID
-            WHERE MajorName = \'""" + major + """\'
-            ORDER BY b.RecommendedOrder ASC;"""
-    return query
+# Generate message for credit total requisite satisfaction based on major/core classes needed
+def generateCreditsAlert(totalCredits):
+    creditRequirement = 175
+    message = "Total credits from options: " + str(totalCredits) + "."
+    if totalCredits < creditRequirement:
+        message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
+    return message
+
+# Organize data on a list of tuples to a dictionary
+def createClassMetadata(classTuples, isCore, isRequired):
+    classMetadata = []
+    for classTuple in classTuples:
+        classMetadata.append({'classTuple': classTuple, 'isCore': isCore, 'isRequired': isRequired})
+    return classMetadata
 
 # Format queried schools to json
 def jsonifySchools(queriedSchools):
@@ -253,21 +232,6 @@ def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter,
         requiredMap[electiveKey] = electiveObj
         creditsInPlan += 4
     return buildFourYearPlan(requiredMap, notRequiredMap, doneClassesMap, creditsCompleted, major, startQuarter, startYear)
-
-
-# Generate message for credit total requisite satisfaction based on major/core classes needed
-def generateCreditsAlert(totalCredits):
-    creditRequirement = 175
-    message = "Total credits from options: " + str(totalCredits) + "."
-    if totalCredits < creditRequirement:
-        message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
-    return message
-
-def createClassMetadata(classTuples, isCore, isRequired):
-    classMetadata = []
-    for classTuple in classTuples:
-        classMetadata.append({'classTuple': classTuple, 'isCore': isCore, 'isRequired': isRequired})
-    return classMetadata
 
 # Home page
 @app.route("/")
@@ -430,6 +394,7 @@ def schedule():
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
 
+    # Organize information on queried tuples
     classMetadata = []
     classMetadata.extend(createClassMetadata(queriedMajorClasses, False, True))
     classMetadata.extend(createClassMetadata(queriedCores, True, True))
