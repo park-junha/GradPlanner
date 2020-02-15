@@ -3,8 +3,6 @@ from datetime import datetime, timedelta
 from gradplanner import FourYearPlan, scuClass
 
 import sys
-import json
-import random
 import pymysql
 
 # Flask app
@@ -45,26 +43,6 @@ def getMysqlConn():
         return [conn, cur]
     except:
         raise Exception("Could not connect to MySQL server.")
-
-# Create FourYearPlan object and build the schedule
-def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
-    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
-    for doneClass in prevCompletedClassesMap:
-        fourYearPlan.completeClass(doneClass)
-    return fourYearPlan.buildPlan(year, startQuarter)
-
-# Initialize scuClass objects
-def initClassObj(queriedClass, isCore, isRequired):
-    try:
-        classID = queriedClass[0]
-        className = queriedClass[1]
-        classSatisfies = queriedClass[2]
-        quartersOffered = queriedClass[3]
-        creditGiven = queriedClass[4]
-        return scuClass(classID, className, classSatisfies, quartersOffered, creditGiven, isCore, isRequired)
-    except:
-        print("Could not initialize scuClass object from query tuple")
-        raise Exception("initClassObj(): Could not create scuClass object")
 
 # String manipulation lambdas
 replaceDashesWithSpaces = lambda item : item.replace('-',' ')
@@ -117,7 +95,20 @@ LEFT JOIN HighlySuggestedClasses AS b
 ON a.CourseID = b.CourseID
 WHERE MajorName = \'""" + major + """\'
 ORDER BY b.RecommendedOrder ASC;"""
-queryPrereqs = lambda queriedClass: "SELECT PreReqName from Prereqs where CourseID=\'" + queriedClass[0] + "\'"
+queryPrereqs = lambda queriedClass : """
+SELECT PreReqName
+FROM Prereqs
+WHERE CourseID=\'""" + queriedClass[0] + "\'"
+
+# Initialize scuClass object
+initClassObj = lambda queriedClass, isCore, isRequired : scuClass(queriedClass[0], queriedClass[1], queriedClass[2], queriedClass[3], queriedClass[4], isCore, isRequired)
+
+# Create FourYearPlan object and build the schedule
+def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
+    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
+    for doneClass in prevCompletedClassesMap:
+        fourYearPlan.completeClass(doneClass)
+    return fourYearPlan.buildPlan(year, startQuarter)
 
 # Replace dashes with spaces in a list
 def replaceDashesWithSpacesInList(itemList):
