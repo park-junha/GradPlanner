@@ -108,14 +108,6 @@ initClassObj = lambda queriedClass, isCore, isRequired : scuClass(queriedClass[0
 # API lambdas
 jsonifySchools = lambda queriedSchools : {"question": "Choose your school.", "options": [ {'name': school[1], 'id': school[0]} for school in queriedSchools ] }
 jsonifyMajors = lambda queriedMajors : {"question": "Choose your major.", "options": [ {'name': major[0], 'id': createId(major[0])} for major in queriedMajors ] }
-
-# Create FourYearPlan object and build the schedule
-def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
-    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
-    for doneClass in prevCompletedClassesMap:
-        fourYearPlan.completeClass(doneClass)
-    return fourYearPlan.buildPlan(year, startQuarter)
-
 totalCreditsMessage = lambda totalCredits : "Total credits from options: " + str(totalCredits) + "."
 generateCreditsAlert = lambda totalCredits, creditRequirement : totalCreditsMessage(totalCredits) if totalCredits >= creditRequirement else totalCreditsMessage(totalCredits) + " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
 
@@ -146,6 +138,13 @@ def jsonifyClasses(queriedClasses):
         columnCounter = (columnCounter + 1) % len(classes["options"])
         classes["totalCredits"] += item[4]
     return classes
+
+# Create FourYearPlan object and build the schedule
+def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, creditsCompleted, major, startQuarter, year):
+    fourYearPlan = FourYearPlan(requiredMap, notRequiredMap, creditsCompleted, major)
+    for doneClass in prevCompletedClassesMap:
+        fourYearPlan.completeClass(doneClass)
+    return fourYearPlan.buildPlan(year, startQuarter)
 
 # Build a four year plan
 def createFourYearPlan(classMetadata, allClassesTaken, major, cur, startQuarter, startYear, creditsCompleted = 0):
