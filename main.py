@@ -116,13 +116,8 @@ def buildFourYearPlan(requiredMap, notRequiredMap, prevCompletedClassesMap, cred
         fourYearPlan.completeClass(doneClass)
     return fourYearPlan.buildPlan(year, startQuarter)
 
-# Generate message for credit total requisite satisfaction based on major/core classes needed
-def generateCreditsAlert(totalCredits):
-    creditRequirement = 175
-    message = "Total credits from options: " + str(totalCredits) + "."
-    if totalCredits < creditRequirement:
-        message += " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
-    return message
+totalCreditsMessage = lambda totalCredits : "Total credits from options: " + str(totalCredits) + "."
+generateCreditsAlert = lambda totalCredits, creditRequirement : totalCreditsMessage(totalCredits) if totalCredits >= creditRequirement else totalCreditsMessage(totalCredits) + " Need " + str(electiveCreditsNeeded(totalCredits, creditRequirement)) + " credits of electives."
 
 # Format queried classes to json
 def jsonifyCores(queriedCores):
@@ -279,7 +274,7 @@ def selectRequisites():
     questionCores = jsonifyCores(queriedCores)
 
     totalCredits = questionMajorClasses['totalCredits'] + questionCores['totalCredits']
-    creditsAlert = generateCreditsAlert(totalCredits)
+    creditsAlert = generateCreditsAlert(totalCredits, 175)
 
     # Combine tuples of all queried classes
     allQueriedClasses = queriedMajorClasses + queriedCores
