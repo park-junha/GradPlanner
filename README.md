@@ -7,11 +7,12 @@ Originally named PlanForGrad / CoursePlanner. Cloned from repository (for CSCI 1
 Refer to the wiki for setup information: https://github.com/park-junha/PlanForGrad/wiki
 
 ## First-Time Setup
-1. Install `python3`, `pip3`, and `python3-venv`. You can use `brew` (Homebrew) to install on macOS or `apt-get` on Ubuntu / Debian to install these. (e.g. `brew install python3` on macOS, `sudo apt-get install python3` on Debian)
-2. Create a Python3 virtual environment with `python3 -m venv ~/.virtualenv/GradPlanner`
-3. Activate it with `source ~/.virtualenv/GradPlanner/bin/activate`
-4. Navigate to your local repository (`cd path/to/directory`)
-5. Run `pip3 install -r requirements.txt` to install all Python dependencies on the environment.
+1. Install `python3` and `pip3`. You can use `brew` (Homebrew) to install on macOS or `apt-get` on Ubuntu / Debian to install these. (e.g. `brew install python3` on macOS, `sudo apt-get install python3` on Debian)
+2. Install the Python3 virtual environment. On macOS, run `pip3 install virtualenv`, and on Ubuntu / Debian, run `sudo apt-get install python3-venv`.
+3. Create a Python3 virtual environment with `python3 -m venv ~/.virtualenv/GradPlanner`
+4. Activate it with `source ~/.virtualenv/GradPlanner/bin/activate`
+5. Navigate to your local repository (`cd path/to/directory`)
+6. Run `pip3 install -r requirements.txt` to install all Python dependencies on the environment.
 
 ## Running
 1. Start your virtual environment with `source ~/.virtualenv/GradPlanner/bin/activate`
