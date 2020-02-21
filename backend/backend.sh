@@ -1,5 +1,6 @@
 #!/bin/bash
 # Type password when prompted to access the database
+# THIS FILE WILL AUTHENTICATE YOU TO THE OLD MYSQL DATABASE
 
 MYSQLHOST="remotemysql.com"
 MYSQLUSER="ubxh2yqkZt"
