@@ -13,6 +13,7 @@ Refer to the wiki for setup information: https://github.com/park-junha/PlanForGr
 4. Activate it with `source ~/.virtualenv/GradPlanner/bin/activate`
 5. Navigate to your local repository (`cd path/to/directory`)
 6. Run `pip3 install -r requirements.txt` to install all Python dependencies on the environment.
+7. You need a file called `gradplanner_rds.py` to pass credentials to the database to the web application. Please obtain this from the project admin (jpark3@scu.edu). **IMPORTANT: DO NOT PUSH THIS FILE TO GITHUB!**
 
 ## Running
 1. Start your virtual environment with `source ~/.virtualenv/GradPlanner/bin/activate`
