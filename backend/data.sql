@@ -981,6 +981,22 @@ VALUES
     4,
     0,
     0
+),
+(
+    'Probability and Statistics',
+    'AMTH 108',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Electric Circuits I',
+    'ELEN 50 and L',
+    'FWS',
+    4,
+    0,
+    1
 );
 
 INSERT INTO CoreReqs
@@ -1459,7 +1475,192 @@ VALUES
 (
     'SPAN 1',
     'SPAN 2'
-);
+),
+(
+	'COEN 10 and L',
+    'COEN 11 and L'
+),
+(
+	'COEN 11 and L',
+    'COEN 12 and L'
+),
+(
+	'COEN 11 and L',
+    'COEN 20 and L'
+),
+(
+	'CSCI 60 and L',
+    'COEN 20 and L'
+),
+(
+	'MATH 13',
+    'COEN 44 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 70 and L'
+),
+(
+	'COEN 19',
+    'COEN 70 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 79 and L'
+),
+(
+	'COEN 19',
+    'COEN 79 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 120 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 122 and L'
+),
+(
+	'COEN 21 and L',
+    'COEN 122 and L'
+),
+(
+	'ELEN 50 and L',
+    'COEN 123 and L'
+),
+(
+	'COEN 11 and L',
+    'COEN 123 and L'
+),
+(
+	'COEN 21 and L',
+    'COEN 127 and L'
+),
+(
+	'AMTH 108',
+    'COEN 140 and L'
+),
+(
+	'MATH 53',
+    'COEN 140 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 140 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 145 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 146 and L'
+),
+(
+	'MATH 53',
+    'COEN 148 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 148 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 152 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 152 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 160 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 161 and L'
+),
+(
+	'COEN 146 and L',
+    'COEN 162 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 163 and L'
+),
+(
+	'COEN 161 and L',
+    'COEN 164 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 166 and L'
+),
+(
+	'COEN 19',
+    'COEN 166 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 168 and L'
+),
+(
+	'MATH 122',
+    'COEN 169'
+),
+(
+	'COEN 12 and L',
+    'COEN 169'
+),
+(
+	'COEN 12 and L',
+    'COEN 171'
+),
+(
+	'COEN 19',
+    'COEN 172 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 172 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 173 and L'
+),
+(
+	'COEN 19',
+    'COEN 173 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 174 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 175 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 175 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 177 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 177 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 178 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 179'
+)
+;
 
 INSERT INTO MajorReqs
 (
