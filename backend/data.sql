@@ -80,7 +80,16 @@ VALUES
     175,
     7,
     18
-);
+),
+(
+	'Mechanical Engineering',
+    'ENGR',
+    2,
+    175,
+    7,
+    18
+)
+;
 
 INSERT INTO Minors
 (
@@ -108,6 +117,270 @@ INSERT INTO Classes
     HasPrereqs
 )
 VALUES
+(
+	'Introduction to Programming',
+    'COEN 10 and L',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Advanced Programming',
+    'COEN 11 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+	'MECH Upper Div Elective II',
+    'MECH Upper Div Elective II',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'MECH Upper Div Elective I',
+    'MECH Upper Div Elective I',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Advanced Design III: Completion and Evaluation',
+    'MECH 196',
+    'S',
+    3,
+    0,
+    1
+),
+(
+	'Advanced Design II: Implementation',
+    'MECH 195',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Advanced Design I: Tools',
+    'MECH 194',
+    'F',
+    3,
+    0,
+    1
+),
+(
+	'Modern Instrumentation for Engineers',
+    'MECH 160 and L',
+    'FS',
+    5,
+    0,
+    1
+),
+(
+	'Control Systems, Analysis, and Design',
+    'MECH 142 and L',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Mechanical Vibrations',
+    'MECH 141 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+	'Dynamics',
+    'MECH 140',
+    'FS',
+    4,
+    0,
+    1
+),
+(
+	'Thermal Systems Design',
+    'MECH 125',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Heat Transfer',
+    'MECH 123 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+	'Fluid Mechanics',
+    'MECH 122 and L',
+    'FS',
+    5,
+    0,
+    1
+),
+(
+	'Thermodynamics',
+    'MECH 121',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Machine Design II',
+    'MECH 115',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Machine Design I',
+    'MECH 114',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Machining Laboratory',
+    'MECH 101L',
+    'F',
+    4,
+    0,
+    1
+),
+(
+	'Materials for Manufacturing Process',
+    'MECH 11',
+    'FW',
+    4,
+    0,
+    1
+),
+(
+	'Graphical Communication in Design',
+    'MECH 10 and L',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits I',
+    'ELEN 50 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
+	'Applied Programming in C',
+    'COEN 44 and L',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Mechanis II: Strength of Materials',
+    'CENG 43 and L',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Mechanics I: Statics',
+    'CENG 41',
+    'FW',
+    4,
+    0,
+    1
+),
+(
+	'Introduction to Engineering',
+    'ENGR 1 and L',
+    'FWS',
+    2,
+    0,
+    0
+),
+(
+	'Engineering Communications: Practical Writing and Presentation Skills for Engineers',
+    'ENGL 181',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Introduction to Mathematical Methods in Mechanical Engineering',
+    'MECH 102',
+    'FS',
+    4,
+    0,
+    0
+),
+(
+	'Physics for Scientists and Engineers III',
+    'PHYS 33',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Introduction to Materials Science Laboratory',
+    'MECH 15 and L',
+    'WS',
+    5,
+    0,
+    1    
+),
+(
+	'General Chemistry 1: Bonding and Energy',
+    'CHEM 11 and L',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Differential Equations',
+    'AMTH 106',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Probability and Statistics',
+    'AMTH 108',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Numerical Methods',
+    'AMTH 118',
+    'FS',
+    4,
+    0,
+    1
+),
 (
     'Intro to Cultural Anthropology',
     'ANTH 3',
@@ -1118,6 +1391,140 @@ INSERT INTO Prereqs
 )
 VALUES
 (
+	'MECH 195',
+    'MECH 196'
+),
+(
+	'MECH 194',
+    'MECH 195'
+),
+(
+	'MECH 115',
+    'MECH 194'
+),
+(
+	'MECH 141 and L',
+    'MECH 160 and L'
+),
+(
+	'MECH 123 and L',
+    'MECH 160 and L'
+),
+(
+	'MECH 141 and L',
+    'MECH 142 and L'
+),
+(
+	'MECH 140',
+    'MECH 141 and L'
+),
+(
+	'AMTH 106',
+    'MECH 141 and L'
+),
+(
+	'AMTH 106',
+    'MECH 140'
+),
+(
+	'MECH 123 and L',
+    'MECH 125'
+),
+(
+	'AMTH 118',
+    'MECH 123 and L'
+),
+(
+	'MECH 122 and L',
+    'MECH 123 and L'
+),
+(
+	'MECH 121',
+    'MECH 123 and L'
+),
+(
+	'MECH 140',
+    'MECH 122 and L'
+),
+(
+	'PHYS 32',
+    'MECH 121'
+),
+(
+	'MECH 114',
+    'MECH 115'
+),
+(
+	'CENG 43 and L',
+    'MECH 114'
+),
+(
+	'MECH 15 and L',
+    'MECH 114'
+),
+(
+	'MECH 10 and L',
+    'MECH 114'
+),
+/* MECH101 L Co-Req is MECH194*/
+(
+	'MECH 15 and L',
+    'MECH 11'
+),
+/*ELEN 50 and L Co-Req is PHY 33 */
+(
+	'MATH 13',
+    'COEN 44 and L'
+),
+(
+	'CENG 41',
+    'CENG 43 and L'
+),
+(
+	'PHYS 31',
+    'CENG 41'
+),
+(
+	'CHEM 11 and L',
+    'MECH 15 and L'
+),
+(
+	'PHYS 32',
+    'PHYS 33'
+),
+(
+	'MATH 12',
+    'PHYS 32'
+),
+(
+	'MATH 11',
+    'PHYS 31'
+),
+(
+	'COEN 10 and L',
+    'COEN 11 and L'
+),
+(
+	'AMTH 118',
+    'COEN 11 and L'
+),
+(
+	'AMTH 106',
+    'AMTH 118'
+),
+(
+	'ENGL 2A',
+    'ENGL 181'
+),
+(
+	'ENGL 1A',
+    'ENGL 181'
+),
+(
+	'MATH 13',
+    'AMTH 106'
+),
+(
     'CSCI 10 and L',
     'CSCI 60 and L'
 ),
@@ -1467,6 +1874,181 @@ INSERT INTO MajorReqs
     MajorName
 )
 VALUES
+(
+	1,
+    'MATH 11',
+    'Mechanical Engineering'
+),
+(
+	2,
+    'MECH 10 and L',
+    'Mechanical Engineering'
+),
+(
+	3,
+    'CHEM 11 and L',
+    'Mechanical Engineering'
+),
+(
+	4,
+    'ENGR 1 and L',
+    'Mechanical Engineering'
+),
+(
+	5,
+    'MATH 12',
+    'Mechanical Engineering'
+),
+(
+	6,
+    'PHYS 31',
+    'Mechanical Engineering'
+),
+(
+	7,
+    'MATH 13',
+    'Mechanical Engineering'
+),
+(
+	8,
+    'MECH 15 and L',
+    'Mechanical Engineering'
+),
+(
+	9,
+    'PHYS 32',
+    'Mechanical Engineering'
+),
+(
+	10,
+    'MATH 14',
+    'Mechanical Engineering'
+),
+(
+	11,
+    'PHYS 33',
+    'Mechanical Engineering'
+),
+(
+	12,
+    'CENG 41',
+    'Mechanical Engineering'
+),
+(
+	13,
+    'COEN 44 and L',
+    'Mechanical Engineering'
+),
+(
+	14,
+    'AMTH 106',
+    'Mechanical Engineering'
+),
+(
+	15,
+    'MECH 11',
+    'Mechanical Engineering'
+),
+(
+	16,
+    'ELEN 50 and L',
+    'Mechanical Engineering'
+),
+(
+	17,
+    'MECH 102',
+    'Mechanical Engineering'
+),
+(
+	18,
+    'MECH 121',
+    'Mechanical Engineering'
+),
+(
+	19,
+    'MECH 140',
+    'Mechanical Engineering'
+),
+(
+	20,
+    'CENG 43 and L',
+    'Mechanical Engineering'
+),
+(
+	21,
+    'AMTH 118',
+    'Mechanical Engineering'
+),
+(
+	22,
+    'MECH 122 and L',
+    'Mechanical Engineering'
+),
+(
+	23,
+    'MECH 123 and L',
+    'Mechanical Engineering'
+),
+(
+	24,
+    'MECH 141 and L',
+    'Mechanical Engineering'
+),
+(
+	25,
+    'MECH 114',
+    'Mechanical Engineering'
+),
+(
+	26,
+    'MECH 125',
+    'Mechanical Engineering'
+),
+(
+	27,
+    'MECH 142 and L',
+    'Mechanical Engineering'
+),
+(
+	28,
+    'MECH 115',
+    'Mechanical Engineering'
+),
+(
+	29,
+    'MECH 160 and L',
+    'Mechanical Engineering'
+),
+(
+	30,
+    'MECH 101L',
+    'Mechanical Engineering'
+),
+(
+	31,
+    'MECH 194',
+    'Mechanical Engineering'
+),
+(
+	32,
+    'MECH 195',
+    'Mechanical Engineering'
+),
+(
+	33,
+    'MECH 196',
+    'Mechanical Engineering'
+),
+(
+	34,
+    'MECH Upper Div Elective I',
+    'Mechanical Engineering'
+),
+(
+	35,
+    'MECH Upper Div Elective II',
+    'Mechanical Engineering'
+),
 (
     1,
     'CSCI 10 and L',
