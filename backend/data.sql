@@ -80,6 +80,22 @@ VALUES
     175,
     7,
     18
+),
+(
+	'Electrical Engineering, Mathematics and Natural Science',
+    'ENGR',
+    3,
+    190,
+    6,
+    25
+),
+(
+	'Electrical Engineering, Engineering',
+    'ENGR',
+    3,
+    190,
+    6,
+    25
 );
 
 INSERT INTO Minors
@@ -95,6 +111,10 @@ VALUES
 (
     'Computer Science',
     'ASCI'
+),
+(
+	'Electrical Engineering',
+    'ENGR'
 );
 
 DELETE FROM Classes;
@@ -980,6 +1000,249 @@ VALUES
     4,
     0,
     0
+),
+(
+	'Differential Equations',
+    'AMTH 106',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+	'Probability & Statistics',
+    'AMTH 108',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+	'General Chemistry I L&L',
+    'CHEM 11',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Physics:Science & Engr III',
+    'PHYS 33',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Physics Scientists & Engrs IV',
+    'PHYS 34',
+    'W',
+    5,
+    0,
+    0
+),
+(
+	'General Chemistry II L&L',
+    'CHEM 12',
+    'WS',
+    5,
+    0,
+    0
+),
+(
+	'Engineering Communications',
+    'ENGL 181',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+	'Intro to Engineering',
+    'ENGR 1',
+    'FWS',
+    1,
+    0,
+    0
+),
+(
+	'Introduction to Programming',
+    'COEN 10',
+    'F',
+    4,
+    0,
+    0
+),
+(
+	'Advanced Programming',
+    'COEN 11',
+    'FW',
+    4,
+    0,
+    0
+),
+(
+	'Abstract Data Types&Structures',
+    'COEN 12',
+    'WS',
+    4,
+    0,
+    0
+),
+(
+	'Energy and Matter',
+	'BIOL 1A',
+    'WS',
+    5,
+    0,
+    0
+),
+(
+	'Adv Electromagnet & Optics',
+    'PHYS 113',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Quantum Mechanics I',
+    'PHYS 121',
+    'W',
+    5,
+    0,
+    0
+),
+(
+	'Thermodynamics I',
+    'MECH 121',
+    'FWS',
+    4,
+    0,
+    0
+),
+(
+	'Emerging Areas: Electrical Engr',
+    'ELEN 20',
+    'W',
+    2,
+    0,
+    0
+),
+(
+	'Introduction to Logic Design',
+    'ELEN 21',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits I',
+    'ELEN 50',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits II',
+    'ELEN 100',
+    'W',
+    5,
+    0,
+    0
+),
+(
+	'Electromagnetics I',
+    'ELEN 104',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Linear Systems',
+    'ELEN 110',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Electronic Circuits I',
+    'ELEN 115',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Embedded Computing Systems',
+    'ELEN 120',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Intro to Senior Design Project',
+    'ELEN 192',
+    'S',
+    2,
+    0,
+    0
+),
+(
+	'Design Project I',
+    'ELEN 194',
+    'F',
+    2,
+    0,
+    0
+),
+(
+	'Design Project II',
+    'ELEN 195',
+    'W',
+    2,
+    0,
+    0
+),
+(
+	'Design Project III',
+    'ELEN 196',
+    'S',
+    2,
+    0,
+    0
+),
+(
+	'Device Electron for IC Design',
+    'ELEN 151',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Digital integrated Circuit Des',
+    'ELEN 153',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Intro to Nanotechnology',
+    'ELEN 156',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	
 );
 
 INSERT INTO CoreReqs
