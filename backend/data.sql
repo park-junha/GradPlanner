@@ -1007,7 +1007,7 @@ VALUES
     'FWS',
     4,
     0,
-    0
+    1
 ),
 (
 	'Probability & Statistics',
@@ -1015,7 +1015,7 @@ VALUES
     'FWS',
     4,
     0,
-    0
+    1
 ),
 (
 	'General Chemistry I L&L',
@@ -1031,7 +1031,7 @@ VALUES
     'F',
     5,
     0,
-    0
+    2
 ),
 (
 	'Physics Scientists & Engrs IV',
@@ -1039,7 +1039,7 @@ VALUES
     'W',
     5,
     0,
-    0
+    1
 ),
 (
 	'General Chemistry II L&L',
@@ -1047,7 +1047,7 @@ VALUES
     'WS',
     5,
     0,
-    0
+    1
 ),
 (
 	'Engineering Communications',
@@ -1079,7 +1079,7 @@ VALUES
     'FW',
     4,
     0,
-    0
+    1
 ),
 (
 	'Abstract Data Types&Structures',
@@ -1087,7 +1087,7 @@ VALUES
     'WS',
     4,
     0,
-    0
+    1
 ),
 (
 	'Energy and Matter',
@@ -1095,7 +1095,23 @@ VALUES
     'WS',
     5,
     0,
-    0
+    1
+),
+(
+	'Electromagnetic Theory I',
+    'PHYS 111',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Electromagnetic Theory II',
+    'PHYS 112',
+    'F',
+    5,
+    0,
+    1
 ),
 (
 	'Adv Electromagnet & Optics',
@@ -1103,7 +1119,7 @@ VALUES
     'S',
     5,
     0,
-    0
+    1
 ),
 (
 	'Quantum Mechanics I',
@@ -1111,7 +1127,7 @@ VALUES
     'W',
     5,
     0,
-    0
+    2
 ),
 (
 	'Thermodynamics I',
@@ -1119,7 +1135,7 @@ VALUES
     'FWS',
     4,
     0,
-    0
+    1
 ),
 (
 	'Emerging Areas: Electrical Engr',
@@ -1151,7 +1167,7 @@ VALUES
     'W',
     5,
     0,
-    0
+    1
 ),
 (
 	'Electromagnetics I',
@@ -1159,7 +1175,7 @@ VALUES
     'F',
     5,
     0,
-    0
+    2
 ),
 (
 	'Linear Systems',
@@ -1167,7 +1183,7 @@ VALUES
     'S',
     5,
     0,
-    0
+    1
 ),
 (
 	'Electronic Circuits I',
@@ -1175,7 +1191,7 @@ VALUES
     'S',
     5,
     0,
-    0
+    1
 ),
 (
 	'Embedded Computing Systems',
@@ -1183,7 +1199,7 @@ VALUES
     'F',
     5,
     0,
-    0
+    2
 ),
 (
 	'Intro to Senior Design Project',
@@ -1207,7 +1223,7 @@ VALUES
     'W',
     2,
     0,
-    0
+    1
 ),
 (
 	'Design Project III',
@@ -1215,15 +1231,23 @@ VALUES
     'S',
     2,
     0,
-    0
+    1
+),
+(
+	'Analog Integrated Cir Des',
+    'ELEN 116',
+    'W',
+    5,
+    0,
+    1
 ),
 (
 	'Device Electron for IC Design',
     'ELEN 151',
-    'S',
+    'W',
     5,
     0,
-    0
+    1
 ),
 (
 	'Digital integrated Circuit Des',
@@ -1231,7 +1255,7 @@ VALUES
     'S',
     5,
     0,
-    0
+    2
 ),
 (
 	'Intro to Nanotechnology',
@@ -1239,10 +1263,143 @@ VALUES
     'F',
     5,
     0,
-    0
+    2
 ),
 (
-	
+	'Control Systems',
+    'ELEN 130',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Digital Signal Processing',
+    'ELEN 133',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Chaos Theory, Metamathematics',
+    'ELEN 160',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Medical Imaging Systems',
+    'ELEN 167',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Electromagnetics II',
+    'ELEN 105',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Communication Systems',
+    'ELEN 141',
+    'F',
+    4,
+    0,
+    2
+),
+(
+	'Communication and Networking',
+    'ELEN 142',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Microwave Circuit Analysis',
+    'ELEN 144',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Intro to Power Electronics',
+    'ELEN 164',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Power Systems Analysis',
+    'ELEN 183',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Power Sys Stability & Control',
+    'ELEN 184',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Real-Time Embedded Systems',
+    'ELEN 121',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Computer Architecture',
+    'ELEN 122',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Mechatronics',
+    'ELEN 123',
+    'W',
+    5,
+    0,
+    2
+),
+(
+	'Advanced Logic Design',
+    'ELEN 127',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Information, Quantum Computing',
+    'ELEN 161',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Numerical Methods in Physics',
+    'PHYS 103',
+    'S',
+    5,
+    0,
+    1
 );
 
 INSERT INTO CoreReqs
@@ -1721,7 +1878,216 @@ VALUES
 (
     'SPAN 1',
     'SPAN 2'
+),
+(
+	'MATH 13',
+	'AMTH 106'
+),
+(
+	'MATH 14',
+    'AMTH 108'
+),
+(
+	'MATH 11',
+	'PHYS 31'
+),
+(
+	'PHYS 32',
+	'PHYS 33'
+),
+(
+	'MATH 12',
+    'PHYS 33'
+),
+(
+	'PHYS 33',
+	'PHYS 34'
+),
+(
+	'CHEM 11',
+	'CHEM 12'
+),
+(
+	'CHEM 11',
+	'BIOL 1A'
+),
+(
+	'AMTH 106',
+    'PHYS 111'
+),
+(
+	'PHYS 33',
+    'PHYS 111'
+),
+(
+	'PHYS 111',
+    'PHYS 112'
+),
+(
+	'PHYS 112',
+	'PHYS 113'
+),
+(
+	'AMTH 106',
+	'PHYS 103'
+),
+(
+	'PHYS 34',
+	'PHYS 121'
+),
+(
+	'PHYS 103',
+	'PHYS 121'
+),
+(
+	'COEN 10',
+	'COEN 11'
+),
+(
+	'COEN 11',
+	'COEN 12'
+),
+(
+	'PHYS 33',
+	'MECH 121'
+),
+(
+	'ELEN 50',
+	'ELEN 100'
+),
+(
+	'PHYS 33',
+	'ELEN 104'
+),
+(
+	'ELEN 50',
+    'ELEN 104'
+),
+(
+	'ELEN 100',
+	'ELEN 110'
+),
+(
+	'ELEN 50',
+	'ELEN 115'
+),
+(
+	'ELEN 21',
+	'ELEN 120'
+),
+(
+	'COEN 11',
+    'ELEN 120'
+),
+(
+	'ELEN 194',
+	'ELEN 195'
+),
+(
+	'ELEN 195',
+	'ELEN 196'
+),
+(
+	'ELEN 115',
+	'ELEN 116'
+),
+(
+	'ELEN 104',
+	'ELEN 151'
+),
+(
+	'ELEN 21',
+	'ELEN 153'
+),
+(
+	'ELEN 50',
+	'ELEN 153'
+),
+(
+	'PHYS 33',
+	'ELEN 156'
+),
+(
+	'PHYS 34',
+    'ELEN 156'
+),
+(
+	'ELEN 110',
+	'ELEN 130'
+),
+(
+	'ELEN 110',
+	'ELEN 133'
+),
+(
+	'ELEN 50',
+    'ELEN 133'
+),
+(
+	'AMTH 106',
+	'ELEN 160'
+),
+(
+	'ELEN 110',
+	'ELEN 167'
+),
+(
+	'ELEN 104',
+	'ELEN 105'
+),
+(
+	'ELEN 110',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 142'
+),
+(
+	'ELEN 105',
+	'ELEN 144'
+),
+(
+	'ELEN 115',
+	'ELEN 164'
+),
+(
+	'ELEN 100',
+	'ELEN 183'
+),
+(
+	'ELEN 183',
+	'ELEN 184'
+),
+(
+	'ELEN 120',
+	'ELEN 121'
+),
+(
+	'ELEN 21',
+	'ELEN 122'
+),
+(
+	'ELEN 50',
+	'ELEN 123'
+),
+(
+	'COEN 11',
+    'ELEN 123'
+),
+(
+	'ELEN 21',
+	'ELEN 127'
+),
+(
+	'AMTH 106',
+	'ELEN 161'
 );
+
 
 INSERT INTO MajorReqs
 (
