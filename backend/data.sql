@@ -88,8 +88,15 @@ VALUES
     175,
     7,
     18
-)
-;
+),
+(
+	'Electrical Engineering',
+    'ENGR',
+    3,
+    190,
+    6,
+    25
+);
 
 INSERT INTO Minors
 (
@@ -104,6 +111,10 @@ VALUES
 (
     'Computer Science',
     'ASCI'
+),
+(
+	'Electrical Engineering',
+    'ENGR'
 );
 
 DELETE FROM Classes;
@@ -230,14 +241,6 @@ VALUES
     1
 ),
 (
-	'Thermodynamics',
-    'MECH 121',
-    'FWS',
-    4,
-    0,
-    1
-),
-(
 	'Machine Design II',
     'MECH 115',
     'S',
@@ -356,22 +359,6 @@ VALUES
     5,
     0,
     0
-),
-(
-	'Differential Equations',
-    'AMTH 106',
-    'FWS',
-    4,
-    0,
-    1
-),
-(
-	'Probability and Statistics',
-    'AMTH 108',
-    'FWS',
-    4,
-    0,
-    1
 ),
 (
 	'Numerical Methods',
@@ -1253,7 +1240,433 @@ VALUES
     4,
     0,
     0
+),
+-- ELEN major courses start here
+(
+	'Differential Equations',
+    'AMTH 106',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Probability & Statistics',
+    'AMTH 108',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'General Chemistry I L&L',
+    'CHEM 11',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Physics Scientists & Engrs IV',
+    'PHYS 34',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'General Chemistry II L&L',
+    'CHEM 12',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Intro to Engineering',
+    'ENGR 1',
+    'FWS',
+    1,
+    0,
+    0
+),
+(
+	'Introduction to Programming',
+    'COEN 10',
+    'F',
+    4,
+    0,
+    0
+),
+(
+	'Advanced Programming',
+    'COEN 11',
+    'FW',
+    4,
+    0,
+    1
+),
+(
+	'Abstract Data Types&Structures',
+    'COEN 12',
+    'WS',
+    4,
+    0,
+    1
+),
+(
+	'Energy and Matter',
+	'BIOL 1A',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Electromagnetic Theory I',
+    'PHYS 111',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Electromagnetic Theory II',
+    'PHYS 112',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Adv Electromagnet & Optics',
+    'PHYS 113',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Quantum Mechanics I',
+    'PHYS 121',
+    'W',
+    5,
+    0,
+    2
+),
+(
+	'Thermodynamics I',
+    'MECH 121',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Emerging Areas: Electrical Engr',
+    'ELEN 20',
+    'W',
+    2,
+    0,
+    0
+),
+(
+	'Introduction to Logic Design',
+    'ELEN 21',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits I',
+    'ELEN 50',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits II',
+    'ELEN 100',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Electromagnetics I',
+    'ELEN 104',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Linear Systems',
+    'ELEN 110',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper III',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electronic Circuits I',
+    'ELEN 115',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Embedded Computing Systems',
+    'ELEN 120',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Intro to Senior Design Project',
+    'ELEN 192',
+    'S',
+    2,
+    0,
+    0
+),
+(
+	'Design Project I',
+    'ELEN 194',
+    'F',
+    2,
+    0,
+    0
+),
+(
+	'Design Project II',
+    'ELEN 195',
+    'W',
+    2,
+    0,
+    1
+),
+(
+	'Design Project III',
+    'ELEN 196',
+    'S',
+    2,
+    0,
+    1
+),
+(
+	'Analog Integrated Cir Des',
+    'ELEN 116',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Device Electron for IC Design',
+    'ELEN 151',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Digital integrated Circuit Des',
+    'ELEN 153',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Intro to Nanotechnology',
+    'ELEN 156',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Control Systems',
+    'ELEN 130',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Digital Signal Processing',
+    'ELEN 133',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Chaos Theory, Metamathematics',
+    'ELEN 160',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Medical Imaging Systems',
+    'ELEN 167',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Electromagnetics II',
+    'ELEN 105',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Communication Systems',
+    'ELEN 141',
+    'F',
+    4,
+    0,
+    2
+),
+(
+	'Communication and Networking',
+    'ELEN 142',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Microwave Circuit Analysis',
+    'ELEN 144',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Intro to Power Electronics',
+    'ELEN 164',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Power Systems Analysis',
+    'ELEN 183',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Power Sys Stability & Control',
+    'ELEN 184',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Real-Time Embedded Systems',
+    'ELEN 121',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Computer Architecture',
+    'ELEN 122',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Mechatronics',
+    'ELEN 123',
+    'W',
+    5,
+    0,
+    2
+),
+(
+	'Advanced Logic Design',
+    'ELEN 127',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Information, Quantum Computing',
+    'ELEN 161',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Numerical Methods in Physics',
+    'PHYS 103',
+    'S',
+    5,
+    0,
+    1
 );
+-- ELEN Major courses end here
 
 INSERT INTO CoreReqs
 (
@@ -1865,7 +2278,217 @@ VALUES
 (
     'SPAN 1',
     'SPAN 2'
+),
+--  ELEN Major pre-req start here
+(
+	'MATH 13',
+	'AMTH 106'
+),
+(
+	'MATH 14',
+    'AMTH 108'
+),
+(
+	'MATH 11',
+	'PHYS 31'
+),
+(
+	'PHYS 32',
+	'PHYS 33'
+),
+(
+	'MATH 12',
+    'PHYS 33'
+),
+(
+	'PHYS 33',
+	'PHYS 34'
+),
+(
+	'CHEM 11',
+	'CHEM 12'
+),
+(
+	'CHEM 11',
+	'BIOL 1A'
+),
+(
+	'AMTH 106',
+    'PHYS 111'
+),
+(
+	'PHYS 33',
+    'PHYS 111'
+),
+(
+	'PHYS 111',
+    'PHYS 112'
+),
+(
+	'PHYS 112',
+	'PHYS 113'
+),
+(
+	'AMTH 106',
+	'PHYS 103'
+),
+(
+	'PHYS 34',
+	'PHYS 121'
+),
+(
+	'PHYS 103',
+	'PHYS 121'
+),
+(
+	'COEN 10',
+	'COEN 11'
+),
+(
+	'COEN 11',
+	'COEN 12'
+),
+(
+	'PHYS 33',
+	'MECH 121'
+),
+(
+	'ELEN 50',
+	'ELEN 100'
+),
+(
+	'PHYS 33',
+	'ELEN 104'
+),
+(
+	'ELEN 50',
+    'ELEN 104'
+),
+(
+	'ELEN 100',
+	'ELEN 110'
+),
+(
+	'ELEN 50',
+	'ELEN 115'
+),
+(
+	'ELEN 21',
+	'ELEN 120'
+),
+(
+	'COEN 11',
+    'ELEN 120'
+),
+(
+	'ELEN 194',
+	'ELEN 195'
+),
+(
+	'ELEN 195',
+	'ELEN 196'
+),
+(
+	'ELEN 115',
+	'ELEN 116'
+),
+(
+	'ELEN 104',
+	'ELEN 151'
+),
+(
+	'ELEN 21',
+	'ELEN 153'
+),
+(
+	'ELEN 50',
+	'ELEN 153'
+),
+(
+	'PHYS 33',
+	'ELEN 156'
+),
+(
+	'PHYS 34',
+    'ELEN 156'
+),
+(
+	'ELEN 110',
+	'ELEN 130'
+),
+(
+	'ELEN 110',
+	'ELEN 133'
+),
+(
+	'ELEN 50',
+    'ELEN 133'
+),
+(
+	'AMTH 106',
+	'ELEN 160'
+),
+(
+	'ELEN 110',
+	'ELEN 167'
+),
+(
+	'ELEN 104',
+	'ELEN 105'
+),
+(
+	'ELEN 110',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 142'
+),
+(
+	'ELEN 105',
+	'ELEN 144'
+),
+(
+	'ELEN 115',
+	'ELEN 164'
+),
+(
+	'ELEN 100',
+	'ELEN 183'
+),
+(
+	'ELEN 183',
+	'ELEN 184'
+),
+(
+	'ELEN 120',
+	'ELEN 121'
+),
+(
+	'ELEN 21',
+	'ELEN 122'
+),
+(
+	'ELEN 50',
+	'ELEN 123'
+),
+(
+	'COEN 11',
+    'ELEN 123'
+),
+(
+	'ELEN 21',
+	'ELEN 127'
+),
+(
+	'AMTH 106',
+	'ELEN 161'
 );
+-- ELEN Major Ends here
 
 INSERT INTO MajorReqs
 (
@@ -2538,7 +3161,154 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
+),
+--  ELEN classes starts here
+(
+	1,
+    'MATH 11',
+    'Electrical Engineering'
+),
+(
+	2,
+    'CHEM 11',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ENGR 1',
+    'Electrical Engineering'
+),
+(
+	4,
+    'MATH 12',
+    'Electrical Engineering'
+),
+(
+	5,
+    'PHYS 31',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN 20',
+    'Electrical Engineering'
+),
+(
+	7,
+    'MATH 13',
+    'Electrical Engineering'
+),
+(
+	8,
+    'PHYS 32',
+    'Electrical Engineering'
+),
+(
+	9,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	10,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	11,
+    'COEN 10',
+    'Electrical Engineering'
+),
+(
+	12,
+    'MATH 14',
+    'Electrical Engineering'
+),
+(
+	13,
+    'PHYS 33',
+    'Electrical Engineering'
+),
+(
+	14,
+    'ELEN 100',
+    'Electrical Engineering'
+),
+(
+	15,
+    'COEN 11',
+    'Electrical Engineering'
+),
+(
+	16,
+    'AMTH 106',
+    'Electrical Engineering'
+),
+(
+	17,
+    'PHYS 34',
+    'Electrical Engineering'
+),
+(
+	18,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	19,
+    'COEN 12',
+    'Electrical Engineering'
+),
+(
+	20,
+    'ELEN 110',
+    'Electrical Engineering'
+),
+(
+	21,
+    'ELEN 104',
+    'Electrical Engineering'
+),
+(
+	22,
+    'ELEN 120',
+    'Electrical Engineering'
+),
+(
+	23,
+    'MECH 121',
+    'Electrical Engineering'
+),
+(
+	24,
+    'ENGL 181',
+    'Electrical Engineering'
+),
+(
+	25,
+    'AMTH 108',
+    'Electrical Engineering'
+),
+(
+	26,
+    'ELEN 192',
+    'Electrical Engineering'
+),
+(
+	27,
+    'ELEN 194',
+    'Electrical Engineering'
+),
+(
+	28,
+    'ELEN 195',
+    'Electrical Engineering'
+),
+(
+	29,
+    'ELEN 196',
+    'Electrical Engineering'
 );
+-- ELEN Classes end here
 
 INSERT INTO HighlySuggestedClasses
 (
@@ -2769,6 +3539,46 @@ VALUES
     8,
     'CSCI Emphasis IV',
     'Computer Science'
+),
+(
+	1,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	2,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	4,
+    'ELEN group I',
+    'Electrical Engineering'
+),
+(
+	5,
+    'ELEN group II',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN Upper I',
+    'Electrical Engineering'
+),
+(
+	7,
+    'ELEN Upper II',
+    'Electrical Engineering'
+),
+(
+	8,
+    'ELEN Upper III',
+    'Electrical Engineering'
 );
 
 INSERT INTO CoreClasses
