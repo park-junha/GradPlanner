@@ -82,15 +82,7 @@ VALUES
     18
 ),
 (
-	'Electrical Engineering, Mathematics and Natural Science',
-    'ENGR',
-    3,
-    190,
-    6,
-    25
-),
-(
-	'Electrical Engineering, Engineering',
+	'Electrical Engineering',
     'ENGR',
     3,
     190,
@@ -1001,6 +993,7 @@ VALUES
     0,
     0
 ),
+-- ELEN major courses start here
 (
 	'Differential Equations',
     'AMTH 106',
@@ -1184,6 +1177,46 @@ VALUES
     5,
     0,
     1
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper III',
+    'FWS',
+    5,
+    0,
+    0
 ),
 (
 	'Electronic Circuits I',
@@ -1401,6 +1434,7 @@ VALUES
     0,
     1
 );
+-- ELEN Major courses end here
 
 INSERT INTO CoreReqs
 (
@@ -1879,6 +1913,7 @@ VALUES
     'SPAN 1',
     'SPAN 2'
 ),
+--  ELEN Major pre-req start here
 (
 	'MATH 13',
 	'AMTH 106'
@@ -2087,7 +2122,7 @@ VALUES
 	'AMTH 106',
 	'ELEN 161'
 );
-
+-- ELEN Major Ends here
 
 INSERT INTO MajorReqs
 (
@@ -2585,7 +2620,154 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
+),
+--  ELEN classes starts here
+(
+	1,
+    'MATH 11',
+    'Electrical Engineering'
+),
+(
+	2,
+    'CHEM 11',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ENGR 1',
+    'Electrical Engineering'
+),
+(
+	4,
+    'MATH 12',
+    'Electrical Engineering'
+),
+(
+	5,
+    'PHYS 31',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN 20',
+    'Electrical Engineering'
+),
+(
+	7,
+    'MATH 13',
+    'Electrical Engineering'
+),
+(
+	8,
+    'PHYS 32',
+    'Electrical Engineering'
+),
+(
+	9,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	10,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	11,
+    'COEN 10',
+    'Electrical Engineering'
+),
+(
+	12,
+    'MATH 14',
+    'Electrical Engineering'
+),
+(
+	13,
+    'PHYS 33',
+    'Electrical Engineering'
+),
+(
+	14,
+    'ELEN 100',
+    'Electrical Engineering'
+),
+(
+	15,
+    'COEN 11',
+    'Electrical Engineering'
+),
+(
+	16,
+    'AMTH 106',
+    'Electrical Engineering'
+),
+(
+	17,
+    'PHYS 34',
+    'Electrical Engineering'
+),
+(
+	18,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	19,
+    'COEN 12',
+    'Electrical Engineering'
+),
+(
+	20,
+    'ELEN 110',
+    'Electrical Engineering'
+),
+(
+	21,
+    'ELEN 104',
+    'Electrical Engineering'
+),
+(
+	22,
+    'ELEN 120',
+    'Electrical Engineering'
+),
+(
+	23,
+    'MECH 121',
+    'Electrical Engineering'
+),
+(
+	24,
+    'ENGL 181',
+    'Electrical Engineering'
+),
+(
+	25,
+    'AMTH 108',
+    'Electrical Engineering'
+),
+(
+	26,
+    'ELEN 192',
+    'Electrical Engineering'
+),
+(
+	27,
+    'ELEN 194',
+    'Electrical Engineering'
+),
+(
+	28,
+    'ELEN 195',
+    'Electrical Engineering'
+),
+(
+	29,
+    'ELEN 196',
+    'Electrical Engineering'
 );
+-- ELEN Classes end here
 
 INSERT INTO HighlySuggestedClasses
 (
@@ -2816,6 +2998,46 @@ VALUES
     8,
     'CSCI Emphasis IV',
     'Computer Science'
+),
+(
+	1,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	2,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	4,
+    'ELEN group I',
+    'Electrical Engineering'
+),
+(
+	5,
+    'ELEN group II',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN Upper I',
+    'Electrical Engineering'
+),
+(
+	7,
+    'ELEN Upper II',
+    'Electrical Engineering'
+),
+(
+	8,
+    'ELEN Upper III',
+    'Electrical Engineering'
 );
 
 INSERT INTO CoreClasses
