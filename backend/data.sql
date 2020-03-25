@@ -43,6 +43,14 @@ INSERT INTO MajornEmphasis
 )
 VALUES
 (
+    'Computer Science and Engineering',
+    'ENGR',
+    3,
+    189,
+    2,
+    20
+),
+(
     'Computer Science, Algorithms and Complexity Emphasis',
     'ASCI',
     2,
@@ -109,6 +117,94 @@ INSERT INTO Classes
     HasPrereqs
 )
 VALUES
+(
+	'Introduction to Programming',
+    'COEN 10 and L',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Advanced Programming',
+    'COEN 11 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+    'Abstract Data Types and Structures',
+    'COEN 12 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
+    'Applied Programming in C',
+    'COEN 44 and L',
+    'F',
+    5,
+    0,
+    1
+),
+(
+    'Applied Programming in MATLAB',
+    'COEN 45 and L',
+    'F',
+    5,
+    0,
+    1
+),
+(
+    'Introduction to Web Technologies',
+    'COEN 60 and L',
+    'F',
+    5,
+    0,
+    0
+),
+(
+    'Object Oriented Programming and Advanced Data Structures',
+    'COEN 79 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
+    'Mechatronics',
+    'COEN 123 and L',
+    'W',
+    5,
+    0,
+    1
+),
+(
+    'Machine Learning and Data Mining',
+    'COEN 140 and L',
+    'FS',
+    5,
+    0,
+    1
+),
+(
+    'Intro to Formal Lang Thry & Compiler Construction',
+    'COEN 175 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+    'Theory of Algorithms',
+    'COEN 179',
+    'FWS',
+    4,
+    0,
+    1
+),
 (
     'Intro to Cultural Anthropology',
     'ANTH 3',
@@ -1498,14 +1594,6 @@ VALUES
 ),
 (
 	'COEN 12 and L',
-    'COEN 70 and L'
-),
-(
-	'COEN 19',
-    'COEN 70 and L'
-),
-(
-	'COEN 12 and L',
     'COEN 79 and L'
 ),
 (
@@ -1558,11 +1646,11 @@ VALUES
 ),
 (
 	'MATH 53',
-    'COEN 148 and L'
+    'COEN 148'
 ),
 (
 	'COEN 12 and L',
-    'COEN 148 and L'
+    'COEN 148'
 ),
 (
 	'COEN 12 and L',
@@ -1669,6 +1757,76 @@ INSERT INTO MajorReqs
     MajorName
 )
 VALUES
+(
+    1,
+    'COEN 10 and L',
+    'Computer Science and Engineering'
+),
+(
+    2,
+    'COEN 11 and L',
+    'Computer Science and Engineering'
+),
+(
+    3,
+    'COEN 12 and L',
+    'Computer Science and Engineering'
+),
+(
+    4,
+    'COEN 19',
+    'Computer Science and Engineering'
+),
+(
+    5,
+    'COEN 21 and L',
+    'Computer Science and Engineering'
+),
+(
+    6,
+    'COEN 79 and L',
+    'Computer Science and Engineering'
+),
+(
+    7,
+    'COEN 20 and L',
+    'Computer Science and Engineering'
+),
+(
+    8,
+    'COEN 177 and L',
+    'Computer Science and Engineering'
+),
+(
+    9,
+    'COEN 171 and L',
+    'Computer Science and Engineering'
+),
+(
+    10,
+    'COEN 146 and L',
+    'Computer Science and Engineering'
+),
+(
+    11,
+    'COEN 179',
+    'Computer Science and Engineering'
+),
+(
+    12,
+    'COEN 174 and L',
+    'Computer Science and Engineering'
+),
+(
+    13,
+    'COEN 175 and L',
+    'Computer Science and Engineering'
+),
+(
+    14,
+    'COEN 122 and L',
+    'Computer Science and Engineering'
+),
 (
     1,
     'CSCI 10 and L',
