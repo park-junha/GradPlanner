@@ -1597,7 +1597,7 @@ VALUES
     'COEN 79 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 79 and L'
 ),
 (
@@ -1670,7 +1670,7 @@ VALUES
 ),
 (
 	'COEN 146 and L',
-    'COEN 162 and L'
+    'COEN 162'
 ),
 (
 	'COEN 12 and L',
@@ -1685,7 +1685,7 @@ VALUES
     'COEN 166 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 166 and L'
 ),
 (
@@ -1705,7 +1705,7 @@ VALUES
     'COEN 171'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 172 and L'
 ),
 (
@@ -1717,7 +1717,7 @@ VALUES
     'COEN 173 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 173 and L'
 ),
 (
@@ -1774,7 +1774,7 @@ VALUES
 ),
 (
     4,
-    'COEN 19',
+    'MATH 51',
     'Computer Science and Engineering'
 ),
 (
@@ -1799,7 +1799,7 @@ VALUES
 ),
 (
     9,
-    'COEN 171 and L',
+    'COEN 171',
     'Computer Science and Engineering'
 ),
 (
