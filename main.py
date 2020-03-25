@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 from gradplanner import FourYearPlan, scuClass
+from gradplanner_rds import MYSQLHOST, MYSQLPORT, MYSQLUSER, MYSQLDB
+from gradplanner_rds import MYSQLPW
 
 import sys
 import pymysql
@@ -8,24 +10,14 @@ import pymysql
 # Flask app
 app = Flask(__name__)
 
-# Set first command line argument as MySQL database password
-if len(sys.argv) >= 2:
-    MYSQLPW = str(sys.argv[1])
-# Otherwise exit program
-else:
-    print("Usage: Enter password for MySQL server as 1st command line argument")
-    raise Exception("No database password entered")
-
 # Create a connection and cursor objects to database
 def getMysqlConn():
     try:
         # MySQL database information
-        MYSQLHOST = 'remotemysql.com'
-        MYSQLPORT = 3306
-        MYSQLUSER = 'ubxh2yqkZt'
-        MYSQLDB = 'ubxh2yqkZt'
-#       MYSQLPW = None
-
+        global MYSQLHOST
+        global MYSQLPORT
+        global MYSQLUSER
+        global MYSQLDB 
         global MYSQLPW
 
         # MySQL connection

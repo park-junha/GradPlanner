@@ -126,13 +126,23 @@ CREATE TABLE IF NOT EXISTS MinorReqs
 );
 
 --  Unused table originally intended to fill in things like "MATH Group A1"
-CREATE TABLE IF NOT EXISTS ConditionalReqs
-(
-    ConditionalID VARCHAR(255) NOT NULL,
-    CourseID VARCHAR(255) NOT NULL,
-    MajorName VARCHAR(255) NOT NULL,
-    FOREIGN KEY (ConditionalID) REFERENCES Classes(CourseID),
-    FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
-    FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
-);
+--  CREATE TABLE IF NOT EXISTS ConditionalReqs
+--  (
+--      ConditionalID VARCHAR(255) NOT NULL,
+--      CourseID VARCHAR(255) NOT NULL,
+--      MajorName VARCHAR(255) NOT NULL,
+--      FOREIGN KEY (ConditionalID) REFERENCES Classes(CourseID),
+--      FOREIGN KEY (CourseID) REFERENCES Classes(CourseID),
+--      FOREIGN KEY (MajorName) REFERENCES MajornEmphasis(MajorName)
+--  );
 
+DESCRIBE SCUSchools;
+DESCRIBE MajornEmphasis;
+DESCRIBE Minors;
+DESCRIBE Classes;
+DESCRIBE CoreReqs;
+DESCRIBE CoreClasses;
+DESCRIBE Prereqs;
+DESCRIBE MajorReqs;
+DESCRIBE HighlySuggestedClasses;
+DESCRIBE MinorReqs;

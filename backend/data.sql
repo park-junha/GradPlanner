@@ -5,7 +5,6 @@ DELETE FROM Prereqs;
 DELETE FROM CoreReqs;
 DELETE FROM MajorReqs;
 DELETE FROM HighlySuggestedClasses;
-DELETE FROM ConditionalReqs;
 
 DELETE FROM MinorReqs;
 
@@ -89,6 +88,22 @@ VALUES
     175,
     7,
     18
+),
+(
+	'Mechanical Engineering',
+    'ENGR',
+    2,
+    175,
+    7,
+    18
+),
+(
+	'Electrical Engineering',
+    'ENGR',
+    3,
+    190,
+    6,
+    25
 );
 
 INSERT INTO Minors
@@ -104,6 +119,10 @@ VALUES
 (
     'Computer Science',
     'ASCI'
+),
+(
+	'Electrical Engineering',
+    'ENGR'
 );
 
 DELETE FROM Classes;
@@ -142,9 +161,57 @@ VALUES
     1
 ),
 (
+	'MECH Upper Div Elective II',
+    'MECH Upper Div Elective II',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
     'Applied Programming in C',
     'COEN 44 and L',
     'F',
+    5,
+    0,
+    1
+),
+(
+	'MECH Upper Div Elective I',
+    'MECH Upper Div Elective I',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Advanced Design III: Completion and Evaluation',
+    'MECH 196',
+    'S',
+    3,
+    0,
+    1
+),
+(
+	'Advanced Design II: Implementation',
+    'MECH 195',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Advanced Design I: Tools',
+    'MECH 194',
+    'F',
+    3,
+    0,
+    1
+),
+(
+	'Modern Instrumentation for Engineers',
+    'MECH 160 and L',
+    'FS',
     5,
     0,
     1
@@ -158,6 +225,22 @@ VALUES
     1
 ),
 (
+	'Control Systems, Analysis, and Design',
+    'MECH 142 and L',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Mechanical Vibrations',
+    'MECH 141 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
     'Introduction to Web Technologies',
     'COEN 60 and L',
     'F',
@@ -166,8 +249,88 @@ VALUES
     0
 ),
 (
+	'Dynamics',
+    'MECH 140',
+    'FS',
+    4,
+    0,
+    1
+),
+(
+	'Thermal Systems Design',
+    'MECH 125',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Heat Transfer',
+    'MECH 123 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
+	'Fluid Mechanics',
+    'MECH 122 and L',
+    'FS',
+    5,
+    0,
+    1
+),
+(
+	'Machine Design II',
+    'MECH 115',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Machine Design I',
+    'MECH 114',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Machining Laboratory',
+    'MECH 101L',
+    'F',
+    4,
+    0,
+    1
+),
+(
+	'Materials for Manufacturing Process',
+    'MECH 11',
+    'FW',
+    4,
+    0,
+    1
+),
+(
+	'Graphical Communication in Design',
+    'MECH 10 and L',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
     'Object Oriented Programming and Advanced Data Structures',
     'COEN 79 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
+	'Electric Circuits I',
+    'ELEN 50 and L',
     'FWS',
     5,
     0,
@@ -190,6 +353,14 @@ VALUES
     1
 ),
 (
+	'Mechanis II: Strength of Materials',
+    'CENG 43 and L',
+    'S',
+    5,
+    0,
+    1
+),
+(
     'Intro to Formal Lang Thry & Compiler Construction',
     'COEN 175 and L',
     'FW',
@@ -198,9 +369,73 @@ VALUES
     1
 ),
 (
+	'Mechanics I: Statics',
+    'CENG 41',
+    'FW',
+    4,
+    0,
+    1
+),
+(
     'Theory of Algorithms',
     'COEN 179',
     'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Introduction to Engineering',
+    'ENGR 1 and L',
+    'FWS',
+    2,
+    0,
+    0
+),
+(
+	'Engineering Communications: Practical Writing and Presentation Skills for Engineers',
+    'ENGL 181',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Introduction to Mathematical Methods in Mechanical Engineering',
+    'MECH 102',
+    'FS',
+    4,
+    0,
+    0
+),
+(
+	'Physics for Scientists and Engineers III',
+    'PHYS 33',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Introduction to Materials Science Laboratory',
+    'MECH 15 and L',
+    'WS',
+    5,
+    0,
+    1    
+),
+(
+	'General Chemistry 1: Bonding and Energy',
+    'CHEM 11 and L',
+    'F',
+    5,
+    0,
+    0
+),
+(
+	'Numerical Methods',
+    'AMTH 118',
+    'FS',
     4,
     0,
     1
@@ -488,7 +723,7 @@ VALUES
 (
     'Web Infrastructure',
     'COEN 162',
-    'FWS',
+    'S',
     4,
     0,
     1
@@ -1087,13 +1322,422 @@ VALUES
     1
 ),
 (
-	'Electric Circuits I',
-    'ELEN 50 and L',
+	'Differential Equations',
+    'AMTH 106',
     'FWS',
     4,
     0,
     1
+),
+(
+	'General Chemistry I L&L',
+    'CHEM 11',
+    'S',
+    5,
+    0,
+    0
+),
+(
+	'Physics Scientists & Engrs IV',
+    'PHYS 34',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'General Chemistry II L&L',
+    'CHEM 12',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Intro to Engineering',
+    'ENGR 1',
+    'FWS',
+    1,
+    0,
+    0
+),
+(
+	'Introduction to Programming',
+    'COEN 10',
+    'F',
+    4,
+    0,
+    0
+),
+(
+	'Advanced Programming',
+    'COEN 11',
+    'FW',
+    4,
+    0,
+    1
+),
+(
+	'Abstract Data Types&Structures',
+    'COEN 12',
+    'WS',
+    4,
+    0,
+    1
+),
+(
+	'Energy and Matter',
+	'BIOL 1A',
+    'WS',
+    5,
+    0,
+    1
+),
+(
+	'Electromagnetic Theory I',
+    'PHYS 111',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Electromagnetic Theory II',
+    'PHYS 112',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Adv Electromagnet & Optics',
+    'PHYS 113',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Quantum Mechanics I',
+    'PHYS 121',
+    'W',
+    5,
+    0,
+    2
+),
+(
+	'Thermodynamics I',
+    'MECH 121',
+    'FWS',
+    4,
+    0,
+    1
+),
+(
+	'Emerging Areas: Electrical Engr',
+    'ELEN 20',
+    'W',
+    2,
+    0,
+    0
+),
+(
+	'Introduction to Logic Design',
+    'ELEN 21',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits I',
+    'ELEN 50',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electric Circuits II',
+    'ELEN 100',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Electromagnetics I',
+    'ELEN 104',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Linear Systems',
+    'ELEN 110',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN 100 or ELEN 104 or ELEN 110',
+    'ELEN group II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'ELEN Upper Classes',
+    'ELEN Upper III',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'Electronic Circuits I',
+    'ELEN 115',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Embedded Computing Systems',
+    'ELEN 120',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Intro to Senior Design Project',
+    'ELEN 192',
+    'S',
+    2,
+    0,
+    0
+),
+(
+	'Design Project I',
+    'ELEN 194',
+    'F',
+    2,
+    0,
+    0
+),
+(
+	'Design Project II',
+    'ELEN 195',
+    'W',
+    2,
+    0,
+    1
+),
+(
+	'Design Project III',
+    'ELEN 196',
+    'S',
+    2,
+    0,
+    1
+),
+(
+	'Analog Integrated Cir Des',
+    'ELEN 116',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Device Electron for IC Design',
+    'ELEN 151',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Digital integrated Circuit Des',
+    'ELEN 153',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Intro to Nanotechnology',
+    'ELEN 156',
+    'F',
+    5,
+    0,
+    2
+),
+(
+	'Control Systems',
+    'ELEN 130',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Digital Signal Processing',
+    'ELEN 133',
+    'S',
+    5,
+    0,
+    2
+),
+(
+	'Chaos Theory, Metamathematics',
+    'ELEN 160',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Medical Imaging Systems',
+    'ELEN 167',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Electromagnetics II',
+    'ELEN 105',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Communication Systems',
+    'ELEN 141',
+    'F',
+    4,
+    0,
+    2
+),
+(
+	'Communication and Networking',
+    'ELEN 142',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Microwave Circuit Analysis',
+    'ELEN 144',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Intro to Power Electronics',
+    'ELEN 164',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Power Systems Analysis',
+    'ELEN 183',
+    'W',
+    4,
+    0,
+    1
+),
+(
+	'Power Sys Stability & Control',
+    'ELEN 184',
+    'S',
+    4,
+    0,
+    1
+),
+(
+	'Real-Time Embedded Systems',
+    'ELEN 121',
+    'S',
+    5,
+    0,
+    1
+),
+(
+	'Computer Architecture',
+    'ELEN 122',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Mechatronics',
+    'ELEN 123',
+    'W',
+    5,
+    0,
+    2
+),
+(
+	'Advanced Logic Design',
+    'ELEN 127',
+    'F',
+    5,
+    0,
+    1
+),
+(
+	'Information, Quantum Computing',
+    'ELEN 161',
+    'W',
+    5,
+    0,
+    1
+),
+(
+	'Numerical Methods in Physics',
+    'PHYS 103',
+    'S',
+    5,
+    0,
+    1
 );
+-- ELEN Major courses end here
 
 INSERT INTO CoreReqs
 (
@@ -1230,6 +1874,140 @@ INSERT INTO Prereqs
     CourseID
 )
 VALUES
+(
+	'MECH 195',
+    'MECH 196'
+),
+(
+	'MECH 194',
+    'MECH 195'
+),
+(
+	'MECH 115',
+    'MECH 194'
+),
+(
+	'MECH 141 and L',
+    'MECH 160 and L'
+),
+(
+	'MECH 123 and L',
+    'MECH 160 and L'
+),
+(
+	'MECH 141 and L',
+    'MECH 142 and L'
+),
+(
+	'MECH 140',
+    'MECH 141 and L'
+),
+(
+	'AMTH 106',
+    'MECH 141 and L'
+),
+(
+	'AMTH 106',
+    'MECH 140'
+),
+(
+	'MECH 123 and L',
+    'MECH 125'
+),
+(
+	'AMTH 118',
+    'MECH 123 and L'
+),
+(
+	'MECH 122 and L',
+    'MECH 123 and L'
+),
+(
+	'MECH 121',
+    'MECH 123 and L'
+),
+(
+	'MECH 140',
+    'MECH 122 and L'
+),
+(
+	'PHYS 32',
+    'MECH 121'
+),
+(
+	'MECH 114',
+    'MECH 115'
+),
+(
+	'CENG 43 and L',
+    'MECH 114'
+),
+(
+	'MECH 15 and L',
+    'MECH 114'
+),
+(
+	'MECH 10 and L',
+    'MECH 114'
+),
+/* MECH101 L Co-Req is MECH194*/
+(
+	'MECH 15 and L',
+    'MECH 11'
+),
+/*ELEN 50 and L Co-Req is PHY 33 */
+(
+	'MATH 13',
+    'COEN 44 and L'
+),
+(
+	'CENG 41',
+    'CENG 43 and L'
+),
+(
+	'PHYS 31',
+    'CENG 41'
+),
+(
+	'CHEM 11 and L',
+    'MECH 15 and L'
+),
+(
+	'PHYS 32',
+    'PHYS 33'
+),
+(
+	'MATH 12',
+    'PHYS 32'
+),
+(
+	'MATH 11',
+    'PHYS 31'
+),
+(
+	'COEN 10 and L',
+    'COEN 11 and L'
+),
+(
+	'AMTH 118',
+    'COEN 11 and L'
+),
+(
+	'AMTH 106',
+    'AMTH 118'
+),
+(
+	'ENGL 2A',
+    'ENGL 181'
+),
+(
+	'ENGL 1A',
+    'ENGL 181'
+),
+(
+	'MATH 13',
+    'AMTH 106'
+),
 (
     'CSCI 10 and L',
     'CSCI 60 and L'
@@ -1371,14 +2149,6 @@ VALUES
     'COEN 122 and L'
 ),
 (
-    'COEN 21 and L',
-    'COEN 122 and L'
-),
-(
-    'COEN 21 and L',
-    'COEN 127 and L'
-),
-(
     'CSCI 61',
     'COEN 145 and L'
 ),
@@ -1387,15 +2157,7 @@ VALUES
     'COEN 148'
 ),
 (
-    'MATH 53',
-    'COEN 148'
-),
-(
     'CSCI 61',
-    'COEN 152 and L'
-),
-(
-    'COEN 20 and L',
     'COEN 152 and L'
 ),
 (
@@ -1407,35 +2169,15 @@ VALUES
     'COEN 161 and L'
 ),
 (
-    'COEN 146 and L',
-    'COEN 162'
-),
-(
     'CSCI 61',
     'COEN 163 and L'
 ),
 (
-    'COEN 161 and L',
-    'COEN 164 and L'
-),
-(
     'CSCI 61',
     'COEN 166 and L'
 ),
 (
-    'MATH 51',
-    'COEN 166 and L'
-),
-(
-    'COEN 20 and L',
-    'COEN 168 and L'
-),
-(
     'CSCI 61',
-    'COEN 169'
-),
-(
-    'MATH 122',
     'COEN 169'
 ),
 (
@@ -1447,15 +2189,7 @@ VALUES
     'COEN 172 and L'
 ),
 (
-    'MATH 51',
-    'COEN 172 and L'
-),
-(
     'CSCI 61',
-    'COEN 173 and L'
-),
-(
-    'MATH 51',
     'COEN 173 and L'
 ),
 (
@@ -1568,13 +2302,206 @@ VALUES
     'HIST 11A',
     'HIST 12A'
 ),
+--  ELEN Major pre-req start here
+(
+	'MATH 14',
+    'AMTH 108'
+),
+(
+	'MATH 12',
+    'PHYS 33'
+),
+(
+	'PHYS 33',
+	'PHYS 34'
+),
+(
+	'CHEM 11',
+	'CHEM 12'
+),
+(
+	'CHEM 11',
+	'BIOL 1A'
+),
+(
+	'AMTH 106',
+    'PHYS 111'
+),
+(
+	'PHYS 33',
+    'PHYS 111'
+),
+(
+	'PHYS 111',
+    'PHYS 112'
+),
+(
+	'PHYS 112',
+	'PHYS 113'
+),
+(
+	'AMTH 106',
+	'PHYS 103'
+),
+(
+	'PHYS 34',
+	'PHYS 121'
+),
+(
+	'PHYS 103',
+	'PHYS 121'
+),
+(
+	'COEN 10',
+	'COEN 11'
+),
+(
+	'COEN 11',
+	'COEN 12'
+),
+(
+	'PHYS 33',
+	'MECH 121'
+),
+(
+	'ELEN 50',
+	'ELEN 100'
+),
+(
+	'PHYS 33',
+	'ELEN 104'
+),
+(
+	'ELEN 50',
+    'ELEN 104'
+),
+(
+	'ELEN 100',
+	'ELEN 110'
+),
+(
+	'ELEN 50',
+	'ELEN 115'
+),
+(
+	'ELEN 21',
+	'ELEN 120'
+),
+(
+	'COEN 11',
+    'ELEN 120'
+),
+(
+	'ELEN 194',
+	'ELEN 195'
+),
+(
+	'ELEN 195',
+	'ELEN 196'
+),
+(
+	'ELEN 115',
+	'ELEN 116'
+),
+(
+	'ELEN 104',
+	'ELEN 151'
+),
+(
+	'ELEN 21',
+	'ELEN 153'
+),
+(
+	'ELEN 50',
+	'ELEN 153'
+),
+(
+	'PHYS 33',
+	'ELEN 156'
+),
+(
+	'PHYS 34',
+    'ELEN 156'
+),
+(
+	'ELEN 110',
+	'ELEN 130'
+),
+(
+	'ELEN 110',
+	'ELEN 133'
+),
+(
+	'ELEN 50',
+    'ELEN 133'
+),
+(
+	'AMTH 106',
+	'ELEN 160'
+),
+(
+	'ELEN 110',
+	'ELEN 167'
+),
+(
+	'ELEN 104',
+	'ELEN 105'
+),
+(
+	'ELEN 110',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 141'
+),
+(
+	'AMTH 108',
+	'ELEN 142'
+),
+(
+	'ELEN 105',
+	'ELEN 144'
+),
+(
+	'ELEN 115',
+	'ELEN 164'
+),
+(
+	'ELEN 100',
+	'ELEN 183'
+),
+(
+	'ELEN 183',
+	'ELEN 184'
+),
+(
+	'ELEN 120',
+	'ELEN 121'
+),
+(
+	'ELEN 21',
+	'ELEN 122'
+),
+(
+	'ELEN 50',
+	'ELEN 123'
+),
+(
+	'COEN 11',
+    'ELEN 123'
+),
+(
+	'ELEN 21',
+	'ELEN 127'
+),
+(
+	'AMTH 106',
+	'ELEN 161'
+),
 (
     'SPAN 1',
     'SPAN 2'
-),
-(
-	'COEN 10 and L',
-    'COEN 11 and L'
 ),
 (
 	'COEN 11 and L',
@@ -1585,32 +2512,16 @@ VALUES
     'COEN 20 and L'
 ),
 (
-	'CSCI 60 and L',
-    'COEN 20 and L'
-),
-(
-	'MATH 13',
-    'COEN 44 and L'
-),
-(
 	'COEN 12 and L',
     'COEN 79 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 79 and L'
 ),
 (
 	'COEN 12 and L',
     'COEN 120 and L'
-),
-(
-	'COEN 20 and L',
-    'COEN 122 and L'
-),
-(
-	'COEN 21 and L',
-    'COEN 122 and L'
 ),
 (
 	'ELEN 50 and L',
@@ -1670,7 +2581,7 @@ VALUES
 ),
 (
 	'COEN 146 and L',
-    'COEN 162 and L'
+    'COEN 162'
 ),
 (
 	'COEN 12 and L',
@@ -1685,7 +2596,7 @@ VALUES
     'COEN 166 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 166 and L'
 ),
 (
@@ -1705,7 +2616,7 @@ VALUES
     'COEN 171'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 172 and L'
 ),
 (
@@ -1717,7 +2628,7 @@ VALUES
     'COEN 173 and L'
 ),
 (
-	'COEN 19',
+	'MATH 51',
     'COEN 173 and L'
 ),
 (
@@ -1737,18 +2648,14 @@ VALUES
     'COEN 177 and L'
 ),
 (
-	'COEN 20 and L',
-    'COEN 177 and L'
-),
-(
 	'COEN 12 and L',
     'COEN 178 and L'
 ),
 (
 	'COEN 12 and L',
     'COEN 179'
-)
-;
+);
+-- ELEN Major Ends here
 
 INSERT INTO MajorReqs
 (
@@ -1757,6 +2664,181 @@ INSERT INTO MajorReqs
     MajorName
 )
 VALUES
+(
+	1,
+    'MATH 11',
+    'Mechanical Engineering'
+),
+(
+	2,
+    'MECH 10 and L',
+    'Mechanical Engineering'
+),
+(
+	3,
+    'CHEM 11 and L',
+    'Mechanical Engineering'
+),
+(
+	4,
+    'ENGR 1 and L',
+    'Mechanical Engineering'
+),
+(
+	5,
+    'MATH 12',
+    'Mechanical Engineering'
+),
+(
+	6,
+    'PHYS 31',
+    'Mechanical Engineering'
+),
+(
+	7,
+    'MATH 13',
+    'Mechanical Engineering'
+),
+(
+	8,
+    'MECH 15 and L',
+    'Mechanical Engineering'
+),
+(
+	9,
+    'PHYS 32',
+    'Mechanical Engineering'
+),
+(
+	10,
+    'MATH 14',
+    'Mechanical Engineering'
+),
+(
+	11,
+    'PHYS 33',
+    'Mechanical Engineering'
+),
+(
+	12,
+    'CENG 41',
+    'Mechanical Engineering'
+),
+(
+	13,
+    'COEN 44 and L',
+    'Mechanical Engineering'
+),
+(
+	14,
+    'AMTH 106',
+    'Mechanical Engineering'
+),
+(
+	15,
+    'MECH 11',
+    'Mechanical Engineering'
+),
+(
+	16,
+    'ELEN 50 and L',
+    'Mechanical Engineering'
+),
+(
+	17,
+    'MECH 102',
+    'Mechanical Engineering'
+),
+(
+	18,
+    'MECH 121',
+    'Mechanical Engineering'
+),
+(
+	19,
+    'MECH 140',
+    'Mechanical Engineering'
+),
+(
+	20,
+    'CENG 43 and L',
+    'Mechanical Engineering'
+),
+(
+	21,
+    'AMTH 118',
+    'Mechanical Engineering'
+),
+(
+	22,
+    'MECH 122 and L',
+    'Mechanical Engineering'
+),
+(
+	23,
+    'MECH 123 and L',
+    'Mechanical Engineering'
+),
+(
+	24,
+    'MECH 141 and L',
+    'Mechanical Engineering'
+),
+(
+	25,
+    'MECH 114',
+    'Mechanical Engineering'
+),
+(
+	26,
+    'MECH 125',
+    'Mechanical Engineering'
+),
+(
+	27,
+    'MECH 142 and L',
+    'Mechanical Engineering'
+),
+(
+	28,
+    'MECH 115',
+    'Mechanical Engineering'
+),
+(
+	29,
+    'MECH 160 and L',
+    'Mechanical Engineering'
+),
+(
+	30,
+    'MECH 101L',
+    'Mechanical Engineering'
+),
+(
+	31,
+    'MECH 194',
+    'Mechanical Engineering'
+),
+(
+	32,
+    'MECH 195',
+    'Mechanical Engineering'
+),
+(
+	33,
+    'MECH 196',
+    'Mechanical Engineering'
+),
+(
+	34,
+    'MECH Upper Div Elective I',
+    'Mechanical Engineering'
+),
+(
+	35,
+    'MECH Upper Div Elective II',
+    'Mechanical Engineering'
+),
 (
     1,
     'COEN 10 and L',
@@ -1774,7 +2856,7 @@ VALUES
 ),
 (
     4,
-    'COEN 19',
+    'MATH 51',
     'Computer Science and Engineering'
 ),
 (
@@ -1799,7 +2881,7 @@ VALUES
 ),
 (
     9,
-    'COEN 171 and L',
+    'COEN 171',
     'Computer Science and Engineering'
 ),
 (
@@ -2316,7 +3398,154 @@ VALUES
     18,
     'MATH Group B4',
     'Mathematics'
+),
+--  ELEN classes starts here
+(
+	1,
+    'MATH 11',
+    'Electrical Engineering'
+),
+(
+	2,
+    'CHEM 11',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ENGR 1',
+    'Electrical Engineering'
+),
+(
+	4,
+    'MATH 12',
+    'Electrical Engineering'
+),
+(
+	5,
+    'PHYS 31',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN 20',
+    'Electrical Engineering'
+),
+(
+	7,
+    'MATH 13',
+    'Electrical Engineering'
+),
+(
+	8,
+    'PHYS 32',
+    'Electrical Engineering'
+),
+(
+	9,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	10,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	11,
+    'COEN 10',
+    'Electrical Engineering'
+),
+(
+	12,
+    'MATH 14',
+    'Electrical Engineering'
+),
+(
+	13,
+    'PHYS 33',
+    'Electrical Engineering'
+),
+(
+	14,
+    'ELEN 100',
+    'Electrical Engineering'
+),
+(
+	15,
+    'COEN 11',
+    'Electrical Engineering'
+),
+(
+	16,
+    'AMTH 106',
+    'Electrical Engineering'
+),
+(
+	17,
+    'PHYS 34',
+    'Electrical Engineering'
+),
+(
+	18,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	19,
+    'COEN 12',
+    'Electrical Engineering'
+),
+(
+	20,
+    'ELEN 110',
+    'Electrical Engineering'
+),
+(
+	21,
+    'ELEN 104',
+    'Electrical Engineering'
+),
+(
+	22,
+    'ELEN 120',
+    'Electrical Engineering'
+),
+(
+	23,
+    'MECH 121',
+    'Electrical Engineering'
+),
+(
+	24,
+    'ENGL 181',
+    'Electrical Engineering'
+),
+(
+	25,
+    'AMTH 108',
+    'Electrical Engineering'
+),
+(
+	26,
+    'ELEN 192',
+    'Electrical Engineering'
+),
+(
+	27,
+    'ELEN 194',
+    'Electrical Engineering'
+),
+(
+	28,
+    'ELEN 195',
+    'Electrical Engineering'
+),
+(
+	29,
+    'ELEN 196',
+    'Electrical Engineering'
 );
+-- ELEN Classes end here
 
 INSERT INTO HighlySuggestedClasses
 (
@@ -2547,6 +3776,46 @@ VALUES
     8,
     'CSCI Emphasis IV',
     'Computer Science'
+),
+(
+	1,
+    'ELEN 21',
+    'Electrical Engineering'
+),
+(
+	2,
+    'ELEN 50',
+    'Electrical Engineering'
+),
+(
+	3,
+    'ELEN 115',
+    'Electrical Engineering'
+),
+(
+	4,
+    'ELEN group I',
+    'Electrical Engineering'
+),
+(
+	5,
+    'ELEN group II',
+    'Electrical Engineering'
+),
+(
+	6,
+    'ELEN Upper I',
+    'Electrical Engineering'
+),
+(
+	7,
+    'ELEN Upper II',
+    'Electrical Engineering'
+),
+(
+	8,
+    'ELEN Upper III',
+    'Electrical Engineering'
 );
 
 INSERT INTO CoreClasses
@@ -2568,291 +3837,302 @@ VALUES
     'Natural Science'
 );
 
-DELETE FROM ConditionalReqs;
+--  DELETE FROM ConditionalReqs;
 
---  CSCI Algorithms Emphasis
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis IV',
-    CourseID,
-    'Computer Science, Algorithms and Complexity Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 175' OR
-    CourseID = 'MATH 176' OR
-    CourseID = 'MATH 178' OR
-    CourseID = 'MATH 101' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  --  CSCI Algorithms Emphasis
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis IV',
+--      CourseID,
+--      'Computer Science, Algorithms and Complexity Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 175' OR
+--      CourseID = 'MATH 176' OR
+--      CourseID = 'MATH 178' OR
+--      CourseID = 'MATH 101' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis V',
-    CourseID,
-    'Computer Science, Algorithms and Complexity Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 175' OR
-    CourseID = 'MATH 176' OR
-    CourseID = 'MATH 178' OR
-    CourseID = 'MATH 101' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis V',
+--      CourseID,
+--      'Computer Science, Algorithms and Complexity Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 175' OR
+--      CourseID = 'MATH 176' OR
+--      CourseID = 'MATH 178' OR
+--      CourseID = 'MATH 101' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
---  CSCI Data Science Emphasis
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis IV',
-    CourseID,
-    'Computer Science, Data Science Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  --  CSCI Data Science Emphasis
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis IV',
+--      CourseID,
+--      'Computer Science, Data Science Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis V',
-    CourseID,
-    'Computer Science, Data Science Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis V',
+--      CourseID,
+--      'Computer Science, Data Science Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
---  CSCI Software Emphasis
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis IV',
-    CourseID,
-    'Computer Science, Software Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'CSCI 1[0-9]{2}';
-;
+--  --  CSCI Software Emphasis
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis IV',
+--      CourseID,
+--      'Computer Science, Software Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'CSCI 1[0-9]{2}';
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis V',
-    CourseID,
-    'Computer Science, Software Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis V',
+--      CourseID,
+--      'Computer Science, Software Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
---  CSCI Security Emphasis
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis IV',
-    CourseID,
-    'Computer Science, Security Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 175' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  --  CSCI Security Emphasis
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis IV',
+--      CourseID,
+--      'Computer Science, Security Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 175' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'CSCI Emphasis V',
-    CourseID,
-    'Computer Science, Security Emphasis'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 175' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}' OR
-    CourseID REGEXP 'COEN 1[0-9]{2}'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'CSCI Emphasis V',
+--      CourseID,
+--      'Computer Science, Security Emphasis'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 175' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}' OR
+--      CourseID REGEXP 'COEN 1[0-9]{2}'
+--  ;
 
---  MATH Groups A1-3, B1-4
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group A1',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 102' OR
-    CourseID = 'MATH 105' OR
-    CourseID = 'MATH 153'
-;
+--  --  MATH Groups A1-3, B1-4
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group A1',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 102' OR
+--      CourseID = 'MATH 105' OR
+--      CourseID = 'MATH 153'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group A2',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 103' OR
-    CourseID = 'MATH 111'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group A2',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 103' OR
+--      CourseID = 'MATH 111'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group A3',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID = 'MATH 101' OR
-    CourseID = 'MATH 113' OR
-    CourseID = 'MATH 122' OR
-    CourseID = 'MATH 125' OR
-    CourseID = 'MATH 144' OR
-    CourseID = 'MATH 155' OR
-    CourseID = 'MATH 165' OR
-    CourseID = 'MATH 166' OR
-    CourseID = 'MATH 174' OR
-    CourseID = 'MATH 176' OR
-    CourseID = 'MATH 177'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group A3',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID = 'MATH 101' OR
+--      CourseID = 'MATH 113' OR
+--      CourseID = 'MATH 122' OR
+--      CourseID = 'MATH 125' OR
+--      CourseID = 'MATH 144' OR
+--      CourseID = 'MATH 155' OR
+--      CourseID = 'MATH 165' OR
+--      CourseID = 'MATH 166' OR
+--      CourseID = 'MATH 174' OR
+--      CourseID = 'MATH 176' OR
+--      CourseID = 'MATH 177'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group B1',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'MATH 1[0-9]{2}' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}'
-AND
-    CourseID != 'MATH 100'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group B1',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'MATH 1[0-9]{2}' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}'
+--  AND
+--      CourseID != 'MATH 100'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group B2',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'MATH 1[0-9]{2}' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}'
-AND
-    CourseID != 'MATH 100'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group B2',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'MATH 1[0-9]{2}' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}'
+--  AND
+--      CourseID != 'MATH 100'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group B3',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'MATH 1[0-9]{2}' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}'
-AND
-    CourseID != 'MATH 100'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group B3',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'MATH 1[0-9]{2}' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}'
+--  AND
+--      CourseID != 'MATH 100'
+--  ;
 
-INSERT INTO ConditionalReqs
-(
-    ConditionalID,
-    CourseID,
-    MajorName
-)
-SELECT
-    'MATH Group B4',
-    CourseID,
-    'Mathematics'
-FROM
-    Classes
-WHERE
-    CourseID REGEXP 'MATH 1[0-9]{2}' OR
-    CourseID REGEXP 'CSCI 1[0-9]{2}'
-AND
-    CourseID != 'MATH 100'
-;
+--  INSERT INTO ConditionalReqs
+--  (
+--      ConditionalID,
+--      CourseID,
+--      MajorName
+--  )
+--  SELECT
+--      'MATH Group B4',
+--      CourseID,
+--      'Mathematics'
+--  FROM
+--      Classes
+--  WHERE
+--      CourseID REGEXP 'MATH 1[0-9]{2}' OR
+--      CourseID REGEXP 'CSCI 1[0-9]{2}'
+--  AND
+--      CourseID != 'MATH 100'
+--  ;
+
+SELECT * FROM SCUSchools;
+SELECT * FROM MajornEmphasis;
+SELECT * FROM Minors;
+SELECT * FROM Classes;
+SELECT * FROM CoreReqs;
+SELECT * FROM CoreClasses;
+SELECT * FROM Prereqs;
+SELECT * FROM MajorReqs;
+SELECT * FROM HighlySuggestedClasses;
+SELECT * FROM MinorReqs;
