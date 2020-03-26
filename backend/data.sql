@@ -42,6 +42,14 @@ INSERT INTO MajornEmphasis
 )
 VALUES
 (
+    'Computer Science and Engineering',
+    'ENGR',
+    3,
+    189,
+    2,
+    20
+),
+(
     'Computer Science, Algorithms and Complexity Emphasis',
     'ASCI',
     2,
@@ -145,10 +153,50 @@ VALUES
     1
 ),
 (
+    'Abstract Data Types and Structures',
+    'COEN 12 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
+	'COEN Upper Div Elective I',
+    'COEN Upper Div Elective I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'COEN Upper Div Elective II',
+    'COEN Upper Div Elective II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'COEN Upper Div Elective III',
+    'COEN Upper Div Elective III',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
 	'MECH Upper Div Elective II',
     'MECH Upper Div Elective II',
     'FWS',
     4,
+    0,
+    1
+),
+(
+    'Applied Programming in C',
+    'COEN 44 and L',
+    'F',
+    5,
     0,
     1
 ),
@@ -193,6 +241,14 @@ VALUES
     1
 ),
 (
+    'Applied Programming in MATLAB',
+    'COEN 45 and L',
+    'F',
+    5,
+    0,
+    1
+),
+(
 	'Control Systems, Analysis, and Design',
     'MECH 142 and L',
     'WS',
@@ -207,6 +263,14 @@ VALUES
     5,
     0,
     1
+),
+(
+    'Introduction to Web Technologies',
+    'COEN 60 and L',
+    'F',
+    5,
+    0,
+    0
 ),
 (
 	'Dynamics',
@@ -281,6 +345,14 @@ VALUES
     0
 ),
 (
+    'Object Oriented Programming and Advanced Data Structures',
+    'COEN 79 and L',
+    'FWS',
+    5,
+    0,
+    1
+),
+(
 	'Electric Circuits I',
     'ELEN 50 and L',
     'FWS',
@@ -289,9 +361,17 @@ VALUES
     1
 ),
 (
-	'Applied Programming in C',
-    'COEN 44 and L',
-    'F',
+    'Mechatronics',
+    'COEN 123 and L',
+    'W',
+    5,
+    0,
+    1
+),
+(
+    'Machine Learning and Data Mining',
+    'COEN 140 and L',
+    'FS',
     5,
     0,
     1
@@ -305,9 +385,25 @@ VALUES
     1
 ),
 (
+    'Intro to Formal Lang Thry & Compiler Construction',
+    'COEN 175 and L',
+    'FW',
+    5,
+    0,
+    1
+),
+(
 	'Mechanics I: Statics',
     'CENG 41',
     'FW',
+    4,
+    0,
+    1
+),
+(
+    'Theory of Algorithms',
+    'COEN 179',
+    'FWS',
     4,
     0,
     1
@@ -651,7 +747,7 @@ VALUES
 (
     'Web Infrastructure',
     'COEN 162',
-    'FWS',
+    'S',
     4,
     0,
     1
@@ -1241,18 +1337,17 @@ VALUES
     0,
     0
 ),
--- ELEN major courses start here
 (
-	'Differential Equations',
-    'AMTH 106',
+    'Probability and Statistics',
+    'AMTH 108',
     'FWS',
     4,
     0,
     1
 ),
 (
-	'Probability & Statistics',
-    'AMTH 108',
+	'Differential Equations',
+    'AMTH 106',
     'FWS',
     4,
     0,
@@ -2078,14 +2173,6 @@ VALUES
     'COEN 122 and L'
 ),
 (
-    'COEN 21 and L',
-    'COEN 122 and L'
-),
-(
-    'COEN 21 and L',
-    'COEN 127 and L'
-),
-(
     'CSCI 61',
     'COEN 145 and L'
 ),
@@ -2094,15 +2181,7 @@ VALUES
     'COEN 148'
 ),
 (
-    'MATH 53',
-    'COEN 148'
-),
-(
     'CSCI 61',
-    'COEN 152 and L'
-),
-(
-    'COEN 20 and L',
     'COEN 152 and L'
 ),
 (
@@ -2114,35 +2193,15 @@ VALUES
     'COEN 161 and L'
 ),
 (
-    'COEN 146 and L',
-    'COEN 162'
-),
-(
     'CSCI 61',
     'COEN 163 and L'
 ),
 (
-    'COEN 161 and L',
-    'COEN 164 and L'
-),
-(
     'CSCI 61',
     'COEN 166 and L'
 ),
 (
-    'MATH 51',
-    'COEN 166 and L'
-),
-(
-    'COEN 20 and L',
-    'COEN 168 and L'
-),
-(
     'CSCI 61',
-    'COEN 169'
-),
-(
-    'MATH 122',
     'COEN 169'
 ),
 (
@@ -2154,15 +2213,7 @@ VALUES
     'COEN 172 and L'
 ),
 (
-    'MATH 51',
-    'COEN 172 and L'
-),
-(
     'CSCI 61',
-    'COEN 173 and L'
-),
-(
-    'MATH 51',
     'COEN 173 and L'
 ),
 (
@@ -2275,26 +2326,10 @@ VALUES
     'HIST 11A',
     'HIST 12A'
 ),
-(
-    'SPAN 1',
-    'SPAN 2'
-),
 --  ELEN Major pre-req start here
-(
-	'MATH 13',
-	'AMTH 106'
-),
 (
 	'MATH 14',
     'AMTH 108'
-),
-(
-	'MATH 11',
-	'PHYS 31'
-),
-(
-	'PHYS 32',
-	'PHYS 33'
 ),
 (
 	'MATH 12',
@@ -2487,6 +2522,162 @@ VALUES
 (
 	'AMTH 106',
 	'ELEN 161'
+),
+(
+    'SPAN 1',
+    'SPAN 2'
+),
+(
+	'COEN 11 and L',
+    'COEN 12 and L'
+),
+(
+	'COEN 11 and L',
+    'COEN 20 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 79 and L'
+),
+(
+	'MATH 51',
+    'COEN 79 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 120 and L'
+),
+(
+	'ELEN 50 and L',
+    'COEN 123 and L'
+),
+(
+	'COEN 11 and L',
+    'COEN 123 and L'
+),
+(
+	'COEN 21 and L',
+    'COEN 127 and L'
+),
+(
+	'AMTH 108',
+    'COEN 140 and L'
+),
+(
+	'MATH 53',
+    'COEN 140 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 140 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 145 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 146 and L'
+),
+(
+	'MATH 53',
+    'COEN 148'
+),
+(
+	'COEN 12 and L',
+    'COEN 148'
+),
+(
+	'COEN 12 and L',
+    'COEN 152 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 152 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 160 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 161 and L'
+),
+(
+	'COEN 146 and L',
+    'COEN 162'
+),
+(
+	'COEN 12 and L',
+    'COEN 163 and L'
+),
+(
+	'COEN 161 and L',
+    'COEN 164 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 166 and L'
+),
+(
+	'MATH 51',
+    'COEN 166 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 168 and L'
+),
+(
+	'MATH 122',
+    'COEN 169'
+),
+(
+	'COEN 12 and L',
+    'COEN 169'
+),
+(
+	'COEN 12 and L',
+    'COEN 171'
+),
+(
+	'MATH 51',
+    'COEN 172 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 172 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 173 and L'
+),
+(
+	'MATH 51',
+    'COEN 173 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 174 and L'
+),
+(
+	'COEN 20 and L',
+    'COEN 175 and L'
+),
+(
+	'COEN 79 and L',
+    'COEN 175 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 177 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 178 and L'
+),
+(
+	'COEN 12 and L',
+    'COEN 179'
 );
 -- ELEN Major Ends here
 
@@ -2671,6 +2862,91 @@ VALUES
 	35,
     'MECH Upper Div Elective II',
     'Mechanical Engineering'
+),
+(
+    1,
+    'COEN 10 and L',
+    'Computer Science and Engineering'
+),
+(
+    2,
+    'COEN 11 and L',
+    'Computer Science and Engineering'
+),
+(
+    3,
+    'COEN 12 and L',
+    'Computer Science and Engineering'
+),
+(
+    4,
+    'MATH 51',
+    'Computer Science and Engineering'
+),
+(
+    5,
+    'COEN 21 and L',
+    'Computer Science and Engineering'
+),
+(
+    6,
+    'COEN 79 and L',
+    'Computer Science and Engineering'
+),
+(
+    7,
+    'COEN 20 and L',
+    'Computer Science and Engineering'
+),
+(
+    8,
+    'COEN 177 and L',
+    'Computer Science and Engineering'
+),
+(
+    9,
+	'COEN Upper Div Elective I',
+    'Computer Science and Engineering'
+),
+(
+    10,
+    'COEN 171',
+    'Computer Science and Engineering'
+),
+(
+    11,
+    'COEN 146 and L',
+    'Computer Science and Engineering'
+),
+(
+    12,
+	'COEN Upper Div Elective II',
+    'Computer Science and Engineering'
+),
+(
+    13,
+    'COEN 179',
+    'Computer Science and Engineering'
+),
+(
+    14,
+	'COEN Upper Div Elective III',
+    'Computer Science and Engineering'
+),
+(
+    15,
+    'COEN 174 and L',
+    'Computer Science and Engineering'
+),
+(
+    16,
+    'COEN 175 and L',
+    'Computer Science and Engineering'
+),
+(
+    17,
+    'COEN 122 and L',
+    'Computer Science and Engineering'
 ),
 (
     1,
