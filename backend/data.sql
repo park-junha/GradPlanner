@@ -161,6 +161,30 @@ VALUES
     1
 ),
 (
+	'COEN Upper Div Elective I',
+    'COEN Upper Div Elective I',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'COEN Upper Div Elective II',
+    'COEN Upper Div Elective II',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
+	'COEN Upper Div Elective III',
+    'COEN Upper Div Elective III',
+    'FWS',
+    5,
+    0,
+    0
+),
+(
 	'MECH Upper Div Elective II',
     'MECH Upper Div Elective II',
     'FWS',
@@ -2881,31 +2905,46 @@ VALUES
 ),
 (
     9,
-    'COEN 171',
+	'COEN Upper Div Elective I',
     'Computer Science and Engineering'
 ),
 (
     10,
-    'COEN 146 and L',
+    'COEN 171',
     'Computer Science and Engineering'
 ),
 (
     11,
-    'COEN 179',
+    'COEN 146 and L',
     'Computer Science and Engineering'
 ),
 (
     12,
-    'COEN 174 and L',
+	'COEN Upper Div Elective II',
     'Computer Science and Engineering'
 ),
 (
     13,
-    'COEN 175 and L',
+    'COEN 179',
     'Computer Science and Engineering'
 ),
 (
     14,
+	'COEN Upper Div Elective III',
+    'Computer Science and Engineering'
+),
+(
+    15,
+    'COEN 174 and L',
+    'Computer Science and Engineering'
+),
+(
+    16,
+    'COEN 175 and L',
+    'Computer Science and Engineering'
+),
+(
+    17,
     'COEN 122 and L',
     'Computer Science and Engineering'
 ),
