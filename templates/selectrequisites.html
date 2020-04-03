@@ -1,5 +1,14 @@
 {% extends "main.html" %} {% block content %}
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160302624-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160302624-1');
+  </script>
+  
   <!-- Google Tag Manager -->
   <script>(
     function(w,d,s,l,i){
@@ -22,7 +31,7 @@
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG4VSR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  
+
   <!---------------------------body section-------------------------->
   <section id="body_content">
     <form action="/schedule">
