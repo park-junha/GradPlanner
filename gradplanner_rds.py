@@ -1,5 +1,5 @@
-MYSQLHOST = 'localhost'
+MYSQLHOST = 'gradplanner1.cp532egttadi.us-west-1.rds.amazonaws.com'
 MYSQLPORT = 3306
-MYSQLUSER = 'root'
-MYSQLDB = 'GradPlanner'
-MYSQLPW = None
+MYSQLUSER = 'web'
+MYSQLDB = 'gradplanner_scu'
+MYSQLPW = 'okDhanush!'
