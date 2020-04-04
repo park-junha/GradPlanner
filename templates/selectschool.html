@@ -49,10 +49,17 @@
               {% for option in questionSchools.options %}
                 <li class="list-group-item">
                   <div class="form-check">
+                    {% if option.id == 'ASCI' %}
                     <input class="form-check-input" type="radio" name="school" id="{{ option.id }}" value="{{ option.id }}">
                     <label class="form-check-label" for="{{ option.id }}">
                       {{ option.name }}
                     </label>
+                    {% else %}
+                    <input class="form-check-input" type="radio" name="school" id="{{ option.id }}" value="{{ option.id }}" disabled>
+                    <label class="form-check-label" for="{{ option.id }}">
+                      {{ option.name }} (Coming Soon!)
+                    </label>
+                    {% endif %}
                   </div>
                 </li>
               {% endfor %}
