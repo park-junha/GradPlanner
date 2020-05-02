@@ -1,6 +1,5 @@
 .DS_Store
-.gitignore
 __pycache__
-gradplanner_rds.py
-gradplanner_rds.pyc
-gradplanner.pyc
+*gradplanner_rds.py*
+*gradplanner_rds.pyc*
+*gradplanner.pyc*
