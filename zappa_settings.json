@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "profile_name": null,
+        "project_name": "gradplanner",
+        "runtime": "python3.7",
+        "s3_bucket": "zappa-gradplanner",
+	"aws_region": "us-west-1"
+    }
+}
