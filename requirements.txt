@@ -1,4 +1,2 @@
 flask
 pymysql
-zappa
-awscli
