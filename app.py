@@ -358,7 +358,11 @@ def schedule():
 
     return render_template('schedule.html', fourYearPlan=fourYearPlan)
 
+# About Us page
+@app.route("/aboutus")
+def aboutus():
+    return render_template('aboutus.html')
+
 # Enable debugging when running
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run()
+    app.run(debug=True)
