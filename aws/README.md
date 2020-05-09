@@ -1,12 +1,12 @@
 ## Amazon EC2 Scripts
 
-This directory contains scripts to connect to AWS and manage the live app on an EC2 instance.
+This directory contains scripts to connect to AWS and manage the live app on an EC2 instance. All are written in `bash`.
 
 ### `connect-to-ec2.sh`
 
-This script will let you ssh into the EC2 instance.
+This script will let you ssh into the EC2 instance. Simply run `./connect-to-ec2.sh` on your local machine.
 
-You will need a key pair titled `gradplanner-ec2-rsa.pem` in this directory. Please retrieve this from an administrator on the team.
+You will need a key pair titled `gradplanner-ec2-rsa.pem` in this directory. This is on the root `.gitignore` file by default, so please retrieve this from an administrator on the team. **DO NOT PUSH THE .pem FILE TO GITHUB!**
 
 ### `run.sh`
 
