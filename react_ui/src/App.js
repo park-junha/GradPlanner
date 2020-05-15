@@ -1,28 +1,20 @@
-import React from 'react';
+import React, {Component} from 'react';
+import LandingPage from './LandingPage';
+import AboutPage from './AboutPage';
+//import GroceryList from './GroceryList';
+import logo from './logo.svg';
 import './App.css';
 
-export default function App() {
-  return (
-    <div className="App">
-      <div className="Header">
-        <h1>About us</h1>
+class App extends Component{
+  render() {
+    return (
+      <div className="App">
+        App Component
+        <LandingPage />
+        <AboutPage />
       </div>
-      <p className="p">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        et{" "}
-      </p>
-      <p className="Body">
-        <h1>Meet the Team</h1>
-      </p>
-      <p className="App-sub">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et.
-      </p>
-
-      <p className = "divv">
-      </p>
-    </div>
-  );
+    );
+  }
 }
+
+export default App;
