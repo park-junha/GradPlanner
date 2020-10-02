@@ -1,58 +1,22 @@
 {% extends "main.html" %} {% block content %}
-
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160302624-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-160302624-1');
-  </script>
-
-  <!-- Google Tag Manager -->
-  <script>(
-    function(w,d,s,l,i){
-      w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-  })
-  (window,document,'script','dataLayer','GTM-MG4VSR3');
-  </script>
-  <!-- End Google Tag Manager -->
-
-  <title>SCU Grad Planner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index_styles.css') }}">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG4VSR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <!--------------------------Body section------------------------------>
-  <section id="body_content">
-    <div class="body_texts">
-      <div class="under_construction">
-        <h4><img class="sign_under_construction_left" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction">More awesome features will be coming soon<img class="sign_under_construction_right" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction"></h4>
-      </div>
-      <div class="intro">
-        <h1 class= "software_name">Grad Planner</h1>
-        <h4 class="under_construction_message">Create your four year plans for SCU</h4>
-        <p>Start by press the "Get Started" button to enter all your preferences</p>
-      </div>
-      <div>
-        <button class="btn btn-secondary btn-lg get_started_button" type="button" name="button" onclick="location.href = '{{ url_for('selectSchool') }}'">
-          Get Started
-        </button>
-      </div>
+<section id="body_content">
+  <div class="body_texts">
+    <div class="under_construction">
+      <h4><img class="sign_under_construction_left" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction">More awesome features will be coming soon<img class="sign_under_construction_right" src="{{ url_for('static', filename='img/under-construction.png') }}" alt="under construction"></h4>
     </div>
-    <div class="bottom-image">
-      <img class="graduation-img" src="{{ url_for('static', filename='img/Background-grad-photo.png') }}" alt="graduation image">
+    <div class="intro">
+      <h1 class= "software_name">Grad Planner</h1>
+      <h4 class="under_construction_message">Create your four year plans for SCU</h4>
+      <p>Start by press the "Get Started" button to enter all your preferences</p>
     </div>
-  </section>
-</body>
-
+    <div>
+      <button class="btn btn-secondary btn-lg get_started_button" type="button" name="button" onclick="location.href = '{{ url_for('selectSchool') }}'">
+        Get Started
+      </button>
+    </div>
+  </div>
+  <div class="bottom-image">
+    <img class="graduation-img" src="{{ url_for('static', filename='img/Background-grad-photo.png') }}" alt="graduation image">
+  </div>
+</section>
 {% endblock %}

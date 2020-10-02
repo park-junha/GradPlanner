@@ -1,5 +1,7 @@
 # GradPlanner 
 
+**NOTE**: This repository contains legacy source code.
+
 A web application that generates a four-year plan for Santa Clara University students based on their needs. It is now open for beta testing - you can visit it [here!](http:gradplanner.herokuapp.com)
 
 Originally named PlanForGrad / CoursePlanner. Cloned from repository (for CSCI 187 project): https://github.com/xiaogong1/Course-Planner
