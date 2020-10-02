@@ -1,75 +1,34 @@
 {% extends "main.html" %} {% block content %}
-
-<head>
-<!--
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160302624-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-160302624-1');
-  </script>
-
-  <!-- Google Tag Manager -->
-  <script>(
-    function(w,d,s,l,i){
-      w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-  })
-  (window,document,'script','dataLayer','GTM-MG4VSR3');
-  </script>
-  <!-- End Google Tag Manager -->
--->
-
-  <title>SCU Grad Planner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index_styles.css') }}">
-</head>
-
-<body>
-
-<!--
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG4VSR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
--->
-
-  <!--------------------------Body section------------------------------>
-  <section id="body_content">
-    <div class="body_texts">
-      <div class="intro">
-        <h2 class= "software_name">About Us</h2>
-      </div>
-        <div class="container">
-          <div class="card-columns d-flex justify-content-center">
-            <div class="card">
-              <div class="card-body">
-                <h4>Business Team</h4>
-                  <div><strong>Dhanush Shetty</strong>, CEO</div>
-                  <div><strong>Jocelyn Chi</strong>, Director of Marketing</div>
-                  <div><strong>Sophia Lapus</strong>, Director of Marketing</div>
-                  <div><strong>Makenna Mitchell</strong>, Director of Business Development</div>
-              </div>
+<section id="body_content">
+  <div class="body_texts">
+    <div class="intro">
+      <h2 class= "software_name">About Us</h2>
+    </div>
+      <div class="container">
+        <div class="card-columns d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body">
+              <h4>Business Team</h4>
+                <div><strong>Dhanush Shetty</strong>, CEO</div>
+                <div><strong>Jocelyn Chi</strong>, Director of Marketing</div>
+                <div><strong>Sophia Lapus</strong>, Director of Marketing</div>
+                <div><strong>Makenna Mitchell</strong>, Director of Business Development</div>
             </div>
-            <div class="card">
-              <div class="card-body">
-                <h4>Engineers</h4>
-                  <div><strong>Junha Park</strong>, Founding Engineer, Full Stack</div>
-                  <div><strong>Manpreet Sokhi</strong>, Founding Engineer, Full Stack</div>
-                  <div><strong>Neil Nguyen</strong>, Founding Engineer, Backend</div>
-                  <div><strong>Hanzhuo Gong</strong>, Founding Engineer, Frontend</div>
-                  <div><strong>Joy Zou</strong>, Software Engineer, Frontend</div>
-                  <div><strong>Ali Nazemi</strong>, Software Engineer, Backend</div>
-                  <div><strong>Shalin Avlani</strong>, Software Engineer, Backend</div>
-              </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4>Engineers</h4>
+                <div><strong>Junha Park</strong>, Founding Engineer, Full Stack</div>
+                <div><strong>Manpreet Sokhi</strong>, Founding Engineer, Full Stack</div>
+                <div><strong>Neil Nguyen</strong>, Founding Engineer, Backend</div>
+                <div><strong>Hanzhuo Gong</strong>, Founding Engineer, Frontend</div>
+                <div><strong>Joy Zou</strong>, Software Engineer, Frontend</div>
+                <div><strong>Ali Nazemi</strong>, Software Engineer, Backend</div>
+                <div><strong>Shalin Avlani</strong>, Software Engineer, Backend</div>
             </div>
           </div>
         </div>
-    </div>
-  </section>
-</body>
-
+      </div>
+  </div>
+</section>
 {% endblock %}

@@ -1,93 +1,59 @@
 {% extends "main.html" %} {% block content %}
-
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160302624-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-160302624-1');
-  </script>
-  
-  <!-- Google Tag Manager -->
-  <script>(
-    function(w,d,s,l,i){
-      w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-  })
-  (window,document,'script','dataLayer','GTM-MG4VSR3');
-  </script>
-  <!-- End Google Tag Manager -->
-  
-  <title>SCU Grad Planner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/schedule_styles.css') }}">
-</head>
-
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MG4VSR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <section id="body">
-    <div class="container">
-      {% if fourYearPlan.warning is not none %}
-      <div>
-        <h2>{{ fourYearPlan.warning }}</h2>
-      </div>
-      {% endif %}
-      {% for yearDict in fourYearPlan.plan %}
-        <div class="{{ yearDict['year'] }} first-shown-year">
-          <h2 class="year_title">{{ yearDict['year'] }}</h2>
-          <div class="card-columns d-flex justify-content-center">
-            {% for quarterDict in yearDict['yearSchedule'] %}
-              <div class="card Four-Year-Schedule">
-                <div class="card-block">
-                  <div class="card-header">
-                    {{ quarterDict['quarter'] }}
-                  </div>
-                  <ul class="list-group list-group-flush">
-                    {% for classDict in quarterDict['classes'] %}
-                      <li class="list-group-item" id="freshman_fall_course_1">{% if classDict['isCore'] == True %}{% block coreSuggestedLabel %}<b>Suggested: </b>{% endblock coreSuggestedLabel %}{% endif %}{{ classDict['name'] }}
-                        {% if classDict['units'] > 0 %}
-                            <ul>
-                              <li>Units: {{ classDict['units'] }}</li>
-                              {% if classDict['prereqs'] is not none %}
-                                <li>Pre-requisites:
-                                  <ul>
-                                    {% for prereq in classDict['prereqs'] %}
-                                      <li>{{ prereq }}</li>
-                                    {% endfor %}
-                                  </ul>
-                                </li>
-                              {% endif %}
-                              {% if classDict['satisfies'] is not none %}
-                                <li>Satisfies:
-                                  <ul>
-                                    {% for prereqFor in classDict['satisfies'] %}
-                                      <li>{{ prereqFor }}</li>
-                                    {% endfor %}
-                                  </ul>
-                                </li>
-                              {% endif %}
-                            </ul>
-                        {% endif %}
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endfor %}
-      <div class="feedback_button">
-        <button class="btn btn-secondary btn-lg" type="button" name="button" onclick ="window.open('https://docs.google.com/forms/d/1mu73PP8GWZPTFMBpU6t6EGmz7f6GfIz0yLDOJk9eGto/','_blank')" target="_blank"><img class="feedback-img" src="{{ url_for('static', filename='img/mail-512.png') }}">Feedback</button>
-      </div>
+<section id="body">
+  <div class="container">
+    {% if fourYearPlan.warning is not none %}
+    <div>
+      <h2>{{ fourYearPlan.warning }}</h2>
     </div>
-  </section>
-</body>
+    {% endif %}
+    {% for yearDict in fourYearPlan.plan %}
+      <div class="{{ yearDict['year'] }} first-shown-year">
+        <h2 class="year_title">{{ yearDict['year'] }}</h2>
+        <div class="card-columns d-flex justify-content-center">
+          {% for quarterDict in yearDict['yearSchedule'] %}
+            <div class="card Four-Year-Schedule">
+              <div class="card-block">
+                <div class="card-header">
+                  {{ quarterDict['quarter'] }}
+                </div>
+                <ul class="list-group list-group-flush">
+                  {% for classDict in quarterDict['classes'] %}
+                    <li class="list-group-item" id="freshman_fall_course_1">{% if classDict['isCore'] == True %}{% block coreSuggestedLabel %}<b>Suggested: </b>{% endblock coreSuggestedLabel %}{% endif %}{{ classDict['name'] }}
+                      {% if classDict['units'] > 0 %}
+                          <ul>
+                            <li>Units: {{ classDict['units'] }}</li>
+                            {% if classDict['prereqs'] is not none %}
+                              <li>Pre-requisites:
+                                <ul>
+                                  {% for prereq in classDict['prereqs'] %}
+                                    <li>{{ prereq }}</li>
+                                  {% endfor %}
+                                </ul>
+                              </li>
+                            {% endif %}
+                            {% if classDict['satisfies'] is not none %}
+                              <li>Satisfies:
+                                <ul>
+                                  {% for prereqFor in classDict['satisfies'] %}
+                                    <li>{{ prereqFor }}</li>
+                                  {% endfor %}
+                                </ul>
+                              </li>
+                            {% endif %}
+                          </ul>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+    <div class="feedback_button">
+      <button class="btn btn-secondary btn-lg" type="button" name="button" onclick ="window.open('https://docs.google.com/forms/d/1mu73PP8GWZPTFMBpU6t6EGmz7f6GfIz0yLDOJk9eGto/','_blank')" target="_blank"><img class="feedback-img" src="{{ url_for('static', filename='img/mail-512.png') }}">Feedback</button>
+    </div>
+  </div>
+</section>
 {% endblock %}
